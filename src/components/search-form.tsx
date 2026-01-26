@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Search01Icon, CommandIcon } from '@hugeicons/core-free-icons'
+import { Search01Icon, CommandIcon, ArrowMoveDownLeftIcon } from '@hugeicons/core-free-icons'
 
 export function SearchForm({
   defaultName = '',
@@ -125,17 +125,20 @@ export function SearchForm({
                 Checks domains, socials, packages &amp; more
               </p>
               <div className="flex items-center gap-2">
-                <kbd className="hidden items-center gap-0.5 rounded-md border bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground sm:flex">
+                <Button type="submit" size="sm">
+                  Check
+                <kbd className="hidden items-center gap-0.5 rounded-md border bg-muted px-1 py-0.5 font-mono text-xs text-muted-foreground sm:flex">
                   <HugeiconsIcon
                     icon={CommandIcon}
                     strokeWidth={2}
-                    className="size-3"
+                    className="size-2"
                   />
-                  Enter
+                  <HugeiconsIcon
+                    icon={ArrowMoveDownLeftIcon}
+                    strokeWidth={2}
+                    className="size-2"
+                  />
                 </kbd>
-                <Button type="submit" size="sm">
-                  <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
-                  Check
                 </Button>
               </div>
             </div>

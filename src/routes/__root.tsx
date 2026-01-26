@@ -23,7 +23,7 @@ export const Route = createRootRoute({
         property: 'og:description',
         content: 'Search domains, social handles, package registries, and more',
       },
-      { property: 'og:image', content: '/api/og' },
+      { property: 'og:image', content: 'https://onomast.app/api/og' },
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
       {
@@ -34,7 +34,7 @@ export const Route = createRootRoute({
         name: 'twitter:description',
         content: 'Search domains, social handles, package registries, and more',
       },
-      { name: 'twitter:image', content: '/api/og' },
+      { name: 'twitter:image', content: 'https://onomast.app/api/og' },
     ],
     links: [
       {

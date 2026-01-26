@@ -54,10 +54,22 @@ async function svgToPng(svg: string): Promise<Uint8Array> {
   return pngData.asPng()
 }
 
+// Theme-matched hex values (dark mode, oklch → hex)
+const colors = {
+  bg: '#09090b', // zinc-950 (--background)
+  fg: '#fafafa', // zinc-50 (--foreground)
+  muted: '#a1a1aa', // zinc-400 (--muted-foreground)
+  subtle: '#3f3f46', // zinc-700
+  track: '#27272a', // zinc-800 (--secondary)
+  success: '#10b981', // emerald-500 (--success)
+  warning: '#f59e0b', // amber-500 (--warning)
+  destructive: '#ef4444', // red-500 (--destructive)
+} as const
+
 function vibeColor(score: number): string {
-  if (score >= 67) return '#4ade80'
-  if (score >= 34) return '#facc15'
-  return '#f87171'
+  if (score >= 67) return colors.success
+  if (score >= 34) return colors.warning
+  return colors.destructive
 }
 
 function vibeLabel(score: number): string {
@@ -69,10 +81,10 @@ function vibeLabel(score: number): string {
 }
 
 function createGaugeSvg(score: number, color: string): string {
-  const cx = 120
-  const cy = 110
-  const r = 90
-  const sw = 14
+  const cx = 180
+  const cy = 165
+  const r = 140
+  const sw = 20
 
   const bgPath = `M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`
 
@@ -85,7 +97,7 @@ function createGaugeSvg(score: number, color: string): string {
     progressMarkup = `<path d="M ${cx - r} ${cy} A ${r} ${r} 0 ${largeArc} 1 ${endX.toFixed(1)} ${endY.toFixed(1)}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`
   }
 
-  return `<svg width="240" height="130" viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg"><path d="${bgPath}" fill="none" stroke="#3c3b48" stroke-width="${sw}" stroke-linecap="round"/>${progressMarkup}</svg>`
+  return `<svg width="360" height="195" viewBox="0 0 360 195" xmlns="http://www.w3.org/2000/svg"><path d="${bgPath}" fill="none" stroke="${colors.track}" stroke-width="${sw}" stroke-linecap="round"/>${progressMarkup}</svg>`
 }
 
 function OgShell({ children }: { children: React.ReactNode }) {
@@ -98,7 +110,7 @@ function OgShell({ children }: { children: React.ReactNode }) {
         justifyContent: 'center',
         width: '100%',
         height: '100%',
-        backgroundColor: '#1c1b22',
+        backgroundColor: colors.bg,
         fontFamily: 'Figtree',
         position: 'relative',
         overflow: 'hidden',
@@ -113,7 +125,7 @@ function OgShell({ children }: { children: React.ReactNode }) {
           height: 360,
           borderRadius: 180,
           background:
-            'radial-gradient(circle, rgba(130, 100, 230, 0.14) 0%, transparent 70%)',
+            'radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, transparent 70%)',
         }}
       />
       <div
@@ -125,7 +137,7 @@ function OgShell({ children }: { children: React.ReactNode }) {
           height: 280,
           borderRadius: 140,
           background:
-            'radial-gradient(circle, rgba(90, 140, 230, 0.10) 0%, transparent 70%)',
+            'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)',
         }}
       />
       <div
@@ -148,7 +160,7 @@ function Divider() {
       style={{
         width: 64,
         height: 2,
-        backgroundColor: '#3c3b48',
+        backgroundColor: colors.track,
         marginTop: 24,
         marginBottom: 24,
         borderRadius: 1,
@@ -164,9 +176,9 @@ export async function generateRootOgImage(): Promise<Uint8Array> {
     <OgShell>
       <div
         style={{
-          fontSize: 56,
+          fontSize: 88,
           fontWeight: 700,
-          color: '#fbfbfb',
+          color: colors.fg,
           letterSpacing: '-0.03em',
         }}
       >
@@ -175,9 +187,9 @@ export async function generateRootOgImage(): Promise<Uint8Array> {
       <Divider />
       <div
         style={{
-          fontSize: 26,
+          fontSize: 40,
           fontWeight: 400,
-          color: 'rgba(251, 251, 251, 0.72)',
+          color: colors.muted,
         }}
       >
         Vibe Check Your Company Name
@@ -185,18 +197,18 @@ export async function generateRootOgImage(): Promise<Uint8Array> {
       <div
         style={{
           display: 'flex',
-          gap: 12,
-          marginTop: 20,
-          fontSize: 16,
-          color: '#7c7c8a',
+          gap: 16,
+          marginTop: 28,
+          fontSize: 24,
+          color: colors.muted,
         }}
       >
         <span>domains</span>
-        <span style={{ color: '#4c4b58' }}>·</span>
+        <span style={{ color: colors.subtle }}>·</span>
         <span>social</span>
-        <span style={{ color: '#4c4b58' }}>·</span>
+        <span style={{ color: colors.subtle }}>·</span>
         <span>packages</span>
-        <span style={{ color: '#4c4b58' }}>·</span>
+        <span style={{ color: colors.subtle }}>·</span>
         <span>vibes</span>
       </div>
     </OgShell>
@@ -217,10 +229,10 @@ export async function generateNameOgImage(
 ): Promise<Uint8Array> {
   const fonts = await loadFonts()
 
-  let nameFontSize = 64
-  if (name.length > 16) nameFontSize = 52
-  if (name.length > 24) nameFontSize = 42
-  if (name.length > 32) nameFontSize = 34
+  let nameFontSize = 96
+  if (name.length > 16) nameFontSize = 78
+  if (name.length > 24) nameFontSize = 64
+  if (name.length > 32) nameFontSize = 52
 
   const element = vibe ? (
     <OgShell>
@@ -228,7 +240,7 @@ export async function generateNameOgImage(
         style={{
           fontSize: nameFontSize,
           fontWeight: 700,
-          color: '#fbfbfb',
+          color: colors.fg,
           letterSpacing: '-0.03em',
         }}
       >
@@ -239,40 +251,40 @@ export async function generateNameOgImage(
         style={{
           display: 'flex',
           position: 'relative',
-          width: 240,
-          height: 130,
-          marginTop: 16,
+          width: 360,
+          height: 195,
+          marginTop: 20,
         }}
       >
         <img
           src={`data:image/svg+xml,${encodeURIComponent(createGaugeSvg(vibe.positivity, vibeColor(vibe.positivity)))}`}
-          width={240}
-          height={130}
+          width={360}
+          height={195}
         />
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
-            width: 240,
-            height: 130,
+            width: 360,
+            height: 195,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            paddingBottom: 10,
+            paddingBottom: 14,
           }}
         >
           <span
             style={{
-              fontSize: 44,
+              fontSize: 68,
               fontWeight: 700,
-              color: '#fbfbfb',
+              color: colors.fg,
             }}
           >
             {vibe.positivity}
           </span>
-          <span style={{ fontSize: 14, color: '#7c7c8a' }}>
+          <span style={{ fontSize: 22, color: colors.muted }}>
             {vibeLabel(vibe.positivity)}
           </span>
         </div>
@@ -280,23 +292,23 @@ export async function generateNameOgImage(
 
       <div
         style={{
-          fontSize: 16,
-          color: '#7c7c8a',
-          marginTop: 16,
-          maxWidth: 600,
+          fontSize: 24,
+          color: colors.muted,
+          marginTop: 20,
+          maxWidth: 800,
           textAlign: 'center',
         }}
       >
-        {vibe.reason.length > 80
-          ? vibe.reason.slice(0, 77) + '...'
+        {vibe.reason.length > 100
+          ? vibe.reason.slice(0, 97) + '...'
           : vibe.reason}
       </div>
 
       <div
         style={{
-          fontSize: 18,
-          color: '#4c4b58',
-          marginTop: 16,
+          fontSize: 26,
+          color: colors.subtle,
+          marginTop: 20,
         }}
       >
         onomast.app
@@ -308,7 +320,7 @@ export async function generateNameOgImage(
         style={{
           fontSize: nameFontSize,
           fontWeight: 700,
-          color: '#fbfbfb',
+          color: colors.fg,
           letterSpacing: '-0.03em',
         }}
       >
@@ -321,11 +333,11 @@ export async function generateNameOgImage(
           alignItems: 'center',
           gap: 10,
           fontSize: 22,
-          color: '#7c7c8a',
+          color: colors.muted,
         }}
       >
         <span>onomast.app</span>
-        <span style={{ color: '#4c4b58' }}>·</span>
+        <span style={{ color: colors.subtle }}>·</span>
         <span>Vibe Check</span>
       </div>
     </OgShell>
