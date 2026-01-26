@@ -49,21 +49,14 @@ export function SearchForm({
 
   return (
     <>
-      <button
-        type="button"
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => setOpen(true)}
-        className="flex w-full min-w-48 max-w-sm items-center gap-2 rounded-md border border-input bg-input/20 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-input/40 dark:bg-input/30"
+        aria-label="Search"
       >
-        <HugeiconsIcon
-          icon={Search01Icon}
-          strokeWidth={2}
-          className="size-3.5 shrink-0"
-        />
-        <span className="truncate">{defaultName || 'Search a name...'}</span>
-        <kbd className="ml-auto hidden shrink-0 rounded border bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground sm:inline-block">
-          &thinsp;K
-        </kbd>
-      </button>
+        <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
+      </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
@@ -78,7 +71,7 @@ export function SearchForm({
               </DialogDescription>
             </DialogHeader>
 
-            <div className="flex items-center gap-2 px-3 py-2.5">
+            <div className="flex items-center gap-2 px-4 py-3">
               <HugeiconsIcon
                 icon={Search01Icon}
                 strokeWidth={2}
@@ -88,26 +81,26 @@ export function SearchForm({
                 placeholder="Company name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="border-0 bg-transparent p-0 text-sm font-medium shadow-none ring-0 focus-visible:ring-0 focus-visible:border-0"
+                className="border-0 bg-transparent px-0 text-sm font-medium shadow-none ring-0 focus-visible:ring-0 focus-visible:border-0"
                 autoFocus
               />
             </div>
 
             <Separator />
 
-            <div className="px-3 py-2.5">
+            <div className="px-4 py-3">
               <Textarea
                 placeholder="What does your company do? (optional — helps the AI vibe check)"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
-                className="border-0 bg-transparent p-0 text-xs shadow-none ring-0 min-h-0 focus-visible:ring-0 focus-visible:border-0 resize-none"
+                className="border-0 bg-transparent px-0 text-xs shadow-none ring-0 min-h-0 focus-visible:ring-0 focus-visible:border-0 resize-none"
               />
             </div>
 
             <Separator />
 
-            <div className="flex items-center justify-between px-3 py-2">
+            <div className="flex items-center justify-between px-4 py-2.5">
               <p className="text-xs text-muted-foreground">
                 Checks domains, socials, packages &amp; more
               </p>

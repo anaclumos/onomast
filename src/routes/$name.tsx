@@ -2,7 +2,6 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod/v4'
 import { SearchForm } from '@/components/search-form'
 import { ResultsDashboard } from '@/components/results-dashboard'
-import { ThemeToggle } from '@/components/theme-toggle'
 
 const searchSchema = z.object({
   description: z.string().optional().default(''),
@@ -10,6 +9,33 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/$name')({
   validateSearch: searchSchema,
+  head: ({ params }) => ({
+    meta: [
+      { title: `${params.name} — onomast.app` },
+      { property: 'og:title', content: `${params.name} — onomast.app` },
+      {
+        property: 'og:description',
+        content: `Vibe check for ${params.name} — domain availability, social handles, package registries & more`,
+      },
+      {
+        property: 'og:image',
+        content: `/api/og?name=${encodeURIComponent(params.name)}`,
+      },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      {
+        name: 'twitter:title',
+        content: `${params.name} — onomast.app`,
+      },
+      {
+        name: 'twitter:description',
+        content: `Vibe check for ${params.name} — domain availability, social handles, package registries & more`,
+      },
+      {
+        name: 'twitter:image',
+        content: `/api/og?name=${encodeURIComponent(params.name)}`,
+      },
+    ],
+  }),
   component: NamePage,
 })
 
@@ -28,10 +54,10 @@ function NamePage() {
 
   return (
     <div className="flex min-h-full flex-col">
-      <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b px-4 py-2">
+      <header className="flex items-center justify-between border-b px-4 py-2">
         <div className="flex shrink-0 items-center gap-1.5">
           <Link to="/" className="text-sm font-semibold tracking-tight">
-            onomast.app
+            <span className="text-primary">ono</span>mast
           </Link>
           <span className="text-sm text-muted-foreground">/</span>
           <span className="text-sm text-muted-foreground">{name}</span>
@@ -42,9 +68,6 @@ function NamePage() {
           defaultDescription={description}
           onSearch={handleSearch}
         />
-        <div className="flex justify-end">
-          <ThemeToggle />
-        </div>
       </header>
       <main className="flex flex-1 flex-col gap-4 px-4 py-6">
         <ResultsDashboard name={name} description={description} />
