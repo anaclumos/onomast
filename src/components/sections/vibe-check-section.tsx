@@ -50,11 +50,16 @@ export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
           Vibe Score
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col items-center">
+      <CardContent className="flex flex-col items-center gap-2">
         {vibeCheck.isLoading ? (
           <SectionSkeleton rows={3} />
         ) : vibeCheck.data ? (
-          <GaugeContent data={vibeCheck.data} />
+          <>
+            <GaugeContent data={vibeCheck.data} />
+            <p className="text-xs text-center text-muted-foreground leading-relaxed">
+              {vibeCheck.data.reason}
+            </p>
+          </>
         ) : (
           <p className="text-xs text-muted-foreground">
             AI vibe check unavailable.

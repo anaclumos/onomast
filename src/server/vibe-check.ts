@@ -13,6 +13,11 @@ const vibeSchema = z.object({
       'Positivity score from 0 to 100 as a name for a product/company/project',
     ),
   vibe: z.enum(['positive', 'neutral', 'negative']),
+  reason: z
+    .string()
+    .describe(
+      'A simple one-sentence explanation of why this name got this score. Plain language, no fluff.',
+    ),
   whyGood: z
     .string()
     .describe('Why this is a good name. Be direct. 1-2 sentences.'),
@@ -59,6 +64,7 @@ No corporate speak. No fluff. Say it like you mean it.`,
       return {
         positivity: 50,
         vibe: 'neutral',
+        reason: 'AI service unavailable.',
         whyGood: 'AI service unavailable.',
         whyBad: 'AI service unavailable.',
         redditTake: 'AI service unavailable.',

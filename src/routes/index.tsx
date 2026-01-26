@@ -28,7 +28,7 @@ function HomePage() {
     <div className="flex min-h-full flex-col">
       <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b px-4 py-2">
         <div className="flex shrink-0 items-center gap-1.5">
-          <h1 className="text-sm font-semibold tracking-tight">Onomast</h1>
+          <h1 className="text-sm font-semibold tracking-tight">onomast</h1>
           {name && (
             <>
               <span className="text-sm text-muted-foreground">/</span>

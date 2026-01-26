@@ -106,6 +106,7 @@ export type GitHubReposResult = { totalCount: number; repos: GitHubRepo[] }
 export type VibeCheckResult = {
   positivity: number
   vibe: 'positive' | 'neutral' | 'negative'
+  reason: string
   whyGood: string
   whyBad: string
   redditTake: string
