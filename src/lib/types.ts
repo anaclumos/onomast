@@ -84,7 +84,7 @@ export type PackageCheck = {
 export type GitHubUserCheck = {
   name: string
   status: AvailabilityStatus
-  type?: 'User' | 'Organization'
+  type?: 'User' | 'Org'
   login?: string
   avatarUrl?: string
   htmlUrl?: string

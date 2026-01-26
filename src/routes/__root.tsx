@@ -15,7 +15,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Vibe Check Your Company Name',
+        title: 'onomast.app — Vibe Check Your Company Name',
       },
     ],
     links: [
