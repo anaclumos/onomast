@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Search01Icon } from '@hugeicons/core-free-icons'
+import { Search01Icon, CommandIcon } from '@hugeicons/core-free-icons'
 
 export function SearchForm({
   defaultName = '',
@@ -38,14 +38,28 @@ export function SearchForm({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const submitForm = useCallback(() => {
     const trimmed = name.trim().toLowerCase()
     if (trimmed) {
       onSearch(trimmed, description.trim())
       setOpen(false)
     }
+  }, [name, description, onSearch])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    submitForm()
   }
+
+  const handleFormKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault()
+        submitForm()
+      }
+    },
+    [submitForm],
+  )
 
   return (
     <>
@@ -63,7 +77,7 @@ export function SearchForm({
           showCloseButton={false}
           className="sm:max-w-md gap-0 p-0 overflow-hidden"
         >
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
             <DialogHeader className="sr-only">
               <DialogTitle>Search</DialogTitle>
               <DialogDescription>
@@ -104,10 +118,20 @@ export function SearchForm({
               <p className="text-xs text-muted-foreground">
                 Checks domains, socials, packages &amp; more
               </p>
-              <Button type="submit" size="sm">
-                <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
-                Check
-              </Button>
+              <div className="flex items-center gap-2">
+                <kbd className="hidden items-center gap-0.5 rounded-md border bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground sm:flex">
+                  <HugeiconsIcon
+                    icon={CommandIcon}
+                    strokeWidth={2}
+                    className="size-3"
+                  />
+                  Enter
+                </kbd>
+                <Button type="submit" size="sm">
+                  <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
+                  Check
+                </Button>
+              </div>
             </div>
           </form>
         </DialogContent>

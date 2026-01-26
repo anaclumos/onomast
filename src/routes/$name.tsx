@@ -57,7 +57,7 @@ function NamePage() {
       <header className="flex items-center justify-between border-b px-4 py-2">
         <div className="flex shrink-0 items-center gap-1.5">
           <Link to="/" className="text-sm font-semibold tracking-tight">
-            <span className="text-primary">ono</span>mast
+            onomast.app
           </Link>
           <span className="text-sm text-muted-foreground">/</span>
           <span className="text-sm text-muted-foreground">{name}</span>

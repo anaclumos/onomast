@@ -1,5 +1,5 @@
 import satori, { type SatoriOptions } from 'satori'
-import { Resvg } from '@resvg/resvg-js'
+import { Resvg, initWasm } from '@resvg/resvg-wasm'
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -36,7 +36,19 @@ function getSatoriOptions(fonts: {
   }
 }
 
-function svgToPng(svg: string): Uint8Array {
+let wasmReady: Promise<void> | null = null
+
+function ensureWasm(): Promise<void> {
+  if (wasmReady) return wasmReady
+
+  wasmReady = fetch('https://unpkg.com/@resvg/resvg-wasm@2.6.2/index_bg.wasm')
+    .then((res) => res.arrayBuffer())
+    .then((buf) => initWasm(buf))
+  return wasmReady
+}
+
+async function svgToPng(svg: string): Promise<Uint8Array> {
+  await ensureWasm()
   const resvg = new Resvg(svg)
   const pngData = resvg.render()
   return pngData.asPng()
@@ -191,7 +203,7 @@ export async function generateRootOgImage(): Promise<Uint8Array> {
   )
 
   const svg = await satori(element, getSatoriOptions(fonts))
-  return svgToPng(svg)
+  return await svgToPng(svg)
 }
 
 export type VibeData = {
@@ -320,5 +332,5 @@ export async function generateNameOgImage(
   )
 
   const svg = await satori(element, getSatoriOptions(fonts))
-  return svgToPng(svg)
+  return await svgToPng(svg)
 }
