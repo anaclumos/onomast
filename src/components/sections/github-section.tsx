@@ -50,7 +50,7 @@ export function GitHubSection({
               <div className="flex flex-col gap-0.5">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-xs font-medium">
-                    github.com/{name}
+                    {name}
                   </span>
                   {githubUser.data?.type && (
                     <Badge variant="outline">{githubUser.data.type}</Badge>
