@@ -9,8 +9,7 @@ import { GitHubSection } from '@/components/sections/github-section'
 import { ExternalLinksSection } from '@/components/sections/external-links-section'
 import {
   VibeGaugeWidget,
-  VibeGoodWidget,
-  VibeBadWidget,
+  VibeProConsWidget,
 } from '@/components/sections/vibe-check-section'
 import { RedditTakeSection } from '@/components/sections/reddit-take-section'
 import { SimilarCompaniesSection } from '@/components/sections/similar-companies-section'
@@ -32,10 +31,7 @@ export function ResultsDashboard({
         <VibeGaugeWidget vibeCheck={results.vibeCheck} />
       </WidgetCard>
       <WidgetCard>
-        <VibeGoodWidget vibeCheck={results.vibeCheck} />
-      </WidgetCard>
-      <WidgetCard>
-        <VibeBadWidget vibeCheck={results.vibeCheck} />
+        <VibeProConsWidget vibeCheck={results.vibeCheck} />
       </WidgetCard>
       <WidgetCard>
         <RedditTakeSection vibeCheck={results.vibeCheck} />

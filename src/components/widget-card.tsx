@@ -18,9 +18,9 @@ export function WidgetCard({ children }: { children: React.ReactNode }) {
             setOpen(true)
           }
         }}
-        className="cursor-pointer"
+        className="h-full cursor-pointer"
       >
-        <div className="pointer-events-none overflow-hidden rounded-lg">
+        <div className="pointer-events-none h-full overflow-hidden rounded-lg [&>*]:h-full">
           {children}
         </div>
       </div>

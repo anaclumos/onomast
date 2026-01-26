@@ -88,19 +88,7 @@ function PackageRow({
         </span>
         <span className="font-mono text-xs text-muted-foreground">{name}</span>
       </div>
-      <div className="flex items-center gap-1.5">
-        {data && <StatusIndicator status={data.status} />}
-        {data?.status === 'taken' && data.url && (
-          <a
-            href={data.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-primary underline-offset-2 hover:underline"
-          >
-            View
-          </a>
-        )}
-      </div>
+      {data && <StatusIndicator status={data.status} />}
     </div>
   )
 }

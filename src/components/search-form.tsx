@@ -52,7 +52,7 @@ export function SearchForm({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex flex-1 items-center gap-2 rounded-md border border-input bg-input/20 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-input/40 dark:bg-input/30"
+        className="flex w-full min-w-48 max-w-sm items-center gap-2 rounded-md border border-input bg-input/20 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-input/40 dark:bg-input/30"
       >
         <HugeiconsIcon
           icon={Search01Icon}

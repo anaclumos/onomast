@@ -1,5 +1,5 @@
 import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { SectionSkeleton } from '@/components/section-skeleton'
 import type { VibeCheckResult } from '@/lib/types'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -7,6 +7,7 @@ import {
   ArrowUp01Icon,
   ArrowDown01Icon,
   Comment01Icon,
+  Megaphone01Icon,
 } from '@hugeicons/core-free-icons'
 
 export function RedditTakeSection({
@@ -15,15 +16,18 @@ export function RedditTakeSection({
   vibeCheck: UseQueryResult<VibeCheckResult>
 }) {
   return (
-    <Card size="sm" className="overflow-hidden">
-      {/* Subreddit header bar */}
-      <div className="flex items-center gap-1.5 bg-muted/50 px-3 py-1.5">
-        <span className="text-xs font-bold">r/namenerds</span>
-        <span className="text-xs text-muted-foreground">&middot;</span>
-        <span className="text-xs text-muted-foreground">just now</span>
-      </div>
-
-      <CardContent className="pt-2">
+    <Card size="sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-1.5">
+          <HugeiconsIcon
+            icon={Megaphone01Icon}
+            strokeWidth={2}
+            className="size-4"
+          />
+          Reddit Take
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
         {vibeCheck.isLoading ? (
           <SectionSkeleton rows={3} />
         ) : vibeCheck.data ? (

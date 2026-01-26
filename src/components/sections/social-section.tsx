@@ -92,7 +92,7 @@ function SocialRow({
         statusRowClassName(data?.status),
       )}
     >
-      <div className="flex flex-col gap-0.5">
+      <div className="flex items-center gap-1.5">
         <span className="text-xs font-medium">
           {PLATFORM_DISPLAY[platform]}
         </span>

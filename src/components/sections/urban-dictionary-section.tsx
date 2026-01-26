@@ -1,9 +1,13 @@
 import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { SectionSkeleton } from '@/components/section-skeleton'
 import type { UrbanDictionaryResult } from '@/lib/types'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { ThumbsUpIcon, ThumbsDownIcon } from '@hugeicons/core-free-icons'
+import {
+  ThumbsUpIcon,
+  ThumbsDownIcon,
+  QuoteDownIcon,
+} from '@hugeicons/core-free-icons'
 
 export function UrbanDictionarySection({
   urbanDictionary,
@@ -11,14 +15,18 @@ export function UrbanDictionarySection({
   urbanDictionary: UseQueryResult<UrbanDictionaryResult>
 }) {
   return (
-    <Card size="sm" className="overflow-hidden">
-      <div className="bg-muted/50 px-3 py-1.5">
-        <span className="text-xs font-bold tracking-tight">
+    <Card size="sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-1.5">
+          <HugeiconsIcon
+            icon={QuoteDownIcon}
+            strokeWidth={2}
+            className="size-4"
+          />
           Urban Dictionary
-        </span>
-      </div>
-
-      <CardContent className="flex flex-col gap-3 pt-2">
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-2">
         {urbanDictionary.isLoading ? (
           <SectionSkeleton rows={3} />
         ) : urbanDictionary.data?.found ? (

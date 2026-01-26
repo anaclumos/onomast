@@ -79,7 +79,10 @@ function DomainRow({
   const content = (
     <>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs font-medium">{domain}</span>
+        <span className="font-mono text-xs">
+          <span className="text-muted-foreground">{name}</span>
+          <span className="font-medium">.{tld}</span>
+        </span>
         {isTaken && data.registrar && (
           <span className="truncate text-xs text-muted-foreground">
             {data.registrar}
