@@ -16,10 +16,12 @@ import { Search01Icon, CommandIcon } from '@hugeicons/core-free-icons'
 export function SearchForm({
   defaultName = '',
   defaultDescription = '',
+  showDescription = true,
   onSearch,
 }: {
   defaultName?: string
   defaultDescription?: string
+  showDescription?: boolean
   onSearch: (name: string, description: string) => void
 }) {
   const [open, setOpen] = useState(false)
@@ -100,17 +102,21 @@ export function SearchForm({
               />
             </div>
 
-            <Separator />
+            {showDescription && (
+              <>
+                <Separator />
 
-            <div className="px-4 py-3">
-              <Textarea
-                placeholder="What does your company do? (optional — helps the AI vibe check)"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={2}
-                className="border-0 bg-transparent px-0 text-xs shadow-none ring-0 min-h-0 focus-visible:ring-0 focus-visible:border-0 resize-none"
-              />
-            </div>
+                <div className="px-4 py-3">
+                  <Textarea
+                    placeholder="What does your company do? (optional — helps the AI vibe check)"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={2}
+                    className="border-0 bg-transparent px-0 text-xs shadow-none ring-0 min-h-0 focus-visible:ring-0 focus-visible:border-0 resize-none"
+                  />
+                </div>
+              </>
+            )}
 
             <Separator />
 

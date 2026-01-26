@@ -66,6 +66,7 @@ function NamePage() {
           key={name + description}
           defaultName={name}
           defaultDescription={description}
+          showDescription={!!description}
           onSearch={handleSearch}
         />
       </header>
