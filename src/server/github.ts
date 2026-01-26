@@ -2,6 +2,31 @@ import { createServerFn } from '@tanstack/react-start'
 import { z } from 'zod'
 import type { GitHubReposResult, GitHubUserCheck } from '@/lib/types'
 
+interface GitHubUserApiResponse {
+  type: 'User' | 'Org'
+  login: string
+  avatar_url: string
+  html_url: string
+  bio: string
+  public_repos: number
+  followers: number
+}
+
+interface GitHubRepoApiItem {
+  name: string
+  full_name: string
+  description?: string
+  stargazers_count: number
+  forks_count: number
+  html_url: string
+  language?: string
+}
+
+interface GitHubSearchApiResponse {
+  total_count?: number
+  items?: GitHubRepoApiItem[]
+}
+
 const nameInput = z.object({ name: z.string().min(1).max(100) })
 
 export const checkGitHubUser = createServerFn({ method: 'GET' })
@@ -31,7 +56,7 @@ export const checkGitHubUser = createServerFn({ method: 'GET' })
         return { name: data.name, status: 'unknown' }
       }
 
-      const json = await res.json()
+      const json: GitHubUserApiResponse = await res.json()
       return {
         name: data.name,
         status: 'taken',
@@ -67,11 +92,11 @@ export const searchGitHubRepos = createServerFn({ method: 'GET' })
         return { totalCount: 0, repos: [] }
       }
 
-      const json = await res.json()
+      const json: GitHubSearchApiResponse = await res.json()
       return {
         totalCount: json.total_count || 0,
 
-        repos: (json.items || []).slice(0, 5).map((item: any) => ({
+        repos: (json.items || []).slice(0, 5).map((item) => ({
           name: item.name,
           fullName: item.full_name,
           description: item.description,

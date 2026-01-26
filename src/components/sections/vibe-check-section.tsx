@@ -64,20 +64,7 @@ export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-2">
-        {vibeCheck.isLoading ? (
-          <SectionSkeleton rows={3} />
-        ) : vibeCheck.data ? (
-          <>
-            <GaugeContent data={vibeCheck.data} />
-            <p className="text-center text-muted-foreground text-xs leading-relaxed">
-              {vibeCheck.data.reason}
-            </p>
-          </>
-        ) : (
-          <p className="text-muted-foreground text-xs">
-            AI vibe check unavailable.
-          </p>
-        )}
+        <VibeGaugeContent vibeCheck={vibeCheck} />
       </CardContent>
     </Card>
   )
@@ -97,30 +84,55 @@ export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
-        {vibeCheck.isLoading ? (
-          <SectionSkeleton rows={4} />
-        ) : vibeCheck.data ? (
-          <>
-            <div className="flex flex-col gap-1">
-              <span className="font-semibold text-success text-xs">
-                The Good
-              </span>
-              <p className="text-xs leading-relaxed">
-                {vibeCheck.data.whyGood}
-              </p>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-semibold text-destructive text-xs">
-                The Bad
-              </span>
-              <p className="text-xs leading-relaxed">{vibeCheck.data.whyBad}</p>
-            </div>
-          </>
-        ) : (
-          <p className="text-muted-foreground text-xs">Unavailable.</p>
-        )}
+        <VibeProConsContent vibeCheck={vibeCheck} />
       </CardContent>
     </Card>
+  )
+}
+
+function VibeGaugeContent({ vibeCheck }: VibeWidgetProps) {
+  if (vibeCheck.isLoading) {
+    return <SectionSkeleton rows={3} />
+  }
+
+  if (!vibeCheck.data) {
+    return (
+      <p className="text-muted-foreground text-xs">
+        AI vibe check unavailable.
+      </p>
+    )
+  }
+
+  return (
+    <>
+      <GaugeContent data={vibeCheck.data} />
+      <p className="text-center text-muted-foreground text-xs leading-relaxed">
+        {vibeCheck.data.reason}
+      </p>
+    </>
+  )
+}
+
+function VibeProConsContent({ vibeCheck }: VibeWidgetProps) {
+  if (vibeCheck.isLoading) {
+    return <SectionSkeleton rows={4} />
+  }
+
+  if (!vibeCheck.data) {
+    return <p className="text-muted-foreground text-xs">Unavailable.</p>
+  }
+
+  return (
+    <>
+      <div className="flex flex-col gap-1">
+        <span className="font-semibold text-success text-xs">The Good</span>
+        <p className="text-xs leading-relaxed">{vibeCheck.data.whyGood}</p>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="font-semibold text-destructive text-xs">The Bad</span>
+        <p className="text-xs leading-relaxed">{vibeCheck.data.whyBad}</p>
+      </div>
+    </>
   )
 }
 

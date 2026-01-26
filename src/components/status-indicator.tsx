@@ -53,10 +53,11 @@ export function StatusIndicator({
   className?: string
 }) {
   const config = STATUS_CONFIG[status]
+  const statusSymbol = status === 'available' ? '✓' : '✗'
 
   return (
     <Badge className={cn(config.className, className)} variant={config.variant}>
-      {showLabel ? config.label : status === 'available' ? '✓' : '✗'}
+      {showLabel ? config.label : statusSymbol}
     </Badge>
   )
 }

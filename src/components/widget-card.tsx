@@ -8,22 +8,15 @@ export function WidgetCard({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div
-        className="h-full cursor-pointer"
+      <button
+        className="h-full w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-left"
         onClick={() => setOpen(true)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            setOpen(true)
-          }
-        }}
-        role="button"
-        tabIndex={0}
+        type="button"
       >
         <div className="pointer-events-none h-full overflow-hidden rounded-lg [&>*]:h-full">
           {children}
         </div>
-      </div>
+      </button>
 
       <Dialog onOpenChange={setOpen} open={open}>
         <DialogContent className="max-h-svh gap-0 overflow-y-auto p-0 sm:max-w-xl">

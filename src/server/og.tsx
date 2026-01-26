@@ -280,6 +280,7 @@ export async function generateNameOgImage(
         }}
       >
         <img
+          alt="Vibe score gauge"
           height={195}
           src={`data:image/svg+xml,${encodeURIComponent(createGaugeSvg(vibe.positivity, vibeColor(vibe.positivity)))}`}
           width={360}

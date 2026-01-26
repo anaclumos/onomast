@@ -44,7 +44,9 @@ export function GitHubSection({
                   <img
                     alt={githubUser.data.login ?? name}
                     className="size-8 rounded-full"
+                    height={32}
                     src={githubUser.data.avatarUrl}
+                    width={32}
                   />
                 )}
               <div className="flex flex-col gap-0.5">
@@ -72,51 +74,65 @@ export function GitHubSection({
           </div>
         )}
 
-        {githubRepos.isLoading ? (
-          <SectionSkeleton rows={3} />
-        ) : githubRepos.data && githubRepos.data.repos.length > 0 ? (
-          <div className="flex flex-col gap-1.5">
-            <span className="font-medium text-muted-foreground text-xs">
-              Related repos
-            </span>
-            {githubRepos.data.repos.slice(0, 3).map((repo) => (
-              <a
-                className="flex items-center justify-between gap-2 rounded-md border p-2 transition-colors hover:bg-muted/50"
-                href={repo.htmlUrl}
-                key={repo.fullName}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <div className="flex flex-col gap-0.5 overflow-hidden">
-                  <span className="truncate font-medium font-mono text-xs">
-                    {repo.fullName}
-                  </span>
-                  {repo.description && (
-                    <p className="truncate text-muted-foreground text-xs">
-                      {repo.description}
-                    </p>
-                  )}
-                </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  {repo.language && (
-                    <span className="text-muted-foreground text-xs">
-                      {repo.language}
-                    </span>
-                  )}
-                  <span className="flex items-center gap-0.5 text-muted-foreground text-xs">
-                    <HugeiconsIcon
-                      className="size-3"
-                      icon={StarIcon}
-                      strokeWidth={2}
-                    />
-                    {repo.stars.toLocaleString()}
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
-        ) : null}
+        <GitHubReposContent githubRepos={githubRepos} />
       </CardContent>
     </Card>
+  )
+}
+
+function GitHubReposContent({
+  githubRepos,
+}: {
+  githubRepos: UseQueryResult<GitHubReposResult>
+}) {
+  if (githubRepos.isLoading) {
+    return <SectionSkeleton rows={3} />
+  }
+
+  if (!githubRepos.data || githubRepos.data.repos.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="font-medium text-muted-foreground text-xs">
+        Related repos
+      </span>
+      {githubRepos.data.repos.slice(0, 3).map((repo) => (
+        <a
+          className="flex items-center justify-between gap-2 rounded-md border p-2 transition-colors hover:bg-muted/50"
+          href={repo.htmlUrl}
+          key={repo.fullName}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <div className="flex flex-col gap-0.5 overflow-hidden">
+            <span className="truncate font-medium font-mono text-xs">
+              {repo.fullName}
+            </span>
+            {repo.description && (
+              <p className="truncate text-muted-foreground text-xs">
+                {repo.description}
+              </p>
+            )}
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            {repo.language && (
+              <span className="text-muted-foreground text-xs">
+                {repo.language}
+              </span>
+            )}
+            <span className="flex items-center gap-0.5 text-muted-foreground text-xs">
+              <HugeiconsIcon
+                className="size-3"
+                icon={StarIcon}
+                strokeWidth={2}
+              />
+              {repo.stars.toLocaleString()}
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
   )
 }

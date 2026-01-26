@@ -83,7 +83,7 @@ export function SearchForm({
           className="gap-0 overflow-hidden p-0 sm:max-w-md"
           showCloseButton={false}
         >
-          <form onKeyDown={handleFormKeyDown} onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <DialogHeader className="sr-only">
               <DialogTitle>Search</DialogTitle>
               <DialogDescription>
@@ -101,6 +101,7 @@ export function SearchForm({
                 autoFocus
                 className="border-0 bg-transparent px-0 font-medium text-sm shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
                 onChange={(e) => setName(e.target.value)}
+                onKeyDown={handleFormKeyDown}
                 placeholder="Company name"
                 value={name}
               />
@@ -114,6 +115,7 @@ export function SearchForm({
                   <Textarea
                     className="min-h-0 resize-none border-0 bg-transparent px-0 text-xs shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
                     onChange={(e) => setDescription(e.target.value)}
+                    onKeyDown={handleFormKeyDown}
                     placeholder="What does your company do? (optional — helps the AI vibe check)"
                     rows={2}
                     value={description}

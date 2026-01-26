@@ -31,30 +31,44 @@ export function SimilarCompaniesSection({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {vibeCheck.isLoading ? (
-          <SectionSkeleton rows={2} />
-        ) : vibeCheck.data ? (
-          <div className="flex flex-col gap-2">
-            <p className="text-muted-foreground text-xs">
-              Companies that live on the same block:
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {vibeCheck.data.similarCompanies.map((name) => (
-                <span
-                  className="rounded-full border bg-muted/50 px-2.5 py-1 font-medium text-xs"
-                  key={name}
-                >
-                  {name}
-                </span>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <p className="text-muted-foreground text-xs">
-            Couldn&apos;t scout the neighborhood.
-          </p>
-        )}
+        <SimilarCompaniesContent vibeCheck={vibeCheck} />
       </CardContent>
     </Card>
+  )
+}
+
+function SimilarCompaniesContent({
+  vibeCheck,
+}: {
+  vibeCheck: UseQueryResult<VibeCheckResult>
+}) {
+  if (vibeCheck.isLoading) {
+    return <SectionSkeleton rows={2} />
+  }
+
+  if (!vibeCheck.data) {
+    return (
+      <p className="text-muted-foreground text-xs">
+        Couldn&apos;t scout the neighborhood.
+      </p>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <p className="text-muted-foreground text-xs">
+        Companies that live on the same block:
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {vibeCheck.data.similarCompanies.map((name) => (
+          <span
+            className="rounded-full border bg-muted/50 px-2.5 py-1 font-medium text-xs"
+            key={name}
+          >
+            {name}
+          </span>
+        ))}
+      </div>
+    </div>
   )
 }

@@ -28,18 +28,30 @@ export function RedditTakeSection({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {vibeCheck.isLoading ? (
-          <SectionSkeleton rows={3} />
-        ) : vibeCheck.data ? (
-          <RedditComment take={vibeCheck.data.redditTake} />
-        ) : (
-          <p className="text-muted-foreground text-xs">
-            Reddit hivemind is offline.
-          </p>
-        )}
+        <RedditTakeContent vibeCheck={vibeCheck} />
       </CardContent>
     </Card>
   )
+}
+
+function RedditTakeContent({
+  vibeCheck,
+}: {
+  vibeCheck: UseQueryResult<VibeCheckResult>
+}) {
+  if (vibeCheck.isLoading) {
+    return <SectionSkeleton rows={3} />
+  }
+
+  if (!vibeCheck.data) {
+    return (
+      <p className="text-muted-foreground text-xs">
+        Reddit hivemind is offline.
+      </p>
+    )
+  }
+
+  return <RedditComment take={vibeCheck.data.redditTake} />
 }
 
 function RedditComment({ take }: { take: string }) {
