@@ -1,10 +1,10 @@
-import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { SectionSkeleton } from '@/components/section-skeleton'
-import type { DictionaryResult } from '@/lib/types'
-import { HugeiconsIcon } from '@hugeicons/react'
 import { Book02Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import type { UseQueryResult } from '@tanstack/react-query'
+import { SectionSkeleton } from '@/components/section-skeleton'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import type { DictionaryResult } from '@/lib/types'
 
 export function DictionarySection({
   dictionary,
@@ -15,7 +15,7 @@ export function DictionarySection({
     <Card size="sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
-          <HugeiconsIcon icon={Book02Icon} strokeWidth={2} className="size-4" />
+          <HugeiconsIcon className="size-4" icon={Book02Icon} strokeWidth={2} />
           Word Meaning
         </CardTitle>
       </CardHeader>
@@ -25,26 +25,26 @@ export function DictionarySection({
         ) : dictionary.data?.found ? (
           <div className="flex flex-col gap-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-sm font-semibold">
+              <span className="font-semibold text-sm">
                 {dictionary.data.word}
               </span>
               {dictionary.data.phonetic && (
-                <span className="text-xs text-muted-foreground">
+                <span className="text-muted-foreground text-xs">
                   {dictionary.data.phonetic}
                 </span>
               )}
             </div>
             {dictionary.data.meanings.map((meaning) => (
-              <div key={meaning.partOfSpeech} className="flex flex-col gap-1.5">
-                <span className="text-xs font-medium italic text-muted-foreground">
+              <div className="flex flex-col gap-1.5" key={meaning.partOfSpeech}>
+                <span className="font-medium text-muted-foreground text-xs italic">
                   {meaning.partOfSpeech}
                 </span>
                 <ol className="flex flex-col gap-1 pl-4">
                   {meaning.definitions.map((def) => (
-                    <li key={def.definition} className="list-decimal text-xs">
+                    <li className="list-decimal text-xs" key={def.definition}>
                       <span>{def.definition}</span>
                       {def.example && (
-                        <p className="mt-0.5 italic text-muted-foreground">
+                        <p className="mt-0.5 text-muted-foreground italic">
                           &ldquo;{def.example}&rdquo;
                         </p>
                       )}
@@ -64,7 +64,7 @@ export function DictionarySection({
             ))}
           </div>
         ) : (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             No dictionary definition found.
           </p>
         )}

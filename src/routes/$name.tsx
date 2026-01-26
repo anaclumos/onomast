@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod/v4'
-import { SearchForm } from '@/components/search-form'
 import { ResultsDashboard } from '@/components/results-dashboard'
+import { SearchForm } from '@/components/search-form'
 
 const searchSchema = z.object({
-  description: z.string().optional().default(''),
+  description: z.string().optional(),
 })
 
 export const Route = createFileRoute('/$name')({
@@ -19,7 +19,7 @@ export const Route = createFileRoute('/$name')({
       },
       {
         property: 'og:image',
-        content: `/api/og?name=${encodeURIComponent(params.name)}`,
+        content: `https://www.onomast.app/api/og?name=${encodeURIComponent(params.name)}`,
       },
       { name: 'twitter:card', content: 'summary_large_image' },
       {
@@ -32,7 +32,7 @@ export const Route = createFileRoute('/$name')({
       },
       {
         name: 'twitter:image',
-        content: `/api/og?name=${encodeURIComponent(params.name)}`,
+        content: `https://www.onomast.app/api/og?name=${encodeURIComponent(params.name)}`,
       },
     ],
   }),
@@ -56,22 +56,22 @@ function NamePage() {
     <div className="flex min-h-full flex-col">
       <header className="flex items-center justify-between border-b px-4 py-2">
         <div className="flex shrink-0 items-center gap-1.5">
-          <Link to="/" className="text-sm font-semibold tracking-tight">
+          <Link className="font-semibold text-sm tracking-tight" to="/">
             onomast.app
           </Link>
-          <span className="text-sm text-muted-foreground">/</span>
-          <span className="text-sm text-muted-foreground">{name}</span>
+          <span className="text-muted-foreground text-sm">/</span>
+          <span className="text-muted-foreground text-sm">{name}</span>
         </div>
         <SearchForm
-          key={name + description}
-          defaultName={name}
           defaultDescription={description}
-          showDescription={!!description}
+          defaultName={name}
+          key={name + (description ?? '')}
           onSearch={handleSearch}
+          showDescription={!!description}
         />
       </header>
       <main className="flex flex-1 flex-col gap-4 px-4 py-6">
-        <ResultsDashboard name={name} description={description} />
+        <ResultsDashboard description={description ?? ''} name={name} />
       </main>
     </div>
   )

@@ -1,9 +1,9 @@
-import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { SectionSkeleton } from '@/components/section-skeleton'
-import type { VibeCheckResult } from '@/lib/types'
-import { HugeiconsIcon } from '@hugeicons/react'
 import { Building03Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import type { UseQueryResult } from '@tanstack/react-query'
+import { SectionSkeleton } from '@/components/section-skeleton'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import type { VibeCheckResult } from '@/lib/types'
 
 export function SimilarCompaniesSection({
   vibeCheck,
@@ -23,9 +23,9 @@ export function SimilarCompaniesSection({
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={Building03Icon}
             strokeWidth={2}
-            className="size-4"
           />
           Name Neighborhood
         </CardTitle>
@@ -35,14 +35,14 @@ export function SimilarCompaniesSection({
           <SectionSkeleton rows={2} />
         ) : vibeCheck.data ? (
           <div className="flex flex-col gap-2">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Companies that live on the same block:
             </p>
             <div className="flex flex-wrap gap-1.5">
               {vibeCheck.data.similarCompanies.map((name) => (
                 <span
+                  className="rounded-full border bg-muted/50 px-2.5 py-1 font-medium text-xs"
                   key={name}
-                  className="rounded-full border bg-muted/50 px-2.5 py-1 text-xs font-medium"
                 >
                   {name}
                 </span>
@@ -50,7 +50,7 @@ export function SimilarCompaniesSection({
             </div>
           </div>
         ) : (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Couldn&apos;t scout the neighborhood.
           </p>
         )}

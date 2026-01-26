@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { z } from 'zod'
-import type { GitHubUserCheck, GitHubReposResult } from '@/lib/types'
+import type { GitHubReposResult, GitHubUserCheck } from '@/lib/types'
 
 const nameInput = z.object({ name: z.string().min(1).max(100) })
 
@@ -16,7 +16,7 @@ export const checkGitHubUser = createServerFn({ method: 'GET' })
             Accept: 'application/vnd.github.v3+json',
             'User-Agent': 'Onomast/1.0',
           },
-        },
+        }
       )
 
       if (res.status === 404) {
@@ -60,7 +60,7 @@ export const searchGitHubRepos = createServerFn({ method: 'GET' })
             Accept: 'application/vnd.github.v3+json',
             'User-Agent': 'Onomast/1.0',
           },
-        },
+        }
       )
 
       if (!res.ok) {
@@ -70,7 +70,7 @@ export const searchGitHubRepos = createServerFn({ method: 'GET' })
       const json = await res.json()
       return {
         totalCount: json.total_count || 0,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
         repos: (json.items || []).slice(0, 5).map((item: any) => ({
           name: item.name,
           fullName: item.full_name,

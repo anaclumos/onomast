@@ -14,14 +14,14 @@ export const checkDomain = createServerFn({ method: 'GET' })
     try {
       const res = await fetch(
         `https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=A`,
-        { signal: AbortSignal.timeout(8000) },
+        { signal: AbortSignal.timeout(8000) }
       )
 
       if (!res.ok) {
         return { tld: data.tld, domain, status: 'unknown' }
       }
 
-      const json: { Status: number; Answer?: { data: string }[] } =
+      const json: { Status: number; Answer?: Array<{ data: string }> } =
         await res.json()
 
       // Status 3 = NXDOMAIN (domain does not exist)

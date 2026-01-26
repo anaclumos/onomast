@@ -7,11 +7,11 @@ export function SectionSkeleton({ rows = 3 }: { rows?: number }) {
     <div className="flex flex-col gap-2">
       {Array.from({ length: rows }, (_, i) => (
         <div
-          key={i}
           className={cn(
             'h-4 animate-pulse rounded-md bg-muted',
-            WIDTHS[i % WIDTHS.length],
+            WIDTHS[i % WIDTHS.length]
           )}
+          key={i}
         />
       ))}
     </div>

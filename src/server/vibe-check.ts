@@ -1,6 +1,6 @@
+import { gateway } from '@ai-sdk/gateway'
 import { createServerFn } from '@tanstack/react-start'
 import { generateObject } from 'ai'
-import { gateway } from '@ai-sdk/gateway'
 import { z } from 'zod'
 import type { VibeCheckResult } from '@/lib/types'
 
@@ -10,13 +10,13 @@ const vibeSchema = z.object({
     .min(0)
     .max(100)
     .describe(
-      'Positivity score from 0 to 100 as a name for a product/company/project',
+      'Positivity score from 0 to 100 as a name for a product/company/project'
     ),
   vibe: z.enum(['positive', 'neutral', 'negative']),
   reason: z
     .string()
     .describe(
-      'A simple one-sentence explanation of why this name got this score. Plain language, no fluff.',
+      'A simple one-sentence explanation of why this name got this score. Plain language, no fluff.'
     ),
   whyGood: z
     .string()
@@ -27,12 +27,12 @@ const vibeSchema = z.object({
   redditTake: z
     .string()
     .describe(
-      'What an average Redditor would say about this name in a comment. Snarky, opinionated, maybe a pun. Write it as a direct quote.',
+      'What an average Redditor would say about this name in a comment. Snarky, opinionated, maybe a pun. Write it as a direct quote.'
     ),
   similarCompanies: z
     .array(z.string())
     .describe(
-      'Real existing companies or products with similar-sounding names. 1-5 entries. Empty array if none.',
+      'Real existing companies or products with similar-sounding names. 1-5 entries. Empty array if none.'
     ),
 })
 
@@ -41,7 +41,7 @@ export const checkWordVibe = createServerFn({ method: 'GET' })
     z.object({
       name: z.string().min(1).max(100),
       description: z.string().max(500).optional().default(''),
-    }),
+    })
   )
   .handler(async ({ data }): Promise<VibeCheckResult> => {
     try {

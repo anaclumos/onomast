@@ -1,11 +1,11 @@
+import { TanStackDevtools } from '@tanstack/react-devtools'
 import {
+  createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
-  createRootRoute,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
 
@@ -23,7 +23,7 @@ export const Route = createRootRoute({
         property: 'og:description',
         content: 'Search domains, social handles, package registries, and more',
       },
-      { property: 'og:image', content: 'https://onomast.app/api/og' },
+      { property: 'og:image', content: 'https://www.onomast.app/api/og' },
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
       {
@@ -34,7 +34,7 @@ export const Route = createRootRoute({
         name: 'twitter:description',
         content: 'Search domains, social handles, package registries, and more',
       },
-      { name: 'twitter:image', content: 'https://onomast.app/api/og' },
+      { name: 'twitter:image', content: 'https://www.onomast.app/api/og' },
     ],
     links: [
       {

@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { checkDictionary, checkUrbanDictionary } from '@/server/dictionary'
 import { checkDomain } from '@/server/domains'
-import { checkSocialHandle } from '@/server/social'
+import { checkGitHubUser, searchGitHubRepos } from '@/server/github'
 import {
-  checkNpm,
+  checkApt,
   checkCrates,
   checkGolang,
   checkHomebrew,
-  checkApt,
+  checkNpm,
 } from '@/server/packages'
-import { checkGitHubUser, searchGitHubRepos } from '@/server/github'
+import { checkSocialHandle } from '@/server/social'
 import { checkWordVibe } from '@/server/vibe-check'
 
 /**
@@ -17,7 +17,7 @@ import { checkWordVibe } from '@/server/vibe-check'
  * Hook count is always 25 (stable across renders):
  *   2 dictionary + 6 domain + 5 social + 5 package + 2 github
  */
-export function useNameCheck(name: string, description: string = '') {
+export function useNameCheck(name: string, description = '') {
   const enabled = name.length > 0
 
   const dictionary = useQuery({

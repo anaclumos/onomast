@@ -1,13 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { generateRootOgImage, generateNameOgImage } from '@/server/og'
-import { checkWordVibe } from '@/server/vibe-check'
 import type { VibeData } from '@/server/og'
+import { generateNameOgImage, generateRootOgImage } from '@/server/og'
+import { checkWordVibe } from '@/server/vibe-check'
 
 const vibeCache = new Map<string, VibeData>()
 
 async function fetchVibe(name: string): Promise<VibeData | undefined> {
   const cached = vibeCache.get(name)
-  if (cached) return cached
+  if (cached) {
+    return cached
+  }
 
   try {
     const result = await Promise.race([

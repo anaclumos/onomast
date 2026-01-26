@@ -1,17 +1,21 @@
-import { useState, useEffect, useCallback } from 'react'
+import {
+  ArrowMoveDownLeftIcon,
+  CommandIcon,
+  Search01Icon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { useCallback, useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { Search01Icon, CommandIcon, ArrowMoveDownLeftIcon } from '@hugeicons/core-free-icons'
+import { Textarea } from '@/components/ui/textarea'
 
 export function SearchForm({
   defaultName = '',
@@ -60,26 +64,26 @@ export function SearchForm({
         submitForm()
       }
     },
-    [submitForm],
+    [submitForm]
   )
 
   return (
     <>
       <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setOpen(true)}
         aria-label="Search"
+        onClick={() => setOpen(true)}
+        size="icon"
+        variant="ghost"
       >
         <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
       </Button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog onOpenChange={setOpen} open={open}>
         <DialogContent
+          className="gap-0 overflow-hidden p-0 sm:max-w-md"
           showCloseButton={false}
-          className="sm:max-w-md gap-0 p-0 overflow-hidden"
         >
-          <form onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
+          <form onKeyDown={handleFormKeyDown} onSubmit={handleSubmit}>
             <DialogHeader className="sr-only">
               <DialogTitle>Search</DialogTitle>
               <DialogDescription>
@@ -89,16 +93,16 @@ export function SearchForm({
 
             <div className="flex items-center gap-2 px-4 py-3">
               <HugeiconsIcon
+                className="size-4 shrink-0 text-muted-foreground"
                 icon={Search01Icon}
                 strokeWidth={2}
-                className="size-4 shrink-0 text-muted-foreground"
               />
               <Input
+                autoFocus
+                className="border-0 bg-transparent px-0 font-medium text-sm shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Company name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="border-0 bg-transparent px-0 text-sm font-medium shadow-none ring-0 focus-visible:ring-0 focus-visible:border-0"
-                autoFocus
               />
             </div>
 
@@ -108,11 +112,11 @@ export function SearchForm({
 
                 <div className="px-4 py-3">
                   <Textarea
-                    placeholder="What does your company do? (optional — helps the AI vibe check)"
-                    value={description}
+                    className="min-h-0 resize-none border-0 bg-transparent px-0 text-xs shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
                     onChange={(e) => setDescription(e.target.value)}
+                    placeholder="What does your company do? (optional — helps the AI vibe check)"
                     rows={2}
-                    className="border-0 bg-transparent px-0 text-xs shadow-none ring-0 min-h-0 focus-visible:ring-0 focus-visible:border-0 resize-none"
+                    value={description}
                   />
                 </div>
               </>
@@ -121,24 +125,24 @@ export function SearchForm({
             <Separator />
 
             <div className="flex items-center justify-between px-4 py-2.5">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 Checks domains, socials, packages &amp; more
               </p>
               <div className="flex items-center gap-2">
-                <Button type="submit" size="sm">
+                <Button size="sm" type="submit">
                   Check
-                <kbd className="hidden items-center gap-0.5 rounded-md border bg-muted px-1 py-0.5 font-mono text-xs text-muted-foreground sm:flex">
-                  <HugeiconsIcon
-                    icon={CommandIcon}
-                    strokeWidth={2}
-                    className="size-2"
-                  />
-                  <HugeiconsIcon
-                    icon={ArrowMoveDownLeftIcon}
-                    strokeWidth={2}
-                    className="size-2"
-                  />
-                </kbd>
+                  <kbd className="hidden items-center gap-0.5 rounded-md border bg-muted px-1 py-0.5 font-mono text-muted-foreground text-xs sm:flex">
+                    <HugeiconsIcon
+                      className="size-2"
+                      icon={CommandIcon}
+                      strokeWidth={2}
+                    />
+                    <HugeiconsIcon
+                      className="size-2"
+                      icon={ArrowMoveDownLeftIcon}
+                      strokeWidth={2}
+                    />
+                  </kbd>
                 </Button>
               </div>
             </div>

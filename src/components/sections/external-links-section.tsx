@@ -1,12 +1,12 @@
+import { BalanceScaleIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
   CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { BalanceScaleIcon } from '@hugeicons/core-free-icons'
 
 export function ExternalLinksSection({ name }: { name: string }) {
   return (
@@ -14,9 +14,9 @@ export function ExternalLinksSection({ name }: { name: string }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={BalanceScaleIcon}
             strokeWidth={2}
-            className="size-4"
           />
           Trademark &amp; Business
         </CardTitle>
@@ -24,24 +24,24 @@ export function ExternalLinksSection({ name }: { name: string }) {
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <a
-          href={`https://tmsearch.uspto.gov/search/search-results?query=${encodeURIComponent(name)}&section=default`}
-          target="_blank"
-          rel="noopener noreferrer"
           className="flex flex-col gap-0.5 rounded-md border p-2 transition-colors hover:bg-muted/50"
+          href={`https://tmsearch.uspto.gov/search/search-results?query=${encodeURIComponent(name)}&section=default`}
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          <span className="text-xs font-medium">USPTO Trademark Search</span>
-          <span className="text-xs text-muted-foreground">
+          <span className="font-medium text-xs">USPTO Trademark Search</span>
+          <span className="text-muted-foreground text-xs">
             Search for &ldquo;{name}&rdquo; in the US trademark database
           </span>
         </a>
         <a
-          href={`https://opencorporates.com/companies?q=${encodeURIComponent(name)}`}
-          target="_blank"
-          rel="noopener noreferrer"
           className="flex flex-col gap-0.5 rounded-md border p-2 transition-colors hover:bg-muted/50"
+          href={`https://opencorporates.com/companies?q=${encodeURIComponent(name)}`}
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          <span className="text-xs font-medium">OpenCorporates</span>
-          <span className="text-xs text-muted-foreground">
+          <span className="font-medium text-xs">OpenCorporates</span>
+          <span className="text-muted-foreground text-xs">
             Search for &ldquo;{name}&rdquo; across company registries worldwide
           </span>
         </a>

@@ -1,5 +1,6 @@
-import satori, { type SatoriOptions } from 'satori'
-import { Resvg, initWasm } from '@resvg/resvg-wasm'
+import { initWasm, Resvg } from '@resvg/resvg-wasm'
+import type { SatoriOptions } from 'satori'
+import satori from 'satori'
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -8,14 +9,16 @@ let fontsPromise: Promise<{ regular: ArrayBuffer; bold: ArrayBuffer }> | null =
   null
 
 function loadFonts() {
-  if (fontsPromise) return fontsPromise
+  if (fontsPromise) {
+    return fontsPromise
+  }
 
   fontsPromise = Promise.all([
     fetch(
-      'https://cdn.jsdelivr.net/fontsource/fonts/figtree@latest/latin-400-normal.woff',
+      'https://cdn.jsdelivr.net/fontsource/fonts/figtree@latest/latin-400-normal.woff'
     ).then((r) => r.arrayBuffer()),
     fetch(
-      'https://cdn.jsdelivr.net/fontsource/fonts/figtree@latest/latin-700-normal.woff',
+      'https://cdn.jsdelivr.net/fontsource/fonts/figtree@latest/latin-700-normal.woff'
     ).then((r) => r.arrayBuffer()),
   ]).then(([regular, bold]) => ({ regular, bold }))
 
@@ -39,7 +42,9 @@ function getSatoriOptions(fonts: {
 let wasmReady: Promise<void> | null = null
 
 function ensureWasm(): Promise<void> {
-  if (wasmReady) return wasmReady
+  if (wasmReady) {
+    return wasmReady
+  }
 
   wasmReady = fetch('https://unpkg.com/@resvg/resvg-wasm@2.6.2/index_bg.wasm')
     .then((res) => res.arrayBuffer())
@@ -67,16 +72,28 @@ const colors = {
 } as const
 
 function vibeColor(score: number): string {
-  if (score >= 67) return colors.success
-  if (score >= 34) return colors.warning
+  if (score >= 67) {
+    return colors.success
+  }
+  if (score >= 34) {
+    return colors.warning
+  }
   return colors.destructive
 }
 
 function vibeLabel(score: number): string {
-  if (score >= 80) return "Chef's Kiss"
-  if (score >= 60) return 'Solid Pick'
-  if (score >= 40) return 'Meh'
-  if (score >= 20) return 'Yikes'
+  if (score >= 80) {
+    return "Chef's Kiss"
+  }
+  if (score >= 60) {
+    return 'Solid Pick'
+  }
+  if (score >= 40) {
+    return 'Meh'
+  }
+  if (score >= 20) {
+    return 'Yikes'
+  }
   return 'Dead on Arrival'
 }
 
@@ -218,21 +235,27 @@ export async function generateRootOgImage(): Promise<Uint8Array> {
   return await svgToPng(svg)
 }
 
-export type VibeData = {
+export interface VibeData {
   positivity: number
   reason: string
 }
 
 export async function generateNameOgImage(
   name: string,
-  vibe?: VibeData,
+  vibe?: VibeData
 ): Promise<Uint8Array> {
   const fonts = await loadFonts()
 
   let nameFontSize = 96
-  if (name.length > 16) nameFontSize = 78
-  if (name.length > 24) nameFontSize = 64
-  if (name.length > 32) nameFontSize = 52
+  if (name.length > 16) {
+    nameFontSize = 78
+  }
+  if (name.length > 24) {
+    nameFontSize = 64
+  }
+  if (name.length > 32) {
+    nameFontSize = 52
+  }
 
   const element = vibe ? (
     <OgShell>
@@ -257,9 +280,9 @@ export async function generateNameOgImage(
         }}
       >
         <img
+          height={195}
           src={`data:image/svg+xml,${encodeURIComponent(createGaugeSvg(vibe.positivity, vibeColor(vibe.positivity)))}`}
           width={360}
-          height={195}
         />
         <div
           style={{
@@ -300,7 +323,7 @@ export async function generateNameOgImage(
         }}
       >
         {vibe.reason.length > 100
-          ? vibe.reason.slice(0, 97) + '...'
+          ? `${vibe.reason.slice(0, 97)}...`
           : vibe.reason}
       </div>
 

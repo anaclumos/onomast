@@ -1,13 +1,13 @@
+import { PackageIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   StatusIndicator,
   statusRowClassName,
 } from '@/components/status-indicator'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { PackageCheck, PackageRegistry } from '@/lib/types'
 import { PACKAGE_REGISTRIES } from '@/lib/types'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { PackageIcon } from '@hugeicons/core-free-icons'
 import { cn } from '@/lib/utils'
 
 const REGISTRY_DISPLAY: Record<PackageRegistry, string> = {
@@ -30,9 +30,9 @@ export function PackagesSection({
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={PackageIcon}
             strokeWidth={2}
-            className="size-4"
           />
           Package Registries
         </CardTitle>
@@ -42,11 +42,11 @@ export function PackagesSection({
           const registry = PACKAGE_REGISTRIES[i]
           return (
             <PackageRow
-              key={registry}
-              registry={registry}
-              name={name}
-              isLoading={query.isLoading}
               data={query.data}
+              isLoading={query.isLoading}
+              key={registry}
+              name={name}
+              registry={registry}
             />
           )
         })}
@@ -79,14 +79,14 @@ function PackageRow({
     <div
       className={cn(
         'flex items-center justify-between gap-2 rounded-md border p-2',
-        statusRowClassName(data?.status),
+        statusRowClassName(data?.status)
       )}
     >
       <div className="flex items-center gap-2">
-        <span className="text-xs font-medium">
+        <span className="font-medium text-xs">
           {REGISTRY_DISPLAY[registry]}
         </span>
-        <span className="font-mono text-xs text-muted-foreground">{name}</span>
+        <span className="font-mono text-muted-foreground text-xs">{name}</span>
       </div>
       {data && <StatusIndicator status={data.status} />}
     </div>

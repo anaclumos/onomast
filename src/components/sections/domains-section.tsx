@@ -1,13 +1,13 @@
+import { Globe02Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   StatusIndicator,
   statusRowClassName,
 } from '@/components/status-indicator'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { DomainCheck } from '@/lib/types'
 import { TLDS } from '@/lib/types'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { Globe02Icon } from '@hugeicons/core-free-icons'
 import { cn } from '@/lib/utils'
 
 export function DomainsSection({
@@ -22,9 +22,9 @@ export function DomainsSection({
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={Globe02Icon}
             strokeWidth={2}
-            className="size-4"
           />
           Domains
         </CardTitle>
@@ -34,11 +34,11 @@ export function DomainsSection({
           const tld = TLDS[i]
           return (
             <DomainRow
+              data={query.data}
+              isLoading={query.isLoading}
               key={tld}
               name={name}
               tld={tld}
-              isLoading={query.isLoading}
-              data={query.data}
             />
           )
         })}
@@ -73,7 +73,7 @@ function DomainRow({
   const rowClassName = cn(
     'flex items-center justify-between gap-2 rounded-md border p-2',
     statusRowClassName(data?.status),
-    isTaken && 'transition-colors hover:bg-muted/50',
+    isTaken && 'transition-colors hover:bg-muted/50'
   )
 
   const content = (
@@ -84,7 +84,7 @@ function DomainRow({
           <span className="font-medium">.{tld}</span>
         </span>
         {isTaken && data.registrar && (
-          <span className="truncate text-xs text-muted-foreground">
+          <span className="truncate text-muted-foreground text-xs">
             {data.registrar}
           </span>
         )}
@@ -96,10 +96,10 @@ function DomainRow({
   if (isTaken) {
     return (
       <a
-        href={`https://${domain}`}
-        target="_blank"
-        rel="noopener noreferrer"
         className={rowClassName}
+        href={`https://${domain}`}
+        rel="noopener noreferrer"
+        target="_blank"
       >
         {content}
       </a>

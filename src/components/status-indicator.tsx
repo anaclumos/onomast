@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
 import type { AvailabilityStatus } from '@/lib/types'
+import { cn } from '@/lib/utils'
 
 const STATUS_CONFIG: Record<
   AvailabilityStatus,
@@ -55,7 +55,7 @@ export function StatusIndicator({
   const config = STATUS_CONFIG[status]
 
   return (
-    <Badge variant={config.variant} className={cn(config.className, className)}>
+    <Badge className={cn(config.className, className)} variant={config.variant}>
       {showLabel ? config.label : status === 'available' ? '✓' : '✗'}
     </Badge>
   )

@@ -7,9 +7,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "lint": "eslint",
-    "format": "prettier",
-    "check": "prettier --write . && eslint --fix"
+    "lint": "bunx ultracite check .",
+    "format": "bunx ultracite fix .",
+    "check": "bunx ultracite check . --fix",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.22",
@@ -43,8 +44,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.11",
     "@tanstack/devtools-vite": "^0.3.11",
-    "@tanstack/eslint-config": "^0.3.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/node": "^22.10.2",
@@ -52,8 +53,9 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
     "jsdom": "^27.0.0",
-    "prettier": "^3.5.3",
+    "lefthook": "^2.0.15",
     "typescript": "^5.7.2",
+    "ultracite": "7.0.12",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
     "web-vitals": "^5.1.0"

@@ -1,5 +1,7 @@
 'use client'
 
+import { SparklesIcon, ThumbsUpIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
 import {
   Label,
@@ -8,24 +10,35 @@ import {
   RadialBar,
   RadialBarChart,
 } from 'recharts'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { ChartContainer, type ChartConfig } from '@/components/ui/chart'
 import { SectionSkeleton } from '@/components/section-skeleton'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import type { ChartConfig } from '@/components/ui/chart'
+import { ChartContainer } from '@/components/ui/chart'
 import type { VibeCheckResult } from '@/lib/types'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { SparklesIcon, ThumbsUpIcon } from '@hugeicons/core-free-icons'
 
 function vibeColor(score: number): string {
-  if (score >= 67) return 'var(--color-success)'
-  if (score >= 34) return 'var(--color-warning)'
+  if (score >= 67) {
+    return 'var(--color-success)'
+  }
+  if (score >= 34) {
+    return 'var(--color-warning)'
+  }
   return 'var(--color-destructive)'
 }
 
 function vibeLabel(score: number): string {
-  if (score >= 80) return "Chef's Kiss"
-  if (score >= 60) return 'Solid Pick'
-  if (score >= 40) return 'Meh'
-  if (score >= 20) return 'Yikes'
+  if (score >= 80) {
+    return "Chef's Kiss"
+  }
+  if (score >= 60) {
+    return 'Solid Pick'
+  }
+  if (score >= 40) {
+    return 'Meh'
+  }
+  if (score >= 20) {
+    return 'Yikes'
+  }
   return 'Dead on Arrival'
 }
 
@@ -33,7 +46,7 @@ const chartConfig = {
   score: { label: 'Positivity' },
 } satisfies ChartConfig
 
-type VibeWidgetProps = {
+interface VibeWidgetProps {
   vibeCheck: UseQueryResult<VibeCheckResult>
 }
 
@@ -43,9 +56,9 @@ export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={SparklesIcon}
             strokeWidth={2}
-            className="size-4"
           />
           Vibe Score
         </CardTitle>
@@ -56,12 +69,12 @@ export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
         ) : vibeCheck.data ? (
           <>
             <GaugeContent data={vibeCheck.data} />
-            <p className="text-xs text-center text-muted-foreground leading-relaxed">
+            <p className="text-center text-muted-foreground text-xs leading-relaxed">
               {vibeCheck.data.reason}
             </p>
           </>
         ) : (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             AI vibe check unavailable.
           </p>
         )}
@@ -76,9 +89,9 @@ export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={ThumbsUpIcon}
             strokeWidth={2}
-            className="size-4"
           />
           Pros &amp; Cons
         </CardTitle>
@@ -89,7 +102,7 @@ export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
         ) : vibeCheck.data ? (
           <>
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-semibold text-success">
+              <span className="font-semibold text-success text-xs">
                 The Good
               </span>
               <p className="text-xs leading-relaxed">
@@ -97,14 +110,14 @@ export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
               </p>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-semibold text-destructive">
+              <span className="font-semibold text-destructive text-xs">
                 The Bad
               </span>
               <p className="text-xs leading-relaxed">{vibeCheck.data.whyBad}</p>
             </div>
           </>
         ) : (
-          <p className="text-xs text-muted-foreground">Unavailable.</p>
+          <p className="text-muted-foreground text-xs">Unavailable.</p>
         )}
       </CardContent>
     </Card>
@@ -119,40 +132,40 @@ function GaugeContent({ data }: { data: VibeCheckResult }) {
 
   return (
     <ChartContainer
+      className="mx-auto -mb-20 aspect-square w-full"
       config={chartConfig}
-      className="mx-auto w-full aspect-square -mb-20"
     >
       <RadialBarChart
+        cy="55%"
         data={chartData}
-        startAngle={180}
         endAngle={0}
         innerRadius={50}
         outerRadius={80}
-        cy="55%"
+        startAngle={180}
       >
         <PolarAngleAxis
-          type="number"
+          axisLine={false}
           domain={[0, 100]}
           tick={false}
-          axisLine={false}
+          type="number"
         />
-        <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+        <PolarRadiusAxis axisLine={false} tick={false} tickLine={false}>
           <Label
             content={({ viewBox }) => {
               if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                 return (
-                  <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
+                  <text textAnchor="middle" x={viewBox.cx} y={viewBox.cy}>
                     <tspan
+                      className="fill-foreground font-bold text-3xl"
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) - 16}
-                      className="fill-foreground text-3xl font-bold"
                     >
                       {data.positivity}
                     </tspan>
                     <tspan
+                      className="fill-muted-foreground text-xs"
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 4}
-                      className="fill-muted-foreground text-xs"
                     >
                       {label}
                     </tspan>
@@ -163,11 +176,11 @@ function GaugeContent({ data }: { data: VibeCheckResult }) {
           />
         </PolarRadiusAxis>
         <RadialBar
-          dataKey="score"
-          cornerRadius={5}
-          fill={color}
           background={{ fill: 'var(--color-muted)' }}
-          className="stroke-transparent stroke-2"
+          className="stroke-2 stroke-transparent"
+          cornerRadius={5}
+          dataKey="score"
+          fill={color}
         />
       </RadialBarChart>
     </ChartContainer>

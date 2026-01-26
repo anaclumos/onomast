@@ -10,7 +10,7 @@ export const checkNpm = createServerFn({ method: 'GET' })
     try {
       const res = await fetch(
         `https://registry.npmjs.org/${encodeURIComponent(data.name)}`,
-        { signal: AbortSignal.timeout(8000) },
+        { signal: AbortSignal.timeout(8000) }
       )
       return {
         registry: 'npm',
@@ -37,7 +37,7 @@ export const checkCrates = createServerFn({ method: 'GET' })
         {
           signal: AbortSignal.timeout(8000),
           headers: { 'User-Agent': 'Onomast/1.0 (name-checker)' },
-        },
+        }
       )
       return {
         registry: 'crates',
@@ -61,7 +61,7 @@ export const checkGolang = createServerFn({ method: 'GET' })
     try {
       const res = await fetch(
         `https://proxy.golang.org/github.com/${encodeURIComponent(data.name)}/@v/list`,
-        { signal: AbortSignal.timeout(8000) },
+        { signal: AbortSignal.timeout(8000) }
       )
       return {
         registry: 'go',
@@ -86,7 +86,7 @@ export const checkHomebrew = createServerFn({ method: 'GET' })
     try {
       const res = await fetch(
         `https://formulae.brew.sh/api/formula/${encodeURIComponent(data.name)}.json`,
-        { signal: AbortSignal.timeout(8000) },
+        { signal: AbortSignal.timeout(8000) }
       )
       return {
         registry: 'homebrew',
@@ -110,7 +110,7 @@ export const checkApt = createServerFn({ method: 'GET' })
     try {
       const res = await fetch(
         `https://sources.debian.org/api/search/${encodeURIComponent(data.name)}/`,
-        { signal: AbortSignal.timeout(8000) },
+        { signal: AbortSignal.timeout(8000) }
       )
       if (!res.ok) {
         return {

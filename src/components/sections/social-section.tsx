@@ -1,14 +1,14 @@
+import { UserGroupIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   StatusIndicator,
   statusRowClassName,
 } from '@/components/status-indicator'
-import { cn } from '@/lib/utils'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { SocialCheck, SocialPlatform } from '@/lib/types'
 import { SOCIAL_PLATFORMS } from '@/lib/types'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { UserGroupIcon } from '@hugeicons/core-free-icons'
+import { cn } from '@/lib/utils'
 
 const PLATFORM_DISPLAY: Record<SocialPlatform, string> = {
   instagram: 'Instagram',
@@ -30,9 +30,9 @@ export function SocialSection({
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon
+            className="size-4"
             icon={UserGroupIcon}
             strokeWidth={2}
-            className="size-4"
           />
           Social Media
         </CardTitle>
@@ -42,15 +42,15 @@ export function SocialSection({
           const platform = SOCIAL_PLATFORMS[i]
           return (
             <SocialRow
-              key={platform}
-              platform={platform}
-              name={name}
-              isLoading={query.isLoading}
               data={query.data}
+              isLoading={query.isLoading}
+              key={platform}
+              name={name}
+              platform={platform}
             />
           )
         })}
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-muted-foreground text-xs">
           Results may be inaccurate. Click to verify.
         </p>
       </CardContent>
@@ -80,23 +80,23 @@ function SocialRow({
 
   const profileUrl =
     data?.profileUrl ??
-    `https://${platform === 'twitter' ? 'x.com' : platform + '.com'}/${name}`
+    `https://${platform === 'twitter' ? 'x.com' : `${platform}.com`}/${name}`
 
   return (
     <a
-      href={profileUrl}
-      target="_blank"
-      rel="noopener noreferrer"
       className={cn(
         'flex items-center justify-between gap-2 rounded-md border p-2 transition-colors hover:bg-muted/50',
-        statusRowClassName(data?.status),
+        statusRowClassName(data?.status)
       )}
+      href={profileUrl}
+      rel="noopener noreferrer"
+      target="_blank"
     >
       <div className="flex items-center gap-1.5">
-        <span className="text-xs font-medium">
+        <span className="font-medium text-xs">
           {PLATFORM_DISPLAY[platform]}
         </span>
-        <span className="text-xs text-muted-foreground">@{name}</span>
+        <span className="text-muted-foreground text-xs">@{name}</span>
       </div>
       {data && <StatusIndicator status={data.status} />}
     </a>

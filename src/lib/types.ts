@@ -1,19 +1,22 @@
 export type AvailabilityStatus = 'available' | 'taken' | 'unknown' | 'error'
 
-export type DictionaryPhonetic = { text?: string; audio?: string }
-export type DictionaryDefinition = {
+export interface DictionaryPhonetic {
+  text?: string
+  audio?: string
+}
+export interface DictionaryDefinition {
   definition: string
   example?: string
   synonyms: string[]
   antonyms: string[]
 }
-export type DictionaryMeaning = {
+export interface DictionaryMeaning {
   partOfSpeech: string
   definitions: DictionaryDefinition[]
   synonyms: string[]
   antonyms: string[]
 }
-export type DictionaryResult = {
+export interface DictionaryResult {
   found: boolean
   word: string
   phonetic?: string
@@ -21,7 +24,7 @@ export type DictionaryResult = {
   meanings: DictionaryMeaning[]
   sourceUrl?: string
 }
-export type UrbanDictionaryEntry = {
+export interface UrbanDictionaryEntry {
   word: string
   definition: string
   example: string
@@ -30,14 +33,14 @@ export type UrbanDictionaryEntry = {
   author: string
   permalink: string
 }
-export type UrbanDictionaryResult = {
+export interface UrbanDictionaryResult {
   found: boolean
   entries: UrbanDictionaryEntry[]
 }
 
 export const TLDS = ['com', 'dev', 'app', 'net', 'org', 'ai'] as const
 export type TLD = (typeof TLDS)[number]
-export type DomainCheck = {
+export interface DomainCheck {
   tld: string
   domain: string
   status: AvailabilityStatus
@@ -59,7 +62,7 @@ export const SOCIAL_PLATFORMS: readonly SocialPlatform[] = [
   'youtube',
   'facebook',
 ] as const
-export type SocialCheck = {
+export interface SocialCheck {
   platform: SocialPlatform
   handle: string
   profileUrl: string
@@ -74,14 +77,14 @@ export const PACKAGE_REGISTRIES: readonly PackageRegistry[] = [
   'homebrew',
   'apt',
 ] as const
-export type PackageCheck = {
+export interface PackageCheck {
   registry: PackageRegistry
   name: string
   status: AvailabilityStatus
   url: string
 }
 
-export type GitHubUserCheck = {
+export interface GitHubUserCheck {
   name: string
   status: AvailabilityStatus
   type?: 'User' | 'Org'
@@ -92,7 +95,7 @@ export type GitHubUserCheck = {
   publicRepos?: number
   followers?: number
 }
-export type GitHubRepo = {
+export interface GitHubRepo {
   name: string
   fullName: string
   description?: string
@@ -101,9 +104,12 @@ export type GitHubRepo = {
   htmlUrl: string
   language?: string
 }
-export type GitHubReposResult = { totalCount: number; repos: GitHubRepo[] }
+export interface GitHubReposResult {
+  totalCount: number
+  repos: GitHubRepo[]
+}
 
-export type VibeCheckResult = {
+export interface VibeCheckResult {
   positivity: number
   vibe: 'positive' | 'neutral' | 'negative'
   reason: string
