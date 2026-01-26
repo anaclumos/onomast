@@ -27,7 +27,7 @@ export const checkSocialHandle = createServerFn({ method: 'GET' })
         signal: AbortSignal.timeout(8000),
         headers: {
           'User-Agent':
-            'Mozilla/5.0 (compatible; Onomast/1.0; +https://onomast.dev)',
+            'Mozilla/5.0 (compatible; Onomast/1.0; +https://onomast.app)',
         },
       })
 

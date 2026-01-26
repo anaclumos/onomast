@@ -65,7 +65,7 @@ function RedditComment({ take }: { take: string }) {
       {/* Comment body */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5">
-          <span className="text-xs font-medium">u/definitely_not_ai</span>
+          <span className="text-xs font-medium">u/onomast</span>
           <span className="text-xs text-muted-foreground">&middot; 2h</span>
         </div>
         <p className="text-xs leading-relaxed">{take}</p>
