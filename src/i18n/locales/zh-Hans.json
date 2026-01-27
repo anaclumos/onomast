@@ -37,6 +37,8 @@
     "description": "在全网检查名称可用性",
     "namePlaceholder": "公司名称",
     "descriptionPlaceholder": "你的公司做什么？（有助于AI氛围检查）",
+    "latinNameHint": "请输入用于域名和用户名的拉丁字母版本",
+    "latinNamePlaceholder": "拉丁字母版本（如拼音）",
     "hint": "检查域名、社交、包管理器等",
     "submit": "检查"
   },

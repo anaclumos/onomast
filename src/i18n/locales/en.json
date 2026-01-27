@@ -37,6 +37,8 @@
     "description": "Check name availability across the internet",
     "namePlaceholder": "Company name",
     "descriptionPlaceholder": "What does your company do? (helps the AI vibe check)",
+    "latinNameHint": "Enter a Latin version for domains & usernames",
+    "latinNamePlaceholder": "Latin version (e.g. romanized spelling)",
     "hint": "Checks domains, socials, packages & more",
     "submit": "Check"
   },

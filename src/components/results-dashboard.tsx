@@ -20,14 +20,23 @@ export function ResultsDashboard({
   description,
   region,
   language,
+  latinName,
 }: {
   name: string
   description: string
   region: string
   language: string
+  latinName: string
 }) {
   const { locale } = useTranslation()
-  const results = useNameCheck(name, description, region, language, locale)
+  const results = useNameCheck(
+    name,
+    description,
+    region,
+    language,
+    locale,
+    latinName
+  )
 
   if (!name) {
     return null
@@ -54,23 +63,26 @@ export function ResultsDashboard({
         <UrbanDictionarySection urbanDictionary={results.urbanDictionary} />
       </WidgetCard>
       <WidgetCard>
-        <DomainsSection domains={results.domains} name={name} />
+        <DomainsSection domains={results.domains} name={results.handleName} />
       </WidgetCard>
       <WidgetCard>
-        <SocialSection name={name} social={results.social} />
+        <SocialSection name={results.handleName} social={results.social} />
       </WidgetCard>
       <WidgetCard>
-        <PackagesSection name={name} packages={results.packages} />
+        <PackagesSection
+          name={results.handleName}
+          packages={results.packages}
+        />
       </WidgetCard>
       <WidgetCard>
         <GitHubSection
           githubRepos={results.githubRepos}
           githubUser={results.githubUser}
-          name={name}
+          name={results.handleName}
         />
       </WidgetCard>
       <WidgetCard>
-        <ExternalLinksSection name={name} />
+        <ExternalLinksSection name={results.handleName} />
       </WidgetCard>
     </div>
   )

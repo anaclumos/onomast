@@ -4,7 +4,7 @@ import {
   Search01Icon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -24,6 +24,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { useTranslation } from '@/i18n/context'
+import { hasNonLatinCharacters } from '@/lib/utils'
 
 const REGIONS = [
   'Global',
@@ -63,6 +64,7 @@ export function SearchForm({
   defaultDescription = '',
   defaultRegion = '',
   defaultLanguage = '',
+  defaultLatinName = '',
   showDescription = true,
   onSearch,
 }: {
@@ -70,12 +72,14 @@ export function SearchForm({
   defaultDescription?: string
   defaultRegion?: string
   defaultLanguage?: string
+  defaultLatinName?: string
   showDescription?: boolean
   onSearch: (
     name: string,
     description: string,
     region: string,
-    language: string
+    language: string,
+    latinName: string
   ) => void
 }) {
   const { t } = useTranslation()
@@ -84,6 +88,8 @@ export function SearchForm({
   const [description, setDescription] = useState(defaultDescription)
   const [region, setRegion] = useState(defaultRegion)
   const [language, setLanguage] = useState(defaultLanguage)
+  const [latinName, setLatinName] = useState(defaultLatinName)
+  const isNonLatin = useMemo(() => hasNonLatinCharacters(name), [name])
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -100,10 +106,11 @@ export function SearchForm({
   const submitForm = useCallback(() => {
     const trimmed = name.trim().toLowerCase()
     if (trimmed) {
-      onSearch(trimmed, description.trim(), region, language)
+      const trimmedLatin = latinName.trim().toLowerCase()
+      onSearch(trimmed, description.trim(), region, language, trimmedLatin)
       setOpen(false)
     }
-  }, [name, description, region, language, onSearch])
+  }, [name, latinName, description, region, language, onSearch])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -157,6 +164,24 @@ export function SearchForm({
                 value={name}
               />
             </div>
+
+            {isNonLatin && (
+              <>
+                <Separator />
+                <div className="px-4 py-3">
+                  <p className="mb-1.5 text-muted-foreground text-xs">
+                    {t('search.latinNameHint')}
+                  </p>
+                  <Input
+                    className="border-0 bg-transparent px-0 font-medium text-sm shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
+                    onChange={(e) => setLatinName(e.target.value)}
+                    onKeyDown={handleFormKeyDown}
+                    placeholder={t('search.latinNamePlaceholder')}
+                    value={latinName}
+                  />
+                </div>
+              </>
+            )}
 
             {showDescription && (
               <>

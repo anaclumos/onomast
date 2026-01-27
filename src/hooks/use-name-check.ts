@@ -22,9 +22,11 @@ export function useNameCheck(
   description = '',
   region = '',
   language = '',
-  locale = 'en'
+  locale = 'en',
+  latinName = ''
 ) {
   const enabled = name.length > 0
+  const handleName = latinName || name
 
   const dictionary = useQuery({
     queryKey: ['dictionary', name],
@@ -39,101 +41,103 @@ export function useNameCheck(
   })
 
   const domainCom = useQuery({
-    queryKey: ['domain', name, 'com'],
-    queryFn: () => checkDomain({ data: { name, tld: 'com' } }),
+    queryKey: ['domain', handleName, 'com'],
+    queryFn: () => checkDomain({ data: { name: handleName, tld: 'com' } }),
     enabled,
   })
   const domainDev = useQuery({
-    queryKey: ['domain', name, 'dev'],
-    queryFn: () => checkDomain({ data: { name, tld: 'dev' } }),
+    queryKey: ['domain', handleName, 'dev'],
+    queryFn: () => checkDomain({ data: { name: handleName, tld: 'dev' } }),
     enabled,
   })
   const domainApp = useQuery({
-    queryKey: ['domain', name, 'app'],
-    queryFn: () => checkDomain({ data: { name, tld: 'app' } }),
+    queryKey: ['domain', handleName, 'app'],
+    queryFn: () => checkDomain({ data: { name: handleName, tld: 'app' } }),
     enabled,
   })
   const domainNet = useQuery({
-    queryKey: ['domain', name, 'net'],
-    queryFn: () => checkDomain({ data: { name, tld: 'net' } }),
+    queryKey: ['domain', handleName, 'net'],
+    queryFn: () => checkDomain({ data: { name: handleName, tld: 'net' } }),
     enabled,
   })
   const domainOrg = useQuery({
-    queryKey: ['domain', name, 'org'],
-    queryFn: () => checkDomain({ data: { name, tld: 'org' } }),
+    queryKey: ['domain', handleName, 'org'],
+    queryFn: () => checkDomain({ data: { name: handleName, tld: 'org' } }),
     enabled,
   })
   const domainAi = useQuery({
-    queryKey: ['domain', name, 'ai'],
-    queryFn: () => checkDomain({ data: { name, tld: 'ai' } }),
+    queryKey: ['domain', handleName, 'ai'],
+    queryFn: () => checkDomain({ data: { name: handleName, tld: 'ai' } }),
     enabled,
   })
 
   const socialInstagram = useQuery({
-    queryKey: ['social', name, 'instagram'],
+    queryKey: ['social', handleName, 'instagram'],
     queryFn: () =>
-      checkSocialHandle({ data: { platform: 'instagram', handle: name } }),
+      checkSocialHandle({
+        data: { platform: 'instagram', handle: handleName },
+      }),
     enabled,
   })
   const socialTwitter = useQuery({
-    queryKey: ['social', name, 'twitter'],
+    queryKey: ['social', handleName, 'twitter'],
     queryFn: () =>
-      checkSocialHandle({ data: { platform: 'twitter', handle: name } }),
+      checkSocialHandle({ data: { platform: 'twitter', handle: handleName } }),
     enabled,
   })
   const socialTiktok = useQuery({
-    queryKey: ['social', name, 'tiktok'],
+    queryKey: ['social', handleName, 'tiktok'],
     queryFn: () =>
-      checkSocialHandle({ data: { platform: 'tiktok', handle: name } }),
+      checkSocialHandle({ data: { platform: 'tiktok', handle: handleName } }),
     enabled,
   })
   const socialYoutube = useQuery({
-    queryKey: ['social', name, 'youtube'],
+    queryKey: ['social', handleName, 'youtube'],
     queryFn: () =>
-      checkSocialHandle({ data: { platform: 'youtube', handle: name } }),
+      checkSocialHandle({ data: { platform: 'youtube', handle: handleName } }),
     enabled,
   })
   const socialFacebook = useQuery({
-    queryKey: ['social', name, 'facebook'],
+    queryKey: ['social', handleName, 'facebook'],
     queryFn: () =>
-      checkSocialHandle({ data: { platform: 'facebook', handle: name } }),
+      checkSocialHandle({ data: { platform: 'facebook', handle: handleName } }),
     enabled,
   })
 
   const pkgNpm = useQuery({
-    queryKey: ['package', name, 'npm'],
-    queryFn: () => checkNpm({ data: { name } }),
+    queryKey: ['package', handleName, 'npm'],
+    queryFn: () => checkNpm({ data: { name: handleName } }),
     enabled,
   })
   const pkgCrates = useQuery({
-    queryKey: ['package', name, 'crates'],
-    queryFn: () => checkCrates({ data: { name } }),
+    queryKey: ['package', handleName, 'crates'],
+    queryFn: () => checkCrates({ data: { name: handleName } }),
     enabled,
   })
   const pkgGo = useQuery({
-    queryKey: ['package', name, 'go'],
-    queryFn: () => checkGolang({ data: { name } }),
+    queryKey: ['package', handleName, 'go'],
+    queryFn: () => checkGolang({ data: { name: handleName } }),
     enabled,
   })
   const pkgHomebrew = useQuery({
-    queryKey: ['package', name, 'homebrew'],
-    queryFn: () => checkHomebrew({ data: { name } }),
+    queryKey: ['package', handleName, 'homebrew'],
+    queryFn: () => checkHomebrew({ data: { name: handleName } }),
     enabled,
   })
   const pkgApt = useQuery({
-    queryKey: ['package', name, 'apt'],
-    queryFn: () => checkApt({ data: { name } }),
+    queryKey: ['package', handleName, 'apt'],
+    queryFn: () => checkApt({ data: { name: handleName } }),
     enabled,
   })
 
   const githubUser = useQuery({
-    queryKey: ['github-user', name],
-    queryFn: () => checkGitHubUser({ data: { name } }),
+    queryKey: ['github-user', handleName],
+    queryFn: () => checkGitHubUser({ data: { name: handleName } }),
     enabled,
   })
   const githubRepos = useQuery({
-    queryKey: ['github-repos', name],
-    queryFn: () => searchGitHubRepos({ data: { name } }),
+    queryKey: ['github-repos', handleName],
+    queryFn: () => searchGitHubRepos({ data: { name: handleName } }),
     enabled,
   })
 
@@ -159,5 +163,6 @@ export function useNameCheck(
     githubUser,
     githubRepos,
     vibeCheck,
+    handleName,
   }
 }

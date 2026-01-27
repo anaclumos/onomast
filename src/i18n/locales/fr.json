@@ -37,6 +37,8 @@
     "description": "Vérifie la disponibilité du nom sur internet",
     "namePlaceholder": "Nom d'entreprise",
     "descriptionPlaceholder": "Que fait ton entreprise ? (aide le vibe check IA)",
+    "latinNameHint": "Entrez une version en caractères latins pour les domaines et noms d'utilisateur",
+    "latinNamePlaceholder": "Version latine (ex: écriture romanisée)",
     "hint": "Vérifie domaines, réseaux sociaux, paquets et plus",
     "submit": "Vérifier"
   },

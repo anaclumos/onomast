@@ -37,6 +37,8 @@
     "description": "在全網檢查名稱可用性",
     "namePlaceholder": "公司名稱",
     "descriptionPlaceholder": "你的公司做什麼？（有助於AI氛圍檢查）",
+    "latinNameHint": "請輸入用於網域和使用者名稱的拉丁字母版本",
+    "latinNamePlaceholder": "拉丁字母版本（如拼音）",
     "hint": "檢查網域、社群、套件管理器等",
     "submit": "檢查"
   },

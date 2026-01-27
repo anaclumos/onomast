@@ -72,7 +72,8 @@ function HomePage() {
     newName: string,
     newDescription: string,
     newRegion: string,
-    newLanguage: string
+    newLanguage: string,
+    newLatinName: string
   ) => {
     navigate({
       to: '/$name',
@@ -81,6 +82,7 @@ function HomePage() {
         description: newDescription || undefined,
         region: newRegion || undefined,
         language: newLanguage || undefined,
+        latinName: newLatinName || undefined,
       },
     })
   }

@@ -8,6 +8,7 @@ const searchSchema = z.object({
   description: z.string().optional(),
   region: z.string().optional(),
   language: z.string().optional(),
+  latinName: z.string().optional(),
 })
 
 export const Route = createFileRoute('/$name')({
@@ -44,14 +45,15 @@ export const Route = createFileRoute('/$name')({
 
 function NamePage() {
   const { name } = Route.useParams()
-  const { description, region, language } = Route.useSearch()
+  const { description, region, language, latinName } = Route.useSearch()
   const navigate = useNavigate()
 
   const handleSearch = (
     newName: string,
     newDescription: string,
     newRegion: string,
-    newLanguage: string
+    newLanguage: string,
+    newLatinName: string
   ) => {
     navigate({
       to: '/$name',
@@ -60,6 +62,7 @@ function NamePage() {
         description: newDescription || undefined,
         region: newRegion || undefined,
         language: newLanguage || undefined,
+        latinName: newLatinName || undefined,
       },
     })
   }
@@ -79,9 +82,16 @@ function NamePage() {
           <SearchForm
             defaultDescription={description}
             defaultLanguage={language}
+            defaultLatinName={latinName}
             defaultName={name}
             defaultRegion={region}
-            key={name + (description ?? '') + (region ?? '') + (language ?? '')}
+            key={
+              name +
+              (description ?? '') +
+              (region ?? '') +
+              (language ?? '') +
+              (latinName ?? '')
+            }
             onSearch={handleSearch}
             showDescription={!!(description || region || language)}
           />
@@ -91,6 +101,7 @@ function NamePage() {
         <ResultsDashboard
           description={description ?? ''}
           language={language ?? ''}
+          latinName={latinName ?? ''}
           name={name}
           region={region ?? ''}
         />

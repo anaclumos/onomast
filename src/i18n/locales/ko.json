@@ -37,6 +37,8 @@
     "description": "인터넷 전체에서 이름을 사용할 수 있는지 확인해 보세요",
     "namePlaceholder": "회사 이름",
     "descriptionPlaceholder": "회사가 무엇을 하나요? (AI 느좋 테스트에 도움이 돼요)",
+    "latinNameHint": "도메인 및 사용자명에 사용할 영문 이름을 입력하세요",
+    "latinNamePlaceholder": "영문 이름 (예: 로마자 표기)",
     "hint": "도메인, 소셜, 패키지 등을 확인해요",
     "submit": "확인"
   },

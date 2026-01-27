@@ -37,6 +37,8 @@
     "description": "Prüfe die Namensverfügbarkeit im Internet",
     "namePlaceholder": "Firmenname",
     "descriptionPlaceholder": "Was macht dein Unternehmen? (hilft beim KI Vibe Check)",
+    "latinNameHint": "Gib eine lateinische Version für Domains und Benutzernamen ein",
+    "latinNamePlaceholder": "Lateinische Version (z.B. romanisierte Schreibweise)",
     "hint": "Prüft Domains, Social Media, Pakete und mehr",
     "submit": "Prüfen"
   },

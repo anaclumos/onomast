@@ -37,6 +37,8 @@
     "description": "インターネット全体で名前が使えるか確認",
     "namePlaceholder": "会社名",
     "descriptionPlaceholder": "会社は何をしていますか？（AIバイブチェックに役立ちます）",
+    "latinNameHint": "ドメインやユーザー名用のローマ字表記を入力してください",
+    "latinNamePlaceholder": "ローマ字表記（例：ローマ字読み）",
     "hint": "ドメイン、ソーシャル、パッケージなどをチェック",
     "submit": "チェック"
   },
