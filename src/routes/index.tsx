@@ -138,7 +138,7 @@ function HomePage() {
             <p className="mb-10 text-center font-medium text-muted-foreground text-xs uppercase tracking-widest">
               Everything checked in one search
             </p>
-            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border md:grid-cols-4">
+            <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 md:grid-cols-4">
               {features.map((feature) => (
                 <div
                   className="flex flex-col gap-2 bg-background p-5 transition-colors hover:bg-muted/40"

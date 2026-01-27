@@ -1,4 +1,3 @@
-- Always work in Git Worktree.
 - Ignore all LSP errors.
 - Always use CLI to install stuff, so that you install the latest one.
 - Use `env.ts` file with Zod to get type-safe environment variables.
