@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: 회사 이름 느좋 테스트",
+    "description": "도메인, 소셜 핸들, 패키지 레지스트리 등을 한번에 검색하세요",
+    "ogDescription": "{name} 느좋 테스트: 도메인, 소셜 핸들, 패키지 레지스트리 등"
+  },
+  "home": {
+    "badge": "네임 인텔리전스 플랫폼",
+    "heading": "다음 회사 이름을",
+    "headingHighlight": "느좋 테스트하세요",
+    "subheading": "도메인, 소셜 핸들, 패키지 레지스트리, 상표, AI 분석까지, 한 번의 검색으로 모두 확인하세요.",
+    "searchPlaceholder": "회사 이름 검색...",
+    "featuresHeading": "한 번의 검색으로 모두 확인",
+    "footer": "창업자, 개발자, 이름에 집착하는 모든 분을 위해.",
+    "footerGithub": "GitHub에서 오픈 소스"
+  },
+  "features": {
+    "domains": "도메인",
+    "domainsDescription": ".com, .io, .dev, .app, .org 등",
+    "socialHandles": "소셜 핸들",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "패키지 레지스트리",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "사용자명 및 레포지토리 가용성",
+    "aiVibeCheck": "AI 느좋 테스트",
+    "aiVibeCheckDescription": "AI 기반 이름 평가 및 장단점 분석",
+    "dictionary": "사전",
+    "dictionaryDescription": "사전 정의 및 Urban Dictionary 항목",
+    "similarCompanies": "유사 회사",
+    "similarCompaniesDescription": "비슷한 이름의 기존 회사",
+    "trademarks": "상표",
+    "trademarksDescription": "USPTO 상표 및 기업 레지스트리 검색"
+  },
+  "search": {
+    "title": "검색",
+    "description": "인터넷 전체에서 이름을 사용할 수 있는지 확인해 보세요",
+    "namePlaceholder": "회사 이름",
+    "descriptionPlaceholder": "회사가 무엇을 하나요? (AI 느좋 테스트에 도움이 돼요)",
+    "hint": "도메인, 소셜, 패키지 등을 확인해요",
+    "submit": "확인"
+  },
+  "status": {
+    "available": "사용 가능",
+    "taken": "사용 중",
+    "unknown": "미확인",
+    "error": "오류"
+  },
+  "widget": {
+    "details": "상세"
+  },
+  "sections": {
+    "vibeScore": "느좋 점수",
+    "prosCons": "장점 & 단점",
+    "redditTake": "Reddit 반응",
+    "nameNeighborhood": "이름 이웃",
+    "wordMeaning": "단어 의미",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "도메인",
+    "socialMedia": "소셜 미디어",
+    "packageRegistries": "패키지 레지스트리",
+    "github": "GitHub",
+    "trademarkBusiness": "상표 & 기업"
+  },
+  "vibe": {
+    "unavailable": "AI 느좋 테스트를 사용할 수 없어요.",
+    "proConsUnavailable": "사용할 수 없어요.",
+    "theGood": "장점",
+    "theBad": "단점",
+    "positivity": "긍정도",
+    "chefsKiss": "완벽",
+    "solidPick": "확실한 선택",
+    "meh": "그저 그러함",
+    "yikes": "별로",
+    "deadOnArrival": "망했어요"
+  },
+  "dictionary": {
+    "noDefinition": "사전 정의를 찾을 수 없어요."
+  },
+  "urban": {
+    "noEntries": "항목을 찾을 수 없어요. 인터넷에 없는 순수한 단어네요."
+  },
+  "reddit": {
+    "offline": "Reddit 하이브마인드가 오프라인이에요.",
+    "reply": "답글",
+    "share": "공유",
+    "report": "신고"
+  },
+  "neighborhood": {
+    "error": "이웃을 탐색할 수 없었어요.",
+    "intro": "같은 블록에 사는 회사들:"
+  },
+  "social": {
+    "disclaimer": "결과가 정확하지 않을 수 있어요. 클릭해서 확인해 보세요."
+  },
+  "github": {
+    "relatedRepos": "관련 레포",
+    "repos": "레포",
+    "followers": "팔로워"
+  },
+  "external": {
+    "description": "외부 데이터베이스 수동 검색",
+    "usptoTitle": "USPTO 상표 검색",
+    "usptoDescription": "미국 상표 데이터베이스에서 \"{name}\" 검색",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "전 세계 기업 레지스트리에서 \"{name}\" 검색"
+  },
+  "language": {
+    "label": "언어"
+  }
+}

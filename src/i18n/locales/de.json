@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: Vibe Check für deinen Firmennamen",
+    "description": "Suche nach Domains, Social-Media-Handles, Paketregistern und mehr",
+    "ogDescription": "Vibe Check für {name}: Domain-Verfügbarkeit, Social-Media-Handles, Paketregister und mehr"
+  },
+  "home": {
+    "badge": "Namens-Intelligenz-Plattform",
+    "heading": "Mach einen Vibe Check für",
+    "headingHighlight": "deinen nächsten Firmennamen",
+    "subheading": "Prüfe Domain-Verfügbarkeit, Social-Media-Handles, Paketregister, Marken und erhalte eine KI-gestützte Namensanalyse, alles in einer Suche.",
+    "searchPlaceholder": "Firmennamen suchen...",
+    "featuresHeading": "Alles in einer Suche geprüft",
+    "footer": "Entwickelt für Gründer, Entwickler und Namens-Besessene.",
+    "footerGithub": "Open Source auf GitHub"
+  },
+  "features": {
+    "domains": "Domains",
+    "domainsDescription": ".com, .io, .dev, .app, .org und mehr",
+    "socialHandles": "Social-Media-Handles",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "Paketregister",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "Benutzername- und Repository-Verfügbarkeit",
+    "aiVibeCheck": "KI Vibe Check",
+    "aiVibeCheckDescription": "KI-gestützte Namensbewertung mit Vor- und Nachteilen",
+    "dictionary": "Wörterbuch",
+    "dictionaryDescription": "Echte Definitionen und Urban Dictionary-Einträge",
+    "similarCompanies": "Ähnliche Unternehmen",
+    "similarCompaniesDescription": "Bestehende Unternehmen mit ähnlichen Namen",
+    "trademarks": "Marken",
+    "trademarksDescription": "USPTO-Marken- und Unternehmensregistersuche"
+  },
+  "search": {
+    "title": "Suche",
+    "description": "Prüfe die Namensverfügbarkeit im Internet",
+    "namePlaceholder": "Firmenname",
+    "descriptionPlaceholder": "Was macht dein Unternehmen? (hilft beim KI Vibe Check)",
+    "hint": "Prüft Domains, Social Media, Pakete und mehr",
+    "submit": "Prüfen"
+  },
+  "status": {
+    "available": "Verfügbar",
+    "taken": "Belegt",
+    "unknown": "Unbekannt",
+    "error": "Fehler"
+  },
+  "widget": {
+    "details": "Details"
+  },
+  "sections": {
+    "vibeScore": "Vibe Score",
+    "prosCons": "Vor- & Nachteile",
+    "redditTake": "Reddit-Meinung",
+    "nameNeighborhood": "Namens-Nachbarschaft",
+    "wordMeaning": "Wortbedeutung",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "Domains",
+    "socialMedia": "Social Media",
+    "packageRegistries": "Paketregister",
+    "github": "GitHub",
+    "trademarkBusiness": "Marken & Unternehmen"
+  },
+  "vibe": {
+    "unavailable": "KI Vibe Check nicht verfügbar.",
+    "proConsUnavailable": "Leider nicht verfügbar.",
+    "theGood": "Das Gute",
+    "theBad": "Das Schlechte",
+    "positivity": "Positivität",
+    "chefsKiss": "Perfekt",
+    "solidPick": "Gute Wahl",
+    "meh": "Naja",
+    "yikes": "Autsch",
+    "deadOnArrival": "Hoffnungslos"
+  },
+  "dictionary": {
+    "noDefinition": "Keine Wörterbuchdefinition gefunden."
+  },
+  "urban": {
+    "noEntries": "Keine Einträge gefunden. Dieses Wort ist zu rein fürs Internet."
+  },
+  "reddit": {
+    "offline": "Der Reddit-Schwarm ist offline.",
+    "reply": "Antworten",
+    "share": "Teilen",
+    "report": "Melden"
+  },
+  "neighborhood": {
+    "error": "Konnte die Nachbarschaft nicht erkunden.",
+    "intro": "Unternehmen aus derselben Straße:"
+  },
+  "social": {
+    "disclaimer": "Ergebnisse können ungenau sein. Klicken zum Überprüfen."
+  },
+  "github": {
+    "relatedRepos": "Verwandte Repos",
+    "repos": "Repos",
+    "followers": "Follower"
+  },
+  "external": {
+    "description": "Manuelle Suche in externen Datenbanken",
+    "usptoTitle": "USPTO Markensuche",
+    "usptoDescription": "\"{name}\" in der US-Markendatenbank suchen",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "\"{name}\" in weltweiten Unternehmensregistern suchen"
+  },
+  "language": {
+    "label": "Sprache"
+  }
+}

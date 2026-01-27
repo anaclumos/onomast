@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: Vibe Check do nome da sua empresa",
+    "description": "Pesquise domínios, redes sociais, registros de pacotes e mais",
+    "ogDescription": "Vibe check de {name}: disponibilidade de domínios, redes sociais, registros de pacotes e mais"
+  },
+  "home": {
+    "badge": "Plataforma de inteligência de nomes",
+    "heading": "Faça um vibe check do",
+    "headingHighlight": "seu próximo nome de empresa",
+    "subheading": "Verifique a disponibilidade de domínios, redes sociais, registros de pacotes, marcas registradas e obtenha uma análise com IA, tudo em uma única pesquisa.",
+    "searchPlaceholder": "Pesquisar um nome de empresa...",
+    "featuresHeading": "Tudo verificado em uma única pesquisa",
+    "footer": "Feito para fundadores, desenvolvedores e obcecados por nomes.",
+    "footerGithub": "Código aberto no GitHub"
+  },
+  "features": {
+    "domains": "Domínios",
+    "domainsDescription": ".com, .io, .dev, .app, .org e mais",
+    "socialHandles": "Redes sociais",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "Registros de pacotes",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "Disponibilidade de usuário e repositório",
+    "aiVibeCheck": "AI Vibe Check",
+    "aiVibeCheckDescription": "Avaliação de nome com IA, prós e contras",
+    "dictionary": "Dicionário",
+    "dictionaryDescription": "Definições reais e entradas do Urban Dictionary",
+    "similarCompanies": "Empresas similares",
+    "similarCompaniesDescription": "Empresas existentes com nomes similares",
+    "trademarks": "Marcas registradas",
+    "trademarksDescription": "Busca no USPTO e registros empresariais"
+  },
+  "search": {
+    "title": "Pesquisar",
+    "description": "Verifique a disponibilidade do nome na internet",
+    "namePlaceholder": "Nome da empresa",
+    "descriptionPlaceholder": "O que sua empresa faz? (ajuda no vibe check com IA)",
+    "hint": "Verifica domínios, redes sociais, pacotes e mais",
+    "submit": "Verificar"
+  },
+  "status": {
+    "available": "Disponível",
+    "taken": "Ocupado",
+    "unknown": "Desconhecido",
+    "error": "Erro"
+  },
+  "widget": {
+    "details": "Detalhes"
+  },
+  "sections": {
+    "vibeScore": "Pontuação de vibe",
+    "prosCons": "Prós e contras",
+    "redditTake": "Opinião do Reddit",
+    "nameNeighborhood": "Vizinhança do nome",
+    "wordMeaning": "Significado",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "Domínios",
+    "socialMedia": "Redes sociais",
+    "packageRegistries": "Registros de pacotes",
+    "github": "GitHub",
+    "trademarkBusiness": "Marcas e empresas"
+  },
+  "vibe": {
+    "unavailable": "Vibe check com IA indisponível.",
+    "proConsUnavailable": "Não disponível no momento.",
+    "theGood": "O bom",
+    "theBad": "O ruim",
+    "positivity": "Positividade",
+    "chefsKiss": "Perfeito",
+    "solidPick": "Boa escolha",
+    "meh": "Meh",
+    "yikes": "Eita",
+    "deadOnArrival": "Sem esperança"
+  },
+  "dictionary": {
+    "noDefinition": "Nenhuma definição encontrada no dicionário."
+  },
+  "urban": {
+    "noEntries": "Nenhuma entrada encontrada. Essa palavra é pura demais para a internet."
+  },
+  "reddit": {
+    "offline": "A mente coletiva do Reddit está offline.",
+    "reply": "Responder",
+    "share": "Compartilhar",
+    "report": "Denunciar"
+  },
+  "neighborhood": {
+    "error": "Não foi possível explorar a vizinhança.",
+    "intro": "Empresas que moram na mesma rua:"
+  },
+  "social": {
+    "disclaimer": "Os resultados podem ser imprecisos. Clique para verificar."
+  },
+  "github": {
+    "relatedRepos": "Repos relacionados",
+    "repos": "repos",
+    "followers": "seguidores"
+  },
+  "external": {
+    "description": "Buscas manuais em bancos de dados externos",
+    "usptoTitle": "Busca de marcas USPTO",
+    "usptoDescription": "Pesquisar \"{name}\" no banco de dados de marcas dos EUA",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "Pesquisar \"{name}\" em registros empresariais do mundo todo"
+  },
+  "language": {
+    "label": "Idioma"
+  }
+}

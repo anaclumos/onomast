@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: 公司名称氛围检查",
+    "description": "一次搜索域名、社交账号、包管理器等",
+    "ogDescription": "{name} 氛围检查: 域名、社交账号、包管理器等"
+  },
+  "home": {
+    "badge": "名称智能平台",
+    "heading": "为你的下一个公司名",
+    "headingHighlight": "做个氛围检查",
+    "subheading": "检查域名可用性、社交账号、包管理器、商标，并获取AI名称分析，一次搜索全部搞定。",
+    "searchPlaceholder": "搜索公司名称...",
+    "featuresHeading": "一次搜索，全部检查",
+    "footer": "为创业者、开发者和所有注重命名的人而建。",
+    "footerGithub": "在GitHub上开源"
+  },
+  "features": {
+    "domains": "域名",
+    "domainsDescription": ".com, .io, .dev, .app, .org 等",
+    "socialHandles": "社交账号",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "包管理器",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "用户名和仓库可用性",
+    "aiVibeCheck": "AI氛围检查",
+    "aiVibeCheckDescription": "AI驱动的名称评分及优缺点分析",
+    "dictionary": "词典",
+    "dictionaryDescription": "词典定义和Urban Dictionary词条",
+    "similarCompanies": "类似公司",
+    "similarCompaniesDescription": "名称相似的现有公司",
+    "trademarks": "商标",
+    "trademarksDescription": "USPTO商标和企业注册搜索"
+  },
+  "search": {
+    "title": "搜索",
+    "description": "在全网检查名称可用性",
+    "namePlaceholder": "公司名称",
+    "descriptionPlaceholder": "你的公司做什么？（有助于AI氛围检查）",
+    "hint": "检查域名、社交、包管理器等",
+    "submit": "检查"
+  },
+  "status": {
+    "available": "可用",
+    "taken": "已占用",
+    "unknown": "未知",
+    "error": "错误"
+  },
+  "widget": {
+    "details": "详情"
+  },
+  "sections": {
+    "vibeScore": "氛围评分",
+    "prosCons": "优点 & 缺点",
+    "redditTake": "Reddit热评",
+    "nameNeighborhood": "名称邻居",
+    "wordMeaning": "词义",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "域名",
+    "socialMedia": "社交媒体",
+    "packageRegistries": "包管理器",
+    "github": "GitHub",
+    "trademarkBusiness": "商标 & 企业"
+  },
+  "vibe": {
+    "unavailable": "AI氛围检查不可用。",
+    "proConsUnavailable": "暂时没法用。",
+    "theGood": "优点",
+    "theBad": "缺点",
+    "positivity": "积极度",
+    "chefsKiss": "完美",
+    "solidPick": "不错的选择",
+    "meh": "一般",
+    "yikes": "糟糕",
+    "deadOnArrival": "彻底失败"
+  },
+  "dictionary": {
+    "noDefinition": "未找到词典定义。"
+  },
+  "urban": {
+    "noEntries": "未找到词条。这个词太纯洁了，互联网上找不到。"
+  },
+  "reddit": {
+    "offline": "Reddit集体智慧已离线。",
+    "reply": "回复",
+    "share": "分享",
+    "report": "举报"
+  },
+  "neighborhood": {
+    "error": "没能找到相似的公司。",
+    "intro": "住在同一条街上的公司："
+  },
+  "social": {
+    "disclaimer": "结果可能不太准，点击确认一下。"
+  },
+  "github": {
+    "relatedRepos": "相关仓库",
+    "repos": "仓库",
+    "followers": "关注者"
+  },
+  "external": {
+    "description": "外部数据库手动搜索",
+    "usptoTitle": "USPTO商标搜索",
+    "usptoDescription": "在美国商标数据库中搜索\"{name}\"",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "在全球企业注册库中搜索\"{name}\""
+  },
+  "language": {
+    "label": "语言"
+  }
+}

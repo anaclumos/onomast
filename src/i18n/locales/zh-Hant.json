@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: 公司名稱氛圍檢查",
+    "description": "一次搜尋網域、社群帳號、套件管理器等",
+    "ogDescription": "{name} 氛圍檢查: 網域、社群帳號、套件管理器等"
+  },
+  "home": {
+    "badge": "名稱智慧平台",
+    "heading": "為你的下一個公司名",
+    "headingHighlight": "做個氛圍檢查",
+    "subheading": "檢查網域可用性、社群帳號、套件管理器、商標，並取得AI名稱分析，一次搜尋全部搞定。",
+    "searchPlaceholder": "搜尋公司名稱...",
+    "featuresHeading": "一次搜尋，全部檢查",
+    "footer": "為創業者、開發者和所有注重命名的人而建。",
+    "footerGithub": "在GitHub上開源"
+  },
+  "features": {
+    "domains": "網域",
+    "domainsDescription": ".com, .io, .dev, .app, .org 等",
+    "socialHandles": "社群帳號",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "套件管理器",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "使用者名稱和儲存庫可用性",
+    "aiVibeCheck": "AI氛圍檢查",
+    "aiVibeCheckDescription": "AI驅動的名稱評分及優缺點分析",
+    "dictionary": "辭典",
+    "dictionaryDescription": "辭典定義和Urban Dictionary詞條",
+    "similarCompanies": "類似公司",
+    "similarCompaniesDescription": "名稱相似的現有公司",
+    "trademarks": "商標",
+    "trademarksDescription": "USPTO商標和企業註冊搜尋"
+  },
+  "search": {
+    "title": "搜尋",
+    "description": "在全網檢查名稱可用性",
+    "namePlaceholder": "公司名稱",
+    "descriptionPlaceholder": "你的公司做什麼？（有助於AI氛圍檢查）",
+    "hint": "檢查網域、社群、套件管理器等",
+    "submit": "檢查"
+  },
+  "status": {
+    "available": "可用",
+    "taken": "已佔用",
+    "unknown": "未知",
+    "error": "錯誤"
+  },
+  "widget": {
+    "details": "詳情"
+  },
+  "sections": {
+    "vibeScore": "氛圍評分",
+    "prosCons": "優點 & 缺點",
+    "redditTake": "Reddit熱評",
+    "nameNeighborhood": "名稱鄰居",
+    "wordMeaning": "詞義",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "網域",
+    "socialMedia": "社群媒體",
+    "packageRegistries": "套件管理器",
+    "github": "GitHub",
+    "trademarkBusiness": "商標 & 企業"
+  },
+  "vibe": {
+    "unavailable": "AI氛圍檢查不可用。",
+    "proConsUnavailable": "暫時沒辦法用。",
+    "theGood": "優點",
+    "theBad": "缺點",
+    "positivity": "積極度",
+    "chefsKiss": "完美",
+    "solidPick": "不錯的選擇",
+    "meh": "普通",
+    "yikes": "糟糕",
+    "deadOnArrival": "徹底失敗"
+  },
+  "dictionary": {
+    "noDefinition": "未找到辭典定義。"
+  },
+  "urban": {
+    "noEntries": "未找到詞條。這個詞太純潔了，網路上找不到。"
+  },
+  "reddit": {
+    "offline": "Reddit集體智慧已離線。",
+    "reply": "回覆",
+    "share": "分享",
+    "report": "檢舉"
+  },
+  "neighborhood": {
+    "error": "沒能找到相似的公司。",
+    "intro": "住在同一條街上的公司："
+  },
+  "social": {
+    "disclaimer": "結果可能不太準，點擊確認一下。"
+  },
+  "github": {
+    "relatedRepos": "相關儲存庫",
+    "repos": "儲存庫",
+    "followers": "追蹤者"
+  },
+  "external": {
+    "description": "外部資料庫手動搜尋",
+    "usptoTitle": "USPTO商標搜尋",
+    "usptoDescription": "在美國商標資料庫中搜尋\"{name}\"",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "在全球企業註冊庫中搜尋\"{name}\""
+  },
+  "language": {
+    "label": "語言"
+  }
+}

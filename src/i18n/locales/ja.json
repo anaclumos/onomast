@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: 会社名バイブチェック",
+    "description": "ドメイン、ソーシャルハンドル、パッケージレジストリなどをまとめて検索",
+    "ogDescription": "{name} のバイブチェック: ドメイン、ソーシャルハンドル、パッケージレジストリなど"
+  },
+  "home": {
+    "badge": "ネームインテリジェンスプラットフォーム",
+    "heading": "次の会社名を",
+    "headingHighlight": "バイブチェック",
+    "subheading": "ドメイン、ソーシャルハンドル、パッケージレジストリ、商標、AI分析まで、一度の検索ですべて確認。",
+    "searchPlaceholder": "会社名を検索...",
+    "featuresHeading": "一度の検索ですべて確認",
+    "footer": "起業家、開発者、ネーミングにこだわるすべての人へ。",
+    "footerGithub": "GitHubでオープンソース"
+  },
+  "features": {
+    "domains": "ドメイン",
+    "domainsDescription": ".com, .io, .dev, .app, .org など",
+    "socialHandles": "ソーシャルハンドル",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "パッケージレジストリ",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "ユーザー名とリポジトリの空き状況",
+    "aiVibeCheck": "AIバイブチェック",
+    "aiVibeCheckDescription": "AIによる名前評価とメリット・デメリット",
+    "dictionary": "辞書",
+    "dictionaryDescription": "辞書の定義とUrban Dictionaryのエントリ",
+    "similarCompanies": "類似企業",
+    "similarCompaniesDescription": "似た名前の既存企業",
+    "trademarks": "商標",
+    "trademarksDescription": "USPTO商標および企業レジストリ検索"
+  },
+  "search": {
+    "title": "検索",
+    "description": "インターネット全体で名前が使えるか確認",
+    "namePlaceholder": "会社名",
+    "descriptionPlaceholder": "会社は何をしていますか？（AIバイブチェックに役立ちます）",
+    "hint": "ドメイン、ソーシャル、パッケージなどをチェック",
+    "submit": "チェック"
+  },
+  "status": {
+    "available": "利用可能",
+    "taken": "使用中",
+    "unknown": "不明",
+    "error": "エラー"
+  },
+  "widget": {
+    "details": "詳細"
+  },
+  "sections": {
+    "vibeScore": "バイブスコア",
+    "prosCons": "メリット & デメリット",
+    "redditTake": "Redditの反応",
+    "nameNeighborhood": "ネームのご近所",
+    "wordMeaning": "単語の意味",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "ドメイン",
+    "socialMedia": "ソーシャルメディア",
+    "packageRegistries": "パッケージレジストリ",
+    "github": "GitHub",
+    "trademarkBusiness": "商標 & 企業"
+  },
+  "vibe": {
+    "unavailable": "AIバイブチェックが利用できません。",
+    "proConsUnavailable": "利用できません。",
+    "theGood": "良い点",
+    "theBad": "悪い点",
+    "positivity": "ポジティブ度",
+    "chefsKiss": "最高",
+    "solidPick": "良い選択",
+    "meh": "微妙",
+    "yikes": "うーん",
+    "deadOnArrival": "絶望的"
+  },
+  "dictionary": {
+    "noDefinition": "辞書の定義が見つかりませんでした。"
+  },
+  "urban": {
+    "noEntries": "エントリが見つかりません。インターネットには純粋すぎる言葉です。"
+  },
+  "reddit": {
+    "offline": "Redditハイブマインドはオフラインです。",
+    "reply": "返信",
+    "share": "共有",
+    "report": "通報"
+  },
+  "neighborhood": {
+    "error": "近所を調査できませんでした。",
+    "intro": "同じブロックの企業:"
+  },
+  "social": {
+    "disclaimer": "結果が正確でないこともあります。クリックして確認してみてください。"
+  },
+  "github": {
+    "relatedRepos": "関連リポ",
+    "repos": "リポ",
+    "followers": "フォロワー"
+  },
+  "external": {
+    "description": "外部データベースの手動検索",
+    "usptoTitle": "USPTO商標検索",
+    "usptoDescription": "米国商標データベースで「{name}」を検索",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "世界中の企業レジストリで「{name}」を検索"
+  },
+  "language": {
+    "label": "言語"
+  }
+}

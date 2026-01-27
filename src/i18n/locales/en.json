@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: Vibe Check Your Company Name",
+    "description": "Search domains, social handles, package registries, and more",
+    "ogDescription": "Vibe check for {name}: domain availability, social handles, package registries & more"
+  },
+  "home": {
+    "badge": "Name intelligence platform",
+    "heading": "Vibe check your",
+    "headingHighlight": "next company name",
+    "subheading": "Check domain availability, social handles, package registries, trademarks, and get an AI-powered name analysis, all in one search.",
+    "searchPlaceholder": "Search a company name...",
+    "featuresHeading": "Everything checked in one search",
+    "footer": "Built for founders, developers, and the name-obsessed.",
+    "footerGithub": "Open source on GitHub"
+  },
+  "features": {
+    "domains": "Domains",
+    "domainsDescription": ".com, .io, .dev, .app, .org, and more",
+    "socialHandles": "Social Handles",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "Package Registries",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "Username and repository availability",
+    "aiVibeCheck": "AI Vibe Check",
+    "aiVibeCheckDescription": "AI-powered name rating with pros and cons",
+    "dictionary": "Dictionary",
+    "dictionaryDescription": "Real definitions and Urban Dictionary entries",
+    "similarCompanies": "Similar Companies",
+    "similarCompaniesDescription": "Existing companies with similar names",
+    "trademarks": "Trademarks",
+    "trademarksDescription": "USPTO trademark and business registry search"
+  },
+  "search": {
+    "title": "Search",
+    "description": "Check name availability across the internet",
+    "namePlaceholder": "Company name",
+    "descriptionPlaceholder": "What does your company do? (helps the AI vibe check)",
+    "hint": "Checks domains, socials, packages & more",
+    "submit": "Check"
+  },
+  "status": {
+    "available": "Available",
+    "taken": "Taken",
+    "unknown": "Unknown",
+    "error": "Error"
+  },
+  "widget": {
+    "details": "Details"
+  },
+  "sections": {
+    "vibeScore": "Vibe Score",
+    "prosCons": "Pros & Cons",
+    "redditTake": "Reddit Take",
+    "nameNeighborhood": "Name Neighborhood",
+    "wordMeaning": "Word Meaning",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "Domains",
+    "socialMedia": "Social Media",
+    "packageRegistries": "Package Registries",
+    "github": "GitHub",
+    "trademarkBusiness": "Trademark & Business"
+  },
+  "vibe": {
+    "unavailable": "AI vibe check unavailable.",
+    "proConsUnavailable": "Unavailable.",
+    "theGood": "The Good",
+    "theBad": "The Bad",
+    "positivity": "Positivity",
+    "chefsKiss": "Chef's Kiss",
+    "solidPick": "Solid Pick",
+    "meh": "Meh",
+    "yikes": "Yikes",
+    "deadOnArrival": "Dead on Arrival"
+  },
+  "dictionary": {
+    "noDefinition": "No dictionary definition found."
+  },
+  "urban": {
+    "noEntries": "No entries found. This word is too pure for the internet."
+  },
+  "reddit": {
+    "offline": "Reddit hivemind is offline.",
+    "reply": "Reply",
+    "share": "Share",
+    "report": "Report"
+  },
+  "neighborhood": {
+    "error": "Couldn't scout the neighborhood.",
+    "intro": "Companies that live on the same block:"
+  },
+  "social": {
+    "disclaimer": "Results may be inaccurate. Click to verify."
+  },
+  "github": {
+    "relatedRepos": "Related repos",
+    "repos": "repos",
+    "followers": "followers"
+  },
+  "external": {
+    "description": "Manual lookups on external databases",
+    "usptoTitle": "USPTO Trademark Search",
+    "usptoDescription": "Search for \"{name}\" in the US trademark database",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "Search for \"{name}\" across company registries worldwide"
+  },
+  "language": {
+    "label": "Language"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "onomast.app: Vérifie le vibe de ton nom d'entreprise",
+    "description": "Recherchez domaines, réseaux sociaux, registres de paquets et plus",
+    "ogDescription": "Vibe check de {name}: disponibilité des domaines, réseaux sociaux, registres de paquets et plus"
+  },
+  "home": {
+    "badge": "Plateforme d'intelligence de noms",
+    "heading": "Vérifie le vibe de",
+    "headingHighlight": "ton prochain nom d'entreprise",
+    "subheading": "Vérifie la disponibilité des domaines, réseaux sociaux, registres de paquets, marques déposées et obtiens une analyse IA, en une seule recherche.",
+    "searchPlaceholder": "Rechercher un nom d'entreprise...",
+    "featuresHeading": "Tout vérifié en une seule recherche",
+    "footer": "Conçu pour les fondateurs, développeurs et passionnés de naming.",
+    "footerGithub": "Open source sur GitHub"
+  },
+  "features": {
+    "domains": "Domaines",
+    "domainsDescription": ".com, .io, .dev, .app, .org et plus",
+    "socialHandles": "Réseaux sociaux",
+    "socialHandlesDescription": "Instagram, X, TikTok, YouTube, Facebook",
+    "packageRegistries": "Registres de paquets",
+    "packageRegistriesDescription": "npm, Crates.io, Go, Homebrew, Debian",
+    "github": "GitHub",
+    "githubDescription": "Disponibilité du nom d'utilisateur et des dépôts",
+    "aiVibeCheck": "AI Vibe Check",
+    "aiVibeCheckDescription": "Notation du nom par IA avec avantages et inconvénients",
+    "dictionary": "Dictionnaire",
+    "dictionaryDescription": "Définitions réelles et entrées Urban Dictionary",
+    "similarCompanies": "Entreprises similaires",
+    "similarCompaniesDescription": "Entreprises existantes avec des noms similaires",
+    "trademarks": "Marques déposées",
+    "trademarksDescription": "Recherche de marques USPTO et registres d'entreprises"
+  },
+  "search": {
+    "title": "Rechercher",
+    "description": "Vérifie la disponibilité du nom sur internet",
+    "namePlaceholder": "Nom d'entreprise",
+    "descriptionPlaceholder": "Que fait ton entreprise ? (aide le vibe check IA)",
+    "hint": "Vérifie domaines, réseaux sociaux, paquets et plus",
+    "submit": "Vérifier"
+  },
+  "status": {
+    "available": "Disponible",
+    "taken": "Pris",
+    "unknown": "Inconnu",
+    "error": "Erreur"
+  },
+  "widget": {
+    "details": "Détails"
+  },
+  "sections": {
+    "vibeScore": "Score de vibe",
+    "prosCons": "Pour & Contre",
+    "redditTake": "Avis Reddit",
+    "nameNeighborhood": "Voisinage du nom",
+    "wordMeaning": "Sens du mot",
+    "urbanDictionary": "Urban Dictionary",
+    "domains": "Domaines",
+    "socialMedia": "Réseaux sociaux",
+    "packageRegistries": "Registres de paquets",
+    "github": "GitHub",
+    "trademarkBusiness": "Marques & Entreprises"
+  },
+  "vibe": {
+    "unavailable": "Vibe check IA indisponible.",
+    "proConsUnavailable": "Indisponible.",
+    "theGood": "Les plus",
+    "theBad": "Les moins",
+    "positivity": "Positivité",
+    "chefsKiss": "Parfait",
+    "solidPick": "Bon choix",
+    "meh": "Bof",
+    "yikes": "Aïe",
+    "deadOnArrival": "Sans espoir"
+  },
+  "dictionary": {
+    "noDefinition": "Aucune définition trouvée dans le dictionnaire."
+  },
+  "urban": {
+    "noEntries": "Aucune entrée trouvée. Ce mot est trop pur pour internet."
+  },
+  "reddit": {
+    "offline": "L'esprit collectif de Reddit est hors ligne.",
+    "reply": "Répondre",
+    "share": "Partager",
+    "report": "Signaler"
+  },
+  "neighborhood": {
+    "error": "Impossible d'explorer le voisinage.",
+    "intro": "Entreprises du même quartier :"
+  },
+  "social": {
+    "disclaimer": "Les résultats peuvent être inexacts. Clique pour vérifier."
+  },
+  "github": {
+    "relatedRepos": "Dépôts liés",
+    "repos": "dépôts",
+    "followers": "abonnés"
+  },
+  "external": {
+    "description": "Recherches manuelles dans les bases de données externes",
+    "usptoTitle": "Recherche de marques USPTO",
+    "usptoDescription": "Rechercher « {name} » dans la base de données des marques américaines",
+    "openCorpTitle": "OpenCorporates",
+    "openCorpDescription": "Rechercher « {name} » dans les registres d'entreprises du monde entier"
+  },
+  "language": {
+    "label": "Langue"
+  }
+}
