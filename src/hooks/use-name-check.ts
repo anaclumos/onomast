@@ -17,7 +17,13 @@ import { checkWordVibe } from '@/server/vibe-check'
  * Hook count is always 25 (stable across renders):
  *   2 dictionary + 6 domain + 5 social + 5 package + 2 github
  */
-export function useNameCheck(name: string, description = '') {
+export function useNameCheck(
+  name: string,
+  description = '',
+  region = '',
+  language = '',
+  locale = 'en'
+) {
   const enabled = name.length > 0
 
   const dictionary = useQuery({
@@ -132,8 +138,9 @@ export function useNameCheck(name: string, description = '') {
   })
 
   const vibeCheck = useQuery({
-    queryKey: ['vibe-check', name, description],
-    queryFn: () => checkWordVibe({ data: { name, description } }),
+    queryKey: ['vibe-check', name, description, region, language, locale],
+    queryFn: () =>
+      checkWordVibe({ data: { name, description, region, language, locale } }),
     enabled,
   })
 

@@ -8,6 +8,7 @@ import {
 } from '@/components/status-indicator'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { GitHubReposResult, GitHubUserCheck } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
@@ -20,12 +21,14 @@ export function GitHubSection({
   githubUser: UseQueryResult<GitHubUserCheck>
   githubRepos: UseQueryResult<GitHubReposResult>
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon className="size-4" icon={GithubIcon} strokeWidth={2} />
-          GitHub
+          {t('sections.github')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
@@ -59,10 +62,14 @@ export function GitHubSection({
                 {githubUser.data?.status === 'taken' && (
                   <div className="flex gap-3 text-muted-foreground text-xs">
                     {githubUser.data.publicRepos !== undefined && (
-                      <span>{githubUser.data.publicRepos} repos</span>
+                      <span>
+                        {githubUser.data.publicRepos} {t('github.repos')}
+                      </span>
                     )}
                     {githubUser.data.followers !== undefined && (
-                      <span>{githubUser.data.followers} followers</span>
+                      <span>
+                        {githubUser.data.followers} {t('github.followers')}
+                      </span>
                     )}
                   </div>
                 )}
@@ -85,6 +92,8 @@ function GitHubReposContent({
 }: {
   githubRepos: UseQueryResult<GitHubReposResult>
 }) {
+  const { t } = useTranslation()
+
   if (githubRepos.isLoading) {
     return <SectionSkeleton rows={3} />
   }
@@ -96,7 +105,7 @@ function GitHubReposContent({
   return (
     <div className="flex flex-col gap-1.5">
       <span className="font-medium text-muted-foreground text-xs">
-        Related repos
+        {t('github.relatedRepos')}
       </span>
       {githubRepos.data.repos.slice(0, 3).map((repo) => (
         <a

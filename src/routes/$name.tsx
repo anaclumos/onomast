@@ -1,10 +1,13 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod/v4'
+import { LanguageSwitcher } from '@/components/language-switcher'
 import { ResultsDashboard } from '@/components/results-dashboard'
 import { SearchForm } from '@/components/search-form'
 
 const searchSchema = z.object({
   description: z.string().optional(),
+  region: z.string().optional(),
+  language: z.string().optional(),
 })
 
 export const Route = createFileRoute('/$name')({
@@ -41,14 +44,23 @@ export const Route = createFileRoute('/$name')({
 
 function NamePage() {
   const { name } = Route.useParams()
-  const { description } = Route.useSearch()
+  const { description, region, language } = Route.useSearch()
   const navigate = useNavigate()
 
-  const handleSearch = (newName: string, newDescription: string) => {
+  const handleSearch = (
+    newName: string,
+    newDescription: string,
+    newRegion: string,
+    newLanguage: string
+  ) => {
     navigate({
       to: '/$name',
       params: { name: newName },
-      search: { description: newDescription || undefined },
+      search: {
+        description: newDescription || undefined,
+        region: newRegion || undefined,
+        language: newLanguage || undefined,
+      },
     })
   }
 
@@ -62,16 +74,26 @@ function NamePage() {
           <span className="text-muted-foreground text-sm">/</span>
           <span className="text-muted-foreground text-sm">{name}</span>
         </div>
-        <SearchForm
-          defaultDescription={description}
-          defaultName={name}
-          key={name + (description ?? '')}
-          onSearch={handleSearch}
-          showDescription={!!description}
-        />
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <SearchForm
+            defaultDescription={description}
+            defaultLanguage={language}
+            defaultName={name}
+            defaultRegion={region}
+            key={name + (description ?? '') + (region ?? '') + (language ?? '')}
+            onSearch={handleSearch}
+            showDescription={!!(description || region || language)}
+          />
+        </div>
       </header>
       <main className="flex flex-1 flex-col gap-4 px-4 py-6">
-        <ResultsDashboard description={description ?? ''} name={name} />
+        <ResultsDashboard
+          description={description ?? ''}
+          language={language ?? ''}
+          name={name}
+          region={region ?? ''}
+        />
       </main>
     </div>
   )

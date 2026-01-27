@@ -13,15 +13,21 @@ import {
 } from '@/components/sections/vibe-check-section'
 import { WidgetCard } from '@/components/widget-card'
 import { useNameCheck } from '@/hooks/use-name-check'
+import { useTranslation } from '@/i18n/context'
 
 export function ResultsDashboard({
   name,
   description,
+  region,
+  language,
 }: {
   name: string
   description: string
+  region: string
+  language: string
 }) {
-  const results = useNameCheck(name, description)
+  const { locale } = useTranslation()
+  const results = useNameCheck(name, description, region, language, locale)
 
   if (!name) {
     return null

@@ -6,6 +6,7 @@ import {
   statusRowClassName,
 } from '@/components/status-indicator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { PackageCheck, PackageRegistry } from '@/lib/types'
 import { PACKAGE_REGISTRIES } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -25,6 +26,8 @@ export function PackagesSection({
   name: string
   packages: UseQueryResult<PackageCheck>[]
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -34,7 +37,7 @@ export function PackagesSection({
             icon={PackageIcon}
             strokeWidth={2}
           />
-          Package Registries
+          {t('sections.packageRegistries')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">

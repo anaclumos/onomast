@@ -14,23 +14,76 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
+import { useTranslation } from '@/i18n/context'
+
+const REGIONS = [
+  'Global',
+  'North America',
+  'Europe',
+  'East Asia',
+  'Southeast Asia',
+  'South Asia',
+  'Latin America',
+  'Middle East',
+  'Africa',
+  'Oceania',
+] as const
+
+const LANGUAGES = [
+  'English',
+  'Spanish',
+  'Chinese',
+  'Japanese',
+  'Korean',
+  'Arabic',
+  'French',
+  'German',
+  'Portuguese',
+  'Hindi',
+  'Russian',
+  'Italian',
+  'Dutch',
+  'Turkish',
+  'Thai',
+  'Vietnamese',
+  'Indonesian',
+] as const
 
 export function SearchForm({
   defaultName = '',
   defaultDescription = '',
+  defaultRegion = '',
+  defaultLanguage = '',
   showDescription = true,
   onSearch,
 }: {
   defaultName?: string
   defaultDescription?: string
+  defaultRegion?: string
+  defaultLanguage?: string
   showDescription?: boolean
-  onSearch: (name: string, description: string) => void
+  onSearch: (
+    name: string,
+    description: string,
+    region: string,
+    language: string
+  ) => void
 }) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState(defaultName)
   const [description, setDescription] = useState(defaultDescription)
+  const [region, setRegion] = useState(defaultRegion)
+  const [language, setLanguage] = useState(defaultLanguage)
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -47,10 +100,10 @@ export function SearchForm({
   const submitForm = useCallback(() => {
     const trimmed = name.trim().toLowerCase()
     if (trimmed) {
-      onSearch(trimmed, description.trim())
+      onSearch(trimmed, description.trim(), region, language)
       setOpen(false)
     }
-  }, [name, description, onSearch])
+  }, [name, description, region, language, onSearch])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -70,7 +123,7 @@ export function SearchForm({
   return (
     <>
       <Button
-        aria-label="Search"
+        aria-label={t('search.title')}
         onClick={() => setOpen(true)}
         size="icon"
         variant="ghost"
@@ -85,10 +138,8 @@ export function SearchForm({
         >
           <form onSubmit={handleSubmit}>
             <DialogHeader className="sr-only">
-              <DialogTitle>Search</DialogTitle>
-              <DialogDescription>
-                Check name availability across the internet
-              </DialogDescription>
+              <DialogTitle>{t('search.title')}</DialogTitle>
+              <DialogDescription>{t('search.description')}</DialogDescription>
             </DialogHeader>
 
             <div className="flex items-center gap-2 px-4 py-3">
@@ -102,7 +153,7 @@ export function SearchForm({
                 className="border-0 bg-transparent px-0 font-medium text-sm shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={handleFormKeyDown}
-                placeholder="Company name"
+                placeholder={t('search.namePlaceholder')}
                 value={name}
               />
             </div>
@@ -116,10 +167,55 @@ export function SearchForm({
                     className="min-h-0 resize-none border-0 bg-transparent px-0 text-xs shadow-none ring-0 focus-visible:border-0 focus-visible:ring-0"
                     onChange={(e) => setDescription(e.target.value)}
                     onKeyDown={handleFormKeyDown}
-                    placeholder="What does your company do? (optional — helps the AI vibe check)"
+                    placeholder={t('search.descriptionPlaceholder')}
                     rows={2}
                     value={description}
                   />
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center gap-3 px-4 py-2.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground text-xs">
+                      Region
+                    </span>
+                    <Select
+                      onValueChange={(v) => setRegion(v ?? '')}
+                      value={region || undefined}
+                    >
+                      <SelectTrigger size="sm">
+                        <SelectValue placeholder="Global" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {REGIONS.map((r) => (
+                          <SelectItem key={r} value={r}>
+                            {r}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground text-xs">
+                      Language
+                    </span>
+                    <Select
+                      onValueChange={(v) => setLanguage(v ?? '')}
+                      value={language || undefined}
+                    >
+                      <SelectTrigger size="sm">
+                        <SelectValue placeholder="English" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {LANGUAGES.map((l) => (
+                          <SelectItem key={l} value={l}>
+                            {l}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </>
             )}
@@ -128,11 +224,11 @@ export function SearchForm({
 
             <div className="flex items-center justify-between px-4 py-2.5">
               <p className="text-muted-foreground text-xs">
-                Checks domains, socials, packages &amp; more
+                {t('search.hint')}
               </p>
               <div className="flex items-center gap-2">
                 <Button size="sm" type="submit">
-                  Check
+                  {t('search.submit')}
                   <kbd className="hidden items-center gap-0.5 rounded-md border bg-muted px-1 py-0.5 font-mono text-muted-foreground text-xs sm:flex">
                     <HugeiconsIcon
                       className="size-2"

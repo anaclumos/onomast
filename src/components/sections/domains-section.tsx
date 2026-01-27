@@ -6,6 +6,7 @@ import {
   statusRowClassName,
 } from '@/components/status-indicator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { DomainCheck } from '@/lib/types'
 import { TLDS } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -17,6 +18,8 @@ export function DomainsSection({
   name: string
   domains: UseQueryResult<DomainCheck>[]
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -26,7 +29,7 @@ export function DomainsSection({
             icon={Globe02Icon}
             strokeWidth={2}
           />
-          Domains
+          {t('sections.domains')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">

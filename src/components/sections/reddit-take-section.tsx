@@ -8,6 +8,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
 import { SectionSkeleton } from '@/components/section-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { VibeCheckResult } from '@/lib/types'
 
 export function RedditTakeSection({
@@ -15,6 +16,8 @@ export function RedditTakeSection({
 }: {
   vibeCheck: UseQueryResult<VibeCheckResult>
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -24,7 +27,7 @@ export function RedditTakeSection({
             icon={Megaphone01Icon}
             strokeWidth={2}
           />
-          Reddit Take
+          {t('sections.redditTake')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -39,15 +42,15 @@ function RedditTakeContent({
 }: {
   vibeCheck: UseQueryResult<VibeCheckResult>
 }) {
+  const { t } = useTranslation()
+
   if (vibeCheck.isLoading) {
     return <SectionSkeleton rows={3} />
   }
 
   if (!vibeCheck.data) {
     return (
-      <p className="text-muted-foreground text-xs">
-        Reddit hivemind is offline.
-      </p>
+      <p className="text-muted-foreground text-xs">{t('reddit.offline')}</p>
     )
   }
 
@@ -55,6 +58,7 @@ function RedditTakeContent({
 }
 
 function RedditComment({ take }: { take: string }) {
+  const { t } = useTranslation()
   const fakeUpvotes = Math.floor(Math.random() * 200) + 42
 
   return (
@@ -91,10 +95,10 @@ function RedditComment({ take }: { take: string }) {
               icon={Comment01Icon}
               strokeWidth={2}
             />
-            Reply
+            {t('reddit.reply')}
           </button>
-          <span className="text-xs">Share</span>
-          <span className="text-xs">Report</span>
+          <span className="text-xs">{t('reddit.share')}</span>
+          <span className="text-xs">{t('reddit.report')}</span>
         </div>
       </div>
     </div>

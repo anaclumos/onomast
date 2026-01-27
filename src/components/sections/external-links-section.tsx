@@ -7,8 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 
 export function ExternalLinksSection({ name }: { name: string }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -18,9 +21,9 @@ export function ExternalLinksSection({ name }: { name: string }) {
             icon={BalanceScaleIcon}
             strokeWidth={2}
           />
-          Trademark &amp; Business
+          {t('sections.trademarkBusiness')}
         </CardTitle>
-        <CardDescription>Manual lookups on external databases</CardDescription>
+        <CardDescription>{t('external.description')}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <a
@@ -29,9 +32,11 @@ export function ExternalLinksSection({ name }: { name: string }) {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <span className="font-medium text-xs">USPTO Trademark Search</span>
+          <span className="font-medium text-xs">
+            {t('external.usptoTitle')}
+          </span>
           <span className="text-muted-foreground text-xs">
-            Search for &ldquo;{name}&rdquo; in the US trademark database
+            {t('external.usptoDescription', { name })}
           </span>
         </a>
         <a
@@ -40,9 +45,11 @@ export function ExternalLinksSection({ name }: { name: string }) {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <span className="font-medium text-xs">OpenCorporates</span>
+          <span className="font-medium text-xs">
+            {t('external.openCorpTitle')}
+          </span>
           <span className="text-muted-foreground text-xs">
-            Search for &ldquo;{name}&rdquo; across company registries worldwide
+            {t('external.openCorpDescription', { name })}
           </span>
         </a>
       </CardContent>

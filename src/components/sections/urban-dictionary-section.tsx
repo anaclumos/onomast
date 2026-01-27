@@ -7,6 +7,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
 import { SectionSkeleton } from '@/components/section-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { UrbanDictionaryResult } from '@/lib/types'
 
 export function UrbanDictionarySection({
@@ -14,6 +15,8 @@ export function UrbanDictionarySection({
 }: {
   urbanDictionary: UseQueryResult<UrbanDictionaryResult>
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -23,7 +26,7 @@ export function UrbanDictionarySection({
             icon={QuoteDownIcon}
             strokeWidth={2}
           />
-          Urban Dictionary
+          {t('sections.urbanDictionary')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
@@ -38,15 +41,15 @@ function UrbanDictionaryContent({
 }: {
   urbanDictionary: UseQueryResult<UrbanDictionaryResult>
 }) {
+  const { t } = useTranslation()
+
   if (urbanDictionary.isLoading) {
     return <SectionSkeleton rows={3} />
   }
 
   if (!urbanDictionary.data?.found) {
     return (
-      <p className="text-muted-foreground text-xs">
-        No entries found. This word is too pure for the internet.
-      </p>
+      <p className="text-muted-foreground text-xs">{t('urban.noEntries')}</p>
     )
   }
 

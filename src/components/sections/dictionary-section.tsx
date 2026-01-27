@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 import { SectionSkeleton } from '@/components/section-skeleton'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { DictionaryResult } from '@/lib/types'
 
 export function DictionarySection({
@@ -12,12 +13,14 @@ export function DictionarySection({
 }: {
   dictionary: UseQueryResult<DictionaryResult>
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5">
           <HugeiconsIcon className="size-4" icon={Book02Icon} strokeWidth={2} />
-          Word Meaning
+          {t('sections.wordMeaning')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
@@ -32,6 +35,8 @@ function DictionaryContent({
 }: {
   dictionary: UseQueryResult<DictionaryResult>
 }): ReactNode {
+  const { t } = useTranslation()
+
   if (dictionary.isLoading) {
     return <SectionSkeleton rows={4} />
   }
@@ -39,7 +44,7 @@ function DictionaryContent({
   if (!dictionary.data?.found) {
     return (
       <p className="text-muted-foreground text-xs">
-        No dictionary definition found.
+        {t('dictionary.noDefinition')}
       </p>
     )
   }

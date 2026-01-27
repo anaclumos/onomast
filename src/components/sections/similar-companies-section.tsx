@@ -3,6 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import type { UseQueryResult } from '@tanstack/react-query'
 import { SectionSkeleton } from '@/components/section-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { VibeCheckResult } from '@/lib/types'
 
 export function SimilarCompaniesSection({
@@ -10,6 +11,8 @@ export function SimilarCompaniesSection({
 }: {
   vibeCheck: UseQueryResult<VibeCheckResult>
 }) {
+  const { t } = useTranslation()
+
   if (
     !vibeCheck.isLoading &&
     vibeCheck.data &&
@@ -27,7 +30,7 @@ export function SimilarCompaniesSection({
             icon={Building03Icon}
             strokeWidth={2}
           />
-          Name Neighborhood
+          {t('sections.nameNeighborhood')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -42,23 +45,21 @@ function SimilarCompaniesContent({
 }: {
   vibeCheck: UseQueryResult<VibeCheckResult>
 }) {
+  const { t } = useTranslation()
+
   if (vibeCheck.isLoading) {
     return <SectionSkeleton rows={2} />
   }
 
   if (!vibeCheck.data) {
     return (
-      <p className="text-muted-foreground text-xs">
-        Couldn&apos;t scout the neighborhood.
-      </p>
+      <p className="text-muted-foreground text-xs">{t('neighborhood.error')}</p>
     )
   }
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-muted-foreground text-xs">
-        Companies that live on the same block:
-      </p>
+      <p className="text-muted-foreground text-xs">{t('neighborhood.intro')}</p>
       <div className="flex flex-wrap gap-1.5">
         {vibeCheck.data.similarCompanies.map((name) => (
           <span

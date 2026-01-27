@@ -7,10 +7,18 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { Analytics } from '@vercel/analytics/react'
+import { EscapeInAppBrowser } from 'eiab/react'
 
+import { I18nProvider } from '@/i18n/context'
+import { detectLocale } from '@/server/detect-locale'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
+  beforeLoad: async () => {
+    const locale = await detectLocale()
+    return { locale }
+  },
+
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -50,7 +58,13 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  return <Outlet />
+  const { locale } = Route.useRouteContext()
+
+  return (
+    <I18nProvider initialLocale={locale}>
+      <Outlet />
+    </I18nProvider>
+  )
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -60,6 +74,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <EscapeInAppBrowser />
         {children}
         <TanStackDevtools
           config={{

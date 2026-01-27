@@ -1,32 +1,28 @@
 import { Badge } from '@/components/ui/badge'
+import { useTranslation } from '@/i18n/context'
 import type { AvailabilityStatus } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
 const STATUS_CONFIG: Record<
   AvailabilityStatus,
   {
-    label: string
     className: string
     variant: 'default' | 'destructive' | 'outline'
   }
 > = {
   available: {
-    label: 'Available',
     className: 'bg-success text-success-foreground',
     variant: 'default',
   },
   taken: {
-    label: 'Taken',
     className: 'bg-destructive text-white',
     variant: 'destructive',
   },
   unknown: {
-    label: 'Unknown',
     className: 'bg-warning text-warning-foreground',
     variant: 'default',
   },
   error: {
-    label: 'Error',
     className: 'bg-destructive text-white',
     variant: 'destructive',
   },
@@ -52,12 +48,13 @@ export function StatusIndicator({
   showLabel?: boolean
   className?: string
 }) {
+  const { t } = useTranslation()
   const config = STATUS_CONFIG[status]
   const statusSymbol = status === 'available' ? '✓' : '✗'
 
   return (
     <Badge className={cn(config.className, className)} variant={config.variant}>
-      {showLabel ? config.label : statusSymbol}
+      {showLabel ? t(`status.${status}`) : statusSymbol}
     </Badge>
   )
 }

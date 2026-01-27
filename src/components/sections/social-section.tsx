@@ -6,6 +6,7 @@ import {
   statusRowClassName,
 } from '@/components/status-indicator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslation } from '@/i18n/context'
 import type { SocialCheck, SocialPlatform } from '@/lib/types'
 import { SOCIAL_PLATFORMS } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -25,6 +26,8 @@ export function SocialSection({
   name: string
   social: UseQueryResult<SocialCheck>[]
 }) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -34,7 +37,7 @@ export function SocialSection({
             icon={UserGroupIcon}
             strokeWidth={2}
           />
-          Social Media
+          {t('sections.socialMedia')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
@@ -51,7 +54,7 @@ export function SocialSection({
           )
         })}
         <p className="mt-1 text-muted-foreground text-xs">
-          Results may be inaccurate. Click to verify.
+          {t('social.disclaimer')}
         </p>
       </CardContent>
     </Card>

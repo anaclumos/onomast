@@ -14,6 +14,7 @@ import { SectionSkeleton } from '@/components/section-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { ChartConfig } from '@/components/ui/chart'
 import { ChartContainer } from '@/components/ui/chart'
+import { useTranslation } from '@/i18n/context'
 import type { VibeCheckResult } from '@/lib/types'
 
 function vibeColor(score: number): string {
@@ -26,31 +27,13 @@ function vibeColor(score: number): string {
   return 'var(--color-destructive)'
 }
 
-function vibeLabel(score: number): string {
-  if (score >= 80) {
-    return "Chef's Kiss"
-  }
-  if (score >= 60) {
-    return 'Solid Pick'
-  }
-  if (score >= 40) {
-    return 'Meh'
-  }
-  if (score >= 20) {
-    return 'Yikes'
-  }
-  return 'Dead on Arrival'
-}
-
-const chartConfig = {
-  score: { label: 'Positivity' },
-} satisfies ChartConfig
-
 interface VibeWidgetProps {
   vibeCheck: UseQueryResult<VibeCheckResult>
 }
 
 export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -60,7 +43,7 @@ export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
             icon={SparklesIcon}
             strokeWidth={2}
           />
-          Vibe Score
+          {t('sections.vibeScore')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-2">
@@ -71,6 +54,8 @@ export function VibeGaugeWidget({ vibeCheck }: VibeWidgetProps) {
 }
 
 export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
+  const { t } = useTranslation()
+
   return (
     <Card size="sm">
       <CardHeader>
@@ -80,7 +65,7 @@ export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
             icon={ThumbsUpIcon}
             strokeWidth={2}
           />
-          Pros &amp; Cons
+          {t('sections.prosCons')}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
@@ -91,15 +76,15 @@ export function VibeProConsWidget({ vibeCheck }: VibeWidgetProps) {
 }
 
 function VibeGaugeContent({ vibeCheck }: VibeWidgetProps) {
+  const { t } = useTranslation()
+
   if (vibeCheck.isLoading) {
     return <SectionSkeleton rows={3} />
   }
 
   if (!vibeCheck.data) {
     return (
-      <p className="text-muted-foreground text-xs">
-        AI vibe check unavailable.
-      </p>
+      <p className="text-muted-foreground text-xs">{t('vibe.unavailable')}</p>
     )
   }
 
@@ -114,22 +99,32 @@ function VibeGaugeContent({ vibeCheck }: VibeWidgetProps) {
 }
 
 function VibeProConsContent({ vibeCheck }: VibeWidgetProps) {
+  const { t } = useTranslation()
+
   if (vibeCheck.isLoading) {
     return <SectionSkeleton rows={4} />
   }
 
   if (!vibeCheck.data) {
-    return <p className="text-muted-foreground text-xs">Unavailable.</p>
+    return (
+      <p className="text-muted-foreground text-xs">
+        {t('vibe.proConsUnavailable')}
+      </p>
+    )
   }
 
   return (
     <>
       <div className="flex flex-col gap-1">
-        <span className="font-semibold text-success text-xs">The Good</span>
+        <span className="font-semibold text-success text-xs">
+          {t('vibe.theGood')}
+        </span>
         <p className="text-xs leading-relaxed">{vibeCheck.data.whyGood}</p>
       </div>
       <div className="flex flex-col gap-1">
-        <span className="font-semibold text-destructive text-xs">The Bad</span>
+        <span className="font-semibold text-destructive text-xs">
+          {t('vibe.theBad')}
+        </span>
         <p className="text-xs leading-relaxed">{vibeCheck.data.whyBad}</p>
       </div>
     </>
@@ -137,8 +132,24 @@ function VibeProConsContent({ vibeCheck }: VibeWidgetProps) {
 }
 
 function GaugeContent({ data }: { data: VibeCheckResult }) {
+  const { t } = useTranslation()
   const color = vibeColor(data.positivity)
-  const label = vibeLabel(data.positivity)
+
+  const score = data.positivity
+  let label = t('vibe.deadOnArrival')
+  if (score >= 80) {
+    label = t('vibe.chefsKiss')
+  } else if (score >= 60) {
+    label = t('vibe.solidPick')
+  } else if (score >= 40) {
+    label = t('vibe.meh')
+  } else if (score >= 20) {
+    label = t('vibe.yikes')
+  }
+
+  const chartConfig = {
+    score: { label: t('vibe.positivity') },
+  } satisfies ChartConfig
 
   const chartData = [{ score: data.positivity }]
 
