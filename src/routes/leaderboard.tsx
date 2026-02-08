@@ -1,4 +1,9 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  type ErrorComponentProps,
+  Link,
+  useNavigate,
+} from '@tanstack/react-router'
 import { useQuery } from 'convex/react'
 import { AuthControls } from '@/components/auth-controls'
 import { LanguageSwitcher } from '@/components/language-switcher'
@@ -10,7 +15,38 @@ export const Route = createFileRoute('/leaderboard')({
     meta: [{ title: 'Leaderboard — onomast.app' }],
   }),
   component: LeaderboardPage,
+  errorComponent: LeaderboardError,
 })
+
+function LeaderboardError(_props: ErrorComponentProps) {
+  return (
+    <div className="flex min-h-full flex-col">
+      <header className="flex items-center justify-between border-b px-4 py-2">
+        <div className="flex shrink-0 items-center gap-1.5">
+          <Link className="font-semibold text-sm tracking-tight" to="/">
+            onomast.app
+          </Link>
+          <span className="text-muted-foreground text-sm">/</span>
+          <span className="text-muted-foreground text-sm">leaderboard</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <AuthControls />
+          <LanguageSwitcher />
+        </div>
+      </header>
+
+      <main className="flex flex-1 flex-col px-4 py-6">
+        <section className="mx-auto w-full max-w-3xl">
+          <div className="overflow-hidden rounded-lg border bg-card">
+            <div className="px-3 py-6 text-muted-foreground text-sm">
+              Leaderboard is temporarily unavailable.
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  )
+}
 
 function formatDate(timestamp: number) {
   try {
