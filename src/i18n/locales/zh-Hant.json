@@ -95,6 +95,10 @@
   "social": {
     "disclaimer": "結果可能不太準，點擊確認一下。"
   },
+  "ownership": {
+    "markOwned": "標記為已擁有",
+    "owned": "已擁有"
+  },
   "github": {
     "relatedRepos": "相關儲存庫",
     "repos": "儲存庫",

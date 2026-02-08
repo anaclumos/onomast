@@ -1,4 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import type {
+  AvailabilityStatus,
+  OwnedAssets,
+  VibeAvailabilitySnapshot,
+} from '@/lib/types'
 import { checkDictionary, checkUrbanDictionary } from '@/server/dictionary'
 import { checkDomain } from '@/server/domains'
 import { checkGitHubUser, searchGitHubRepos } from '@/server/github'
@@ -12,22 +17,24 @@ import {
 import { checkSocialHandle } from '@/server/social'
 import { checkWordVibe } from '@/server/vibe-check'
 
-/**
- * Orchestrator hook: fires all name checks in parallel via independent useQuery calls.
- * Hook count is always 25 (stable across renders):
- *   2 dictionary + 6 domain + 5 social + 5 package + 2 github
- */
-export function useNameCheck(
-  name: string,
-  description = '',
-  region = '',
-  language = '',
-  locale = 'en',
-  latinName = ''
-) {
-  const enabled = name.length > 0
-  const handleName = latinName || name
+function statusOrUnknown(status?: AvailabilityStatus): AvailabilityStatus {
+  return status ?? 'unknown'
+}
 
+function resolveHandleName(name: string, latinName: string): string {
+  return latinName || name
+}
+
+function normalizeOwnedAssets(owned?: OwnedAssets): OwnedAssets {
+  return {
+    domains: [...(owned?.domains ?? [])].sort(),
+    social: [...(owned?.social ?? [])].sort(),
+    packages: [...(owned?.packages ?? [])].sort(),
+    githubUser: Boolean(owned?.githubUser),
+  }
+}
+
+function useDictionaryChecks(name: string, enabled: boolean) {
   const dictionary = useQuery({
     queryKey: ['dictionary', name],
     queryFn: () => checkDictionary({ data: { word: name } }),
@@ -40,6 +47,10 @@ export function useNameCheck(
     enabled,
   })
 
+  return { dictionary, urbanDictionary }
+}
+
+function useDomainChecks(handleName: string, enabled: boolean) {
   const domainCom = useQuery({
     queryKey: ['domain', handleName, 'com'],
     queryFn: () => checkDomain({ data: { name: handleName, tld: 'com' } }),
@@ -71,6 +82,27 @@ export function useNameCheck(
     enabled,
   })
 
+  const domains = [
+    domainCom,
+    domainDev,
+    domainApp,
+    domainNet,
+    domainOrg,
+    domainAi,
+  ]
+
+  return {
+    domainAi,
+    domainApp,
+    domainCom,
+    domainDev,
+    domainNet,
+    domainOrg,
+    domains,
+  }
+}
+
+function useSocialChecks(handleName: string, enabled: boolean) {
   const socialInstagram = useQuery({
     queryKey: ['social', handleName, 'instagram'],
     queryFn: () =>
@@ -104,6 +136,25 @@ export function useNameCheck(
     enabled,
   })
 
+  const social = [
+    socialInstagram,
+    socialTwitter,
+    socialTiktok,
+    socialYoutube,
+    socialFacebook,
+  ]
+
+  return {
+    social,
+    socialFacebook,
+    socialInstagram,
+    socialTiktok,
+    socialTwitter,
+    socialYoutube,
+  }
+}
+
+function usePackageChecks(handleName: string, enabled: boolean) {
   const pkgNpm = useQuery({
     queryKey: ['package', handleName, 'npm'],
     queryFn: () => checkNpm({ data: { name: handleName } }),
@@ -130,6 +181,12 @@ export function useNameCheck(
     enabled,
   })
 
+  const packages = [pkgNpm, pkgCrates, pkgGo, pkgHomebrew, pkgApt]
+
+  return { packages, pkgApt, pkgCrates, pkgGo, pkgHomebrew, pkgNpm }
+}
+
+function useGitHubChecks(handleName: string, enabled: boolean) {
   const githubUser = useQuery({
     queryKey: ['github-user', handleName],
     queryFn: () => checkGitHubUser({ data: { name: handleName } }),
@@ -141,25 +198,139 @@ export function useNameCheck(
     enabled,
   })
 
+  return { githubRepos, githubUser }
+}
+
+/**
+ * Orchestrator hook: fires all name checks in parallel via independent useQuery calls.
+ * Hook count is always 25 (stable across renders):
+ *   2 dictionary + 6 domain + 5 social + 5 package + 2 github
+ */
+export function useNameCheck(
+  name: string,
+  description = '',
+  region = '',
+  language = '',
+  locale = 'en',
+  latinName = '',
+  owned?: OwnedAssets
+) {
+  const enabled = name.length > 0
+  const handleName = resolveHandleName(name, latinName)
+  const ownedNormalized = normalizeOwnedAssets(owned)
+
+  const { dictionary, urbanDictionary } = useDictionaryChecks(name, enabled)
+  const {
+    domainAi,
+    domainApp,
+    domainCom,
+    domainDev,
+    domainNet,
+    domainOrg,
+    domains,
+  } = useDomainChecks(handleName, enabled)
+  const {
+    social,
+    socialFacebook,
+    socialInstagram,
+    socialTiktok,
+    socialTwitter,
+    socialYoutube,
+  } = useSocialChecks(handleName, enabled)
+  const { packages, pkgApt, pkgCrates, pkgGo, pkgHomebrew, pkgNpm } =
+    usePackageChecks(handleName, enabled)
+  const { githubRepos, githubUser } = useGitHubChecks(handleName, enabled)
+
+  const availability: VibeAvailabilitySnapshot = {
+    domains: [
+      { tld: 'com', status: statusOrUnknown(domainCom.data?.status) },
+      { tld: 'dev', status: statusOrUnknown(domainDev.data?.status) },
+      { tld: 'app', status: statusOrUnknown(domainApp.data?.status) },
+      { tld: 'net', status: statusOrUnknown(domainNet.data?.status) },
+      { tld: 'org', status: statusOrUnknown(domainOrg.data?.status) },
+      { tld: 'ai', status: statusOrUnknown(domainAi.data?.status) },
+    ],
+    social: [
+      {
+        platform: 'instagram',
+        status: statusOrUnknown(socialInstagram.data?.status),
+      },
+      {
+        platform: 'twitter',
+        status: statusOrUnknown(socialTwitter.data?.status),
+      },
+      {
+        platform: 'tiktok',
+        status: statusOrUnknown(socialTiktok.data?.status),
+      },
+      {
+        platform: 'youtube',
+        status: statusOrUnknown(socialYoutube.data?.status),
+      },
+      {
+        platform: 'facebook',
+        status: statusOrUnknown(socialFacebook.data?.status),
+      },
+    ],
+    packages: [
+      { registry: 'npm', status: statusOrUnknown(pkgNpm.data?.status) },
+      { registry: 'crates', status: statusOrUnknown(pkgCrates.data?.status) },
+      { registry: 'go', status: statusOrUnknown(pkgGo.data?.status) },
+      {
+        registry: 'homebrew',
+        status: statusOrUnknown(pkgHomebrew.data?.status),
+      },
+      { registry: 'apt', status: statusOrUnknown(pkgApt.data?.status) },
+    ],
+    githubUser: {
+      status: statusOrUnknown(githubUser.data?.status),
+      type: githubUser.data?.type,
+    },
+  }
+
+  const availabilityReady = [
+    ...domains,
+    ...social,
+    ...packages,
+    githubUser,
+  ].every((q) => !q.isLoading)
+
   const vibeCheck = useQuery({
-    queryKey: ['vibe-check', name, description, region, language, locale],
+    queryKey: [
+      'vibe-check',
+      name,
+      description,
+      region,
+      language,
+      locale,
+      handleName,
+      availability,
+      ownedNormalized,
+    ],
     queryFn: () =>
-      checkWordVibe({ data: { name, description, region, language, locale } }),
-    enabled,
+      checkWordVibe({
+        data: {
+          name,
+          description,
+          region,
+          language,
+          locale,
+          context: {
+            handleName,
+            availability,
+            owned: ownedNormalized,
+          },
+        },
+      }),
+    enabled: enabled && availabilityReady,
   })
 
   return {
     dictionary,
     urbanDictionary,
-    domains: [domainCom, domainDev, domainApp, domainNet, domainOrg, domainAi],
-    social: [
-      socialInstagram,
-      socialTwitter,
-      socialTiktok,
-      socialYoutube,
-      socialFacebook,
-    ],
-    packages: [pkgNpm, pkgCrates, pkgGo, pkgHomebrew, pkgApt],
+    domains,
+    social,
+    packages,
     githubUser,
     githubRepos,
     vibeCheck,

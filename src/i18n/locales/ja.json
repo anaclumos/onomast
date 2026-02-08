@@ -95,6 +95,10 @@
   "social": {
     "disclaimer": "結果が正確でないこともあります。クリックして確認してみてください。"
   },
+  "ownership": {
+    "markOwned": "所有済みにする",
+    "owned": "所有済み"
+  },
   "github": {
     "relatedRepos": "関連リポ",
     "repos": "リポ",

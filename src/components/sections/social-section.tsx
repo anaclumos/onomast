@@ -5,6 +5,7 @@ import {
   StatusIndicator,
   statusRowClassName,
 } from '@/components/status-indicator'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTranslation } from '@/i18n/context'
 import type { SocialCheck, SocialPlatform } from '@/lib/types'
@@ -22,9 +23,13 @@ const PLATFORM_DISPLAY: Record<SocialPlatform, string> = {
 export function SocialSection({
   name,
   social,
+  owned,
+  onToggleOwned,
 }: {
   name: string
   social: UseQueryResult<SocialCheck>[]
+  owned: SocialPlatform[]
+  onToggleOwned: (platform: SocialPlatform) => void
 }) {
   const { t } = useTranslation()
 
@@ -49,6 +54,8 @@ export function SocialSection({
               isLoading={query.isLoading}
               key={platform}
               name={name}
+              onToggleOwned={onToggleOwned}
+              owned={owned.includes(platform)}
               platform={platform}
             />
           )
@@ -66,12 +73,18 @@ function SocialRow({
   name,
   isLoading,
   data,
+  owned,
+  onToggleOwned,
 }: {
   platform: SocialPlatform
   name: string
   isLoading: boolean
   data?: SocialCheck
+  owned: boolean
+  onToggleOwned: (platform: SocialPlatform) => void
 }) {
+  const { t } = useTranslation()
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-between rounded-md border p-2">
@@ -85,23 +98,40 @@ function SocialRow({
     data?.profileUrl ??
     `https://${platform === 'twitter' ? 'x.com' : `${platform}.com`}/${name}`
 
+  const status = data?.status
+  const showOwnedToggle = owned || status !== 'available'
+
   return (
-    <a
+    <div
       className={cn(
         'flex items-center justify-between gap-2 rounded-md border p-2 transition-colors hover:bg-muted/50',
         statusRowClassName(data?.status)
       )}
-      href={profileUrl}
-      rel="noopener noreferrer"
-      target="_blank"
     >
-      <div className="flex items-center gap-1.5">
-        <span className="font-medium text-xs">
+      <a
+        className="flex min-w-0 flex-1 items-center gap-1.5"
+        href={profileUrl}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span className="shrink-0 font-medium text-xs">
           {PLATFORM_DISPLAY[platform]}
         </span>
-        <span className="text-muted-foreground text-xs">@{name}</span>
+        <span className="truncate text-muted-foreground text-xs">@{name}</span>
+      </a>
+      <div className="flex items-center gap-2">
+        {showOwnedToggle && (
+          <Button
+            aria-pressed={owned}
+            onClick={() => onToggleOwned(platform)}
+            size="xs"
+            variant={owned ? 'secondary' : 'outline'}
+          >
+            {owned ? t('ownership.owned') : t('ownership.markOwned')}
+          </Button>
+        )}
+        {data && <StatusIndicator status={data.status} />}
       </div>
-      {data && <StatusIndicator status={data.status} />}
-    </a>
+    </div>
   )
 }

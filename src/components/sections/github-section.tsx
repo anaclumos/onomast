@@ -7,6 +7,7 @@ import {
   statusRowClassName,
 } from '@/components/status-indicator'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTranslation } from '@/i18n/context'
 import type { GitHubReposResult, GitHubUserCheck } from '@/lib/types'
@@ -16,10 +17,14 @@ export function GitHubSection({
   name,
   githubUser,
   githubRepos,
+  owned,
+  onToggleOwned,
 }: {
   name: string
   githubUser: UseQueryResult<GitHubUserCheck>
   githubRepos: UseQueryResult<GitHubReposResult>
+  owned: boolean
+  onToggleOwned: () => void
 }) {
   const { t } = useTranslation()
 
@@ -75,9 +80,21 @@ export function GitHubSection({
                 )}
               </div>
             </div>
-            {githubUser.data && (
-              <StatusIndicator status={githubUser.data.status} />
-            )}
+            <div className="flex items-center gap-2">
+              {(owned || githubUser.data?.status !== 'available') && (
+                <Button
+                  aria-pressed={owned}
+                  onClick={onToggleOwned}
+                  size="xs"
+                  variant={owned ? 'secondary' : 'outline'}
+                >
+                  {owned ? t('ownership.owned') : t('ownership.markOwned')}
+                </Button>
+              )}
+              {githubUser.data && (
+                <StatusIndicator status={githubUser.data.status} />
+              )}
+            </div>
           </div>
         )}
 

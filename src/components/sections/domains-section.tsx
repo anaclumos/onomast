@@ -5,18 +5,23 @@ import {
   StatusIndicator,
   statusRowClassName,
 } from '@/components/status-indicator'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTranslation } from '@/i18n/context'
-import type { DomainCheck } from '@/lib/types'
+import type { DomainCheck, TLD } from '@/lib/types'
 import { TLDS } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
 export function DomainsSection({
   name,
   domains,
+  owned,
+  onToggleOwned,
 }: {
   name: string
   domains: UseQueryResult<DomainCheck>[]
+  owned: TLD[]
+  onToggleOwned: (tld: TLD) => void
 }) {
   const { t } = useTranslation()
 
@@ -41,6 +46,8 @@ export function DomainsSection({
               isLoading={query.isLoading}
               key={tld}
               name={name}
+              onToggleOwned={onToggleOwned}
+              owned={owned.includes(tld)}
               tld={tld}
             />
           )
@@ -55,12 +62,18 @@ function DomainRow({
   tld,
   isLoading,
   data,
+  owned,
+  onToggleOwned,
 }: {
   name: string
-  tld: string
+  tld: TLD
   isLoading: boolean
   data?: DomainCheck
+  owned: boolean
+  onToggleOwned: (tld: TLD) => void
 }) {
+  const { t } = useTranslation()
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-between rounded-md border p-2">
@@ -72,6 +85,8 @@ function DomainRow({
 
   const domain = `${name}.${tld}`
   const isTaken = data?.status === 'taken'
+  const status = data?.status
+  const showOwnedToggle = owned || status !== 'available'
 
   const rowClassName = cn(
     'flex items-center justify-between gap-2 rounded-md border p-2',
@@ -79,35 +94,47 @@ function DomainRow({
     isTaken && 'transition-colors hover:bg-muted/50'
   )
 
-  const content = (
-    <>
-      <div className="flex items-center gap-2">
-        <span className="font-mono text-xs">
-          <span className="text-muted-foreground">{name}</span>
-          <span className="font-medium">.{tld}</span>
+  const left = (
+    <div className="flex min-w-0 flex-1 items-center gap-2">
+      <span className="font-mono text-xs">
+        <span className="text-muted-foreground">{name}</span>
+        <span className="font-medium">.{tld}</span>
+      </span>
+      {isTaken && data?.registrar && (
+        <span className="truncate text-muted-foreground text-xs">
+          {data.registrar}
         </span>
-        {isTaken && data.registrar && (
-          <span className="truncate text-muted-foreground text-xs">
-            {data.registrar}
-          </span>
-        )}
-      </div>
-      {data && <StatusIndicator status={data.status} />}
-    </>
+      )}
+    </div>
   )
 
-  if (isTaken) {
-    return (
-      <a
-        className={rowClassName}
-        href={`https://${domain}`}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {content}
-      </a>
-    )
-  }
-
-  return <div className={rowClassName}>{content}</div>
+  return (
+    <div className={rowClassName}>
+      {isTaken ? (
+        <a
+          className="min-w-0 flex-1"
+          href={`https://${domain}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {left}
+        </a>
+      ) : (
+        left
+      )}
+      <div className="flex items-center gap-2">
+        {showOwnedToggle && (
+          <Button
+            aria-pressed={owned}
+            onClick={() => onToggleOwned(tld)}
+            size="xs"
+            variant={owned ? 'secondary' : 'outline'}
+          >
+            {owned ? t('ownership.owned') : t('ownership.markOwned')}
+          </Button>
+        )}
+        {data && <StatusIndicator status={data.status} />}
+      </div>
+    </div>
+  )
 }

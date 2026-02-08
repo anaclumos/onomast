@@ -118,6 +118,7 @@ function NamePage() {
         />
         <ResultsDashboard
           description={description ?? ''}
+          key={name + (latinName ?? '')}
           language={language ?? ''}
           latinName={latinName ?? ''}
           name={name}

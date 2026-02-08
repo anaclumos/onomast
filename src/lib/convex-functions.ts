@@ -1,4 +1,5 @@
 import { makeFunctionReference } from 'convex/server'
+import type { VibeCheckResult } from '@/lib/types'
 
 export interface SavedSearch {
   _id: string
@@ -33,6 +34,34 @@ export const saveSearchFn = makeFunctionReference<
   },
   string
 >('savedsearches:save')
+
+export const getVibeCheckByHashFn = makeFunctionReference<
+  'query',
+  { inputHash: string },
+  VibeCheckResult | null
+>('vibechecks:getByInputHash')
+
+export const upsertVibeCheckFn = makeFunctionReference<
+  'mutation',
+  {
+    inputHash: string
+    name: string
+    description?: string
+    region?: string
+    language?: string
+    locale: string
+    positivity: number
+    vibe: 'positive' | 'neutral' | 'negative'
+    reason: string
+    whyGood: string
+    whyBad: string
+    redditTake: string
+    similarCompanies: string[]
+    model?: string
+    promptVersion: number
+  },
+  string
+>('vibechecks:upsert')
 
 export const leaderboardTopNamesFn = makeFunctionReference<
   'query',

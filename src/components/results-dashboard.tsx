@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react'
 import { DictionarySection } from '@/components/sections/dictionary-section'
 import { DomainsSection } from '@/components/sections/domains-section'
 import { ExternalLinksSection } from '@/components/sections/external-links-section'
@@ -14,6 +15,12 @@ import {
 import { WidgetCard } from '@/components/widget-card'
 import { useNameCheck } from '@/hooks/use-name-check'
 import { useTranslation } from '@/i18n/context'
+import type {
+  OwnedAssets,
+  PackageRegistry,
+  SocialPlatform,
+  TLD,
+} from '@/lib/types'
 
 export function ResultsDashboard({
   name,
@@ -29,13 +36,52 @@ export function ResultsDashboard({
   latinName: string
 }) {
   const { locale } = useTranslation()
+  const [owned, setOwned] = useState<OwnedAssets>(() => ({
+    domains: [],
+    social: [],
+    packages: [],
+    githubUser: false,
+  }))
+
+  const toggleOwnedDomain = useCallback((tld: TLD) => {
+    setOwned((prev) => ({
+      ...prev,
+      domains: prev.domains.includes(tld)
+        ? prev.domains.filter((d) => d !== tld)
+        : [...prev.domains, tld],
+    }))
+  }, [])
+
+  const toggleOwnedSocial = useCallback((platform: SocialPlatform) => {
+    setOwned((prev) => ({
+      ...prev,
+      social: prev.social.includes(platform)
+        ? prev.social.filter((p) => p !== platform)
+        : [...prev.social, platform],
+    }))
+  }, [])
+
+  const toggleOwnedPackage = useCallback((registry: PackageRegistry) => {
+    setOwned((prev) => ({
+      ...prev,
+      packages: prev.packages.includes(registry)
+        ? prev.packages.filter((r) => r !== registry)
+        : [...prev.packages, registry],
+    }))
+  }, [])
+
+  const toggleOwnedGitHub = useCallback(() => {
+    setOwned((prev) => ({ ...prev, githubUser: !prev.githubUser }))
+  }, [])
+
   const results = useNameCheck(
     name,
     description,
     region,
     language,
     locale,
-    latinName
+    latinName,
+    owned
   )
 
   if (!name) {
@@ -63,14 +109,26 @@ export function ResultsDashboard({
         <UrbanDictionarySection urbanDictionary={results.urbanDictionary} />
       </WidgetCard>
       <WidgetCard>
-        <DomainsSection domains={results.domains} name={results.handleName} />
+        <DomainsSection
+          domains={results.domains}
+          name={results.handleName}
+          onToggleOwned={toggleOwnedDomain}
+          owned={owned.domains}
+        />
       </WidgetCard>
       <WidgetCard>
-        <SocialSection name={results.handleName} social={results.social} />
+        <SocialSection
+          name={results.handleName}
+          onToggleOwned={toggleOwnedSocial}
+          owned={owned.social}
+          social={results.social}
+        />
       </WidgetCard>
       <WidgetCard>
         <PackagesSection
           name={results.handleName}
+          onToggleOwned={toggleOwnedPackage}
+          owned={owned.packages}
           packages={results.packages}
         />
       </WidgetCard>
@@ -79,6 +137,8 @@ export function ResultsDashboard({
           githubRepos={results.githubRepos}
           githubUser={results.githubUser}
           name={results.handleName}
+          onToggleOwned={toggleOwnedGitHub}
+          owned={owned.githubUser}
         />
       </WidgetCard>
       <WidgetCard>

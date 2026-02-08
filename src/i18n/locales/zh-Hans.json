@@ -95,6 +95,10 @@
   "social": {
     "disclaimer": "结果可能不太准，点击确认一下。"
   },
+  "ownership": {
+    "markOwned": "标记为已拥有",
+    "owned": "已拥有"
+  },
   "github": {
     "relatedRepos": "相关仓库",
     "repos": "仓库",

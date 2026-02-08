@@ -5,6 +5,7 @@ import {
   StatusIndicator,
   statusRowClassName,
 } from '@/components/status-indicator'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTranslation } from '@/i18n/context'
 import type { PackageCheck, PackageRegistry } from '@/lib/types'
@@ -22,9 +23,13 @@ const REGISTRY_DISPLAY: Record<PackageRegistry, string> = {
 export function PackagesSection({
   name,
   packages,
+  owned,
+  onToggleOwned,
 }: {
   name: string
   packages: UseQueryResult<PackageCheck>[]
+  owned: PackageRegistry[]
+  onToggleOwned: (registry: PackageRegistry) => void
 }) {
   const { t } = useTranslation()
 
@@ -49,6 +54,8 @@ export function PackagesSection({
               isLoading={query.isLoading}
               key={registry}
               name={name}
+              onToggleOwned={onToggleOwned}
+              owned={owned.includes(registry)}
               registry={registry}
             />
           )
@@ -63,12 +70,18 @@ function PackageRow({
   name,
   isLoading,
   data,
+  owned,
+  onToggleOwned,
 }: {
   registry: PackageRegistry
   name: string
   isLoading: boolean
   data?: PackageCheck
+  owned: boolean
+  onToggleOwned: (registry: PackageRegistry) => void
 }) {
+  const { t } = useTranslation()
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-between rounded-md border p-2">
@@ -77,6 +90,9 @@ function PackageRow({
       </div>
     )
   }
+
+  const status = data?.status
+  const showOwnedToggle = owned || status !== 'available'
 
   return (
     <div
@@ -91,7 +107,19 @@ function PackageRow({
         </span>
         <span className="font-mono text-muted-foreground text-xs">{name}</span>
       </div>
-      {data && <StatusIndicator status={data.status} />}
+      <div className="flex items-center gap-2">
+        {showOwnedToggle && (
+          <Button
+            aria-pressed={owned}
+            onClick={() => onToggleOwned(registry)}
+            size="xs"
+            variant={owned ? 'secondary' : 'outline'}
+          >
+            {owned ? t('ownership.owned') : t('ownership.markOwned')}
+          </Button>
+        )}
+        {data && <StatusIndicator status={data.status} />}
+      </div>
     </div>
   )
 }

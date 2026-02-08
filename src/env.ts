@@ -7,6 +7,12 @@ export const clientEnvSchema = z.object({
 
 export type ClientEnv = z.infer<typeof clientEnvSchema>
 
+export const convexEnvSchema = z.object({
+  VITE_CONVEX_URL: z.string().url(),
+})
+
+export type ConvexEnv = z.infer<typeof convexEnvSchema>
+
 export const serverEnvSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'])

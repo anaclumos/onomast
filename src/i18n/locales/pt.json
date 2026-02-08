@@ -95,6 +95,10 @@
   "social": {
     "disclaimer": "Os resultados podem ser imprecisos. Clique para verificar."
   },
+  "ownership": {
+    "markOwned": "Marcar como meu",
+    "owned": "Meu"
+  },
   "github": {
     "relatedRepos": "Repos relacionados",
     "repos": "repos",

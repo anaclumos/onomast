@@ -118,3 +118,17 @@ export interface VibeCheckResult {
   redditTake: string
   similarCompanies: string[]
 }
+
+export interface VibeAvailabilitySnapshot {
+  domains: Array<{ tld: TLD; status: AvailabilityStatus }>
+  social: Array<{ platform: SocialPlatform; status: AvailabilityStatus }>
+  packages: Array<{ registry: PackageRegistry; status: AvailabilityStatus }>
+  githubUser?: { status: AvailabilityStatus; type?: 'User' | 'Org' }
+}
+
+export interface OwnedAssets {
+  domains: TLD[]
+  social: SocialPlatform[]
+  packages: PackageRegistry[]
+  githubUser: boolean
+}

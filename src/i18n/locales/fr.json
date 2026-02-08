@@ -95,6 +95,10 @@
   "social": {
     "disclaimer": "Les résultats peuvent être inexacts. Clique pour vérifier."
   },
+  "ownership": {
+    "markOwned": "Marquer comme acquis",
+    "owned": "Acquis"
+  },
   "github": {
     "relatedRepos": "Dépôts liés",
     "repos": "dépôts",
