@@ -9,6 +9,13 @@ export interface SavedSearch {
   latinName?: string
 }
 
+export interface LeaderboardEntry {
+  normalizedName: string
+  name: string
+  saves: number
+  lastSavedAt: number
+}
+
 export const listSavedSearchesFn = makeFunctionReference<
   'query',
   Record<string, never>,
@@ -26,3 +33,9 @@ export const saveSearchFn = makeFunctionReference<
   },
   string
 >('savedsearches:save')
+
+export const leaderboardTopNamesFn = makeFunctionReference<
+  'query',
+  { limit?: number },
+  LeaderboardEntry[]
+>('leaderboard:topNames')

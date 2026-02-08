@@ -80,6 +80,12 @@ function NamePage() {
           <span className="text-muted-foreground text-sm">{name}</span>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            className="rounded-md px-2 py-1 text-muted-foreground text-xs transition-colors hover:bg-muted hover:text-foreground"
+            to="/leaderboard"
+          >
+            Leaderboard
+          </Link>
           <AuthControls />
           <LanguageSwitcher />
           <SearchForm

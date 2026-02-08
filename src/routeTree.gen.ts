@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as NameRouteImport } from './routes/$name'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiOgRouteImport } from './routes/api/og'
 
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NameRoute = NameRouteImport.update({
   id: '/$name',
   path: '/$name',
@@ -32,35 +38,46 @@ const ApiOgRoute = ApiOgRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$name': typeof NameRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/api/og': typeof ApiOgRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$name': typeof NameRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/api/og': typeof ApiOgRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$name': typeof NameRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/api/og': typeof ApiOgRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$name' | '/api/og'
+  fullPaths: '/' | '/$name' | '/leaderboard' | '/api/og'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$name' | '/api/og'
-  id: '__root__' | '/' | '/$name' | '/api/og'
+  to: '/' | '/$name' | '/leaderboard' | '/api/og'
+  id: '__root__' | '/' | '/$name' | '/leaderboard' | '/api/og'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   NameRoute: typeof NameRoute
+  LeaderboardRoute: typeof LeaderboardRoute
   ApiOgRoute: typeof ApiOgRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$name': {
       id: '/$name'
       path: '/$name'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   NameRoute: NameRoute,
+  LeaderboardRoute: LeaderboardRoute,
   ApiOgRoute: ApiOgRoute,
 }
 export const routeTree = rootRouteImport
