@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod/v4'
+import { AuthControls } from '@/components/auth-controls'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { ResultsDashboard } from '@/components/results-dashboard'
+import { SavedSearchesPanel } from '@/components/saved-searches-panel'
 import { SearchForm } from '@/components/search-form'
 
 const searchSchema = z.object({
@@ -78,6 +80,7 @@ function NamePage() {
           <span className="text-muted-foreground text-sm">{name}</span>
         </div>
         <div className="flex items-center gap-2">
+          <AuthControls />
           <LanguageSwitcher />
           <SearchForm
             defaultDescription={description}
@@ -98,6 +101,15 @@ function NamePage() {
         </div>
       </header>
       <main className="flex flex-1 flex-col gap-4 px-4 py-6">
+        <SavedSearchesPanel
+          currentSearch={{
+            name,
+            description: description ?? '',
+            region: region ?? '',
+            language: language ?? '',
+            latinName: latinName ?? '',
+          }}
+        />
         <ResultsDashboard
           description={description ?? ''}
           language={language ?? ''}
