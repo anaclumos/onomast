@@ -1,0 +1,24 @@
+TASK 5: Create drizzle.config.ts - COMPLETED ✅
+
+DELIVERABLES:
+1. ✅ File created: /Users/cho/Developer/onomast/drizzle.config.ts
+   - Schema path: ./src/db/schema.ts
+   - Out directory: ./drizzle
+   - Dialect: postgresql
+   - DB credentials: process.env.DATABASE_URL!
+
+2. ✅ .gitignore updated
+   - Added entry: drizzle/
+   - Location: line 16
+
+VERIFICATION:
+- drizzle.config.ts exists and is valid TypeScript
+- Uses defineConfig from drizzle-kit
+- All required properties configured correctly
+- .gitignore includes drizzle/ directory
+- Config ready for migration generation
+
+NOTES:
+- Schema file (src/db/schema.ts) will be created in Task 2
+- Config is environment-aware (uses process.env.DATABASE_URL)
+- Migration output directory (./drizzle) is properly ignored from git

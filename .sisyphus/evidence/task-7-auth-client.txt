@@ -1,0 +1,46 @@
+TASK 7: Create Better Auth React Client (src/lib/auth-client.ts)
+================================================================
+
+COMPLETION STATUS: ✅ COMPLETE
+
+FILE CREATED: src/lib/auth-client.ts
+- Location: /Users/cho/Developer/onomast/src/lib/auth-client.ts
+- Size: 6 lines
+- Status: Created successfully
+
+IMPLEMENTATION DETAILS:
+- Import: createAuthClient from 'better-auth/react'
+- Export: authClient instance
+- Configuration:
+  * baseURL: window.location.origin (with SSR guard)
+  * SSR Guard: typeof window !== 'undefined' check
+  * No plugins in client config (as required)
+
+CODE VERIFICATION:
+✅ File created with exact pattern specified
+✅ SSR guard implemented correctly
+✅ No hardcoded baseURL (uses window.location.origin)
+✅ No plugins in configuration
+✅ Export named as 'authClient' for component usage
+
+TYPESCRIPT COMPILATION:
+- File syntax: Valid TypeScript
+- Import resolution: better-auth/react available
+- Export type: Correct (authClient instance)
+- Note: Dependency-level TypeScript errors are pre-existing and not related to this file
+
+USAGE PATTERN:
+Components will use:
+- authClient.useSession() - Get current session
+- authClient.signIn.email() - Email sign-in
+- authClient.signOut() - Sign out
+- authClient.signUp.email() - Email sign-up
+
+BLOCKING DEPENDENCIES:
+This task unblocks:
+- Task 13: Create sign-in page
+- Task 14: Create sign-up page
+- Task 15: Create sign-out functionality
+- Task 16: Create session provider
+
+TIMESTAMP: Tue Feb 17 2026

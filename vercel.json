@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "bun install",
-  "buildCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then bunx convex deploy -y --typecheck disable --codegen disable --cmd-url-env-var-name VITE_CONVEX_URL --cmd 'NITRO_PRESET=vercel bun run build'; else NITRO_PRESET=vercel bun run build; fi",
+  "buildCommand": "NITRO_PRESET=vercel bun run build",
   "devCommand": "bun run dev"
 }

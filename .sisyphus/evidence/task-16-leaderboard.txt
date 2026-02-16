@@ -1,0 +1,27 @@
+Task 16: Rewrite leaderboard.tsx — Server Fns + React Query
+==========================================================
+
+File: src/routes/leaderboard.tsx
+
+Changes Made:
+1. Replaced import: `useQuery` from `convex/react` → `@tanstack/react-query`
+2. Removed import: `leaderboardTopNamesFn` from `@/lib/convex-functions`
+3. Added import: `getTopNames` from `@/server/leaderboard`
+4. Replaced query call:
+   - Before: `const entries = useQuery(leaderboardTopNamesFn, { limit: 50 })`
+   - After:  `const { data: entries, isLoading } = useQuery({ queryKey: ['leaderboard', 50], queryFn: () => getTopNames({ data: 50 }) })`
+5. Updated loading check: `entries === undefined` → `isLoading`
+6. Added null safety: `!entries || entries.length === 0` for empty state
+
+Preserved:
+- All JSX structure and styling
+- formatDate helper function
+- LeaderboardError component
+- handleSearch navigation logic
+- Header, layout, list rendering
+
+Verification:
+✅ grep convex: No matches found
+✅ LSP diagnostics: No diagnostics found
+✅ React Query pattern matches use-name-check.ts conventions
+✅ Server function call uses { data: 50 } pattern (TanStack Start convention)

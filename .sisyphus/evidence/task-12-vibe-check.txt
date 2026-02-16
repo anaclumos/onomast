@@ -1,0 +1,46 @@
+Task 12: Rewrite vibe-check.ts — Replace ConvexHttpClient with Drizzle
+======================================================================
+
+Status: COMPLETE
+
+Changes Made:
+- File: src/server/vibe-check.ts
+
+Removed Convex imports:
+  - import { ConvexHttpClient } from 'convex/browser'
+  - import { convexEnvSchema } from '@/env'
+  - import { getVibeCheckByHashFn, upsertVibeCheckFn } from '@/lib/convex-functions'
+
+Added Drizzle imports:
+  - import { eq } from 'drizzle-orm'
+  - import { db } from '@/db'
+  - import { vibeChecks } from '@/db/schema'
+
+Removed:
+  - getConvexClient() singleton (lines 130-143) — ConvexHttpClient + convexEnvSchema
+
+Rewritten getCachedVibeCheck():
+  - Before: client.query(getVibeCheckByHashFn, { inputHash })
+  - After: db.select().from(vibeChecks).where(eq(vibeChecks.inputHash, inputHash)).limit(1)
+  - Returns mapped VibeCheckResult or null
+
+Rewritten saveVibeCheck():
+  - Before: client.mutation(upsertVibeCheckFn, { ... })
+  - After: Drizzle upsert pattern (select existing → update or insert)
+  - Sets updatedAt: new Date() on both paths
+  - Sets createdAt: new Date() on insert only
+  - Uses db.select({ id: vibeChecks.id }) for minimal read on upsert check
+
+Preserved (unchanged):
+  - AI prompt logic (buildVibePrompt, generateVibeCheck)
+  - vibeSchema, availabilityStatusSchema, all Zod schemas
+  - MODEL_ID, PROMPT_VERSION constants
+  - canonicalize(), sha256Hex(), computeInputHash()
+  - checkWordVibe server function signature and handler
+  - All type imports (OwnedAssets, VibeAvailabilitySnapshot, VibeCheckResult)
+  - getCachedVibeCheckSafe() try/catch wrapper
+  - AI_UNAVAILABLE_RESULT fallback
+
+Verification:
+  grep 'convex|Convex' src/server/vibe-check.ts → No matches found
+  checkWordVibe export preserved with same createServerFn({ method: 'GET' }) pattern

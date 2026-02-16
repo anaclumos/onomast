@@ -1,0 +1,59 @@
+TASK 17: Delete Convex Files and Old Client/Function Files
+============================================================
+
+EXECUTION DATE: 2026-02-17
+STATUS: ✓ COMPLETED
+
+DELETIONS PERFORMED:
+====================
+
+1. Directory Deletion:
+   - rm -rf convex/
+   - Status: ✓ Deleted successfully
+   - Verification: ls convex/ → "No such file or directory"
+
+2. File Deletions:
+   - rm src/lib/convex-client.ts
+   - Status: ✓ Deleted successfully
+   - Verification: ls src/lib/convex-client.ts → "No such file or directory"
+   
+   - rm src/lib/convex-functions.ts
+   - Status: ✓ Deleted successfully
+   - Verification: ls src/lib/convex-functions.ts → "No such file or directory"
+
+VERIFICATION RESULTS:
+====================
+
+✓ convex/ directory does not exist
+✓ src/lib/convex-client.ts does not exist
+✓ src/lib/convex-functions.ts does not exist
+✓ No orphan convex imports found in src/
+  - grep -r "convex" src/ --include="*.ts" --include="*.tsx" → 0 matches
+
+DELETED CONTENTS:
+=================
+
+The following files/directories were removed:
+- convex/schema.ts
+- convex/savedsearches.ts
+- convex/vibechecks.ts
+- convex/leaderboard.ts
+- convex/tsconfig.json
+- convex/README.md
+- convex/_generated/ (entire directory)
+- src/lib/convex-client.ts
+- src/lib/convex-functions.ts
+
+MIGRATION STATUS:
+=================
+
+All Convex functionality has been successfully migrated:
+✓ Schema → Drizzle schema
+✓ Queries → Server functions with Drizzle
+✓ Mutations → Server functions with Drizzle
+✓ Client hooks → React Query + Better Auth
+
+NEXT STEPS:
+===========
+
+Task 19: Build verification (unblocked by this task completion)

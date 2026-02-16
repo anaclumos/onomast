@@ -1,0 +1,21 @@
+Task 10: Create saved-searches server functions
+================================================
+
+File created: src/server/saved-searches.ts
+
+Exports:
+- listSavedSearches: createServerFn GET, authenticated via auth.api.getSession
+- saveSearch: createServerFn POST, authenticated, with Zod inputValidator
+- SavedSearch type: { id, name, description, region, language, latinName }
+
+Verification:
+- LSP diagnostics: 0 errors on saved-searches.ts
+- tsc --noEmit: No errors in src/server/saved-searches.ts
+- grep convex: No Convex imports found
+
+Key decisions:
+- Used .inputValidator() (not .validator()) to match codebase convention (social.ts, packages.ts, etc.)
+- Import getRequestHeaders from '@tanstack/react-start/server' (re-exports from @tanstack/start-server-core)
+- SavedSearch type uses null (not undefined) for optional fields to match Drizzle schema nullability
+- Insert relies on schema $defaultFn for id and defaultNow() for timestamps
+- Upsert sets optional fields to null (via ?? null) to handle Zod optional → Drizzle null mapping

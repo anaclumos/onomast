@@ -1,0 +1,55 @@
+Task 13: Rewrite __root.tsx — Remove Clerk/Convex Providers
+=============================================================
+Date: 2026-02-17
+Status: COMPLETE
+
+## Changes Made
+
+File: src/routes/__root.tsx (103 → 96 lines)
+
+### Removed Imports
+- `import { ClerkProvider, useAuth } from '@clerk/tanstack-react-start'` (line 1)
+- `import { ConvexProviderWithClerk } from 'convex/react-clerk'` (line 11)
+- `import { convex } from '@/lib/convex-client'` (line 15)
+
+### Simplified RootComponent
+Before:
+```tsx
+function RootComponent() {
+  const { locale } = Route.useRouteContext()
+  return (
+    <ClerkProvider>
+      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+        <I18nProvider initialLocale={locale}>
+          <Outlet />
+        </I18nProvider>
+      </ConvexProviderWithClerk>
+    </ClerkProvider>
+  )
+}
+```
+
+After:
+```tsx
+function RootComponent() {
+  const { locale } = Route.useRouteContext()
+  return (
+    <I18nProvider initialLocale={locale}>
+      <Outlet />
+    </I18nProvider>
+  )
+}
+```
+
+### Preserved (Unchanged)
+- beforeLoad (locale detection)
+- head() metadata (OG tags, twitter cards, viewport)
+- RootDocument component (devtools, analytics, scripts, EscapeInAppBrowser)
+- CSS import (appCss)
+- All TanStack Router imports
+- All Vercel Analytics imports
+
+## Verification
+- grep -i "clerk|convex" src/routes/__root.tsx → No matches found
+- TypeScript: No new errors introduced (only pre-existing convex/ directory errors)
+- File structure intact, all preserved sections unchanged

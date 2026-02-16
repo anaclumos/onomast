@@ -1,0 +1,36 @@
+# Task 4: Database Connection (src/db/index.ts) - Verification Report
+
+## File Created: src/db/index.ts
+
+### Verification Checklist:
+
+✓ File exists at: src/db/index.ts
+✓ Imports from 'drizzle-orm/postgres-js': YES
+✓ Imports from 'postgres': YES
+✓ Imports schema from './schema': YES
+✓ postgres client created with { prepare: false }: YES
+✓ db exported as drizzle(client, { schema }): YES
+✓ Uses process.env.DATABASE_URL! directly: YES
+
+### File Content:
+```typescript
+import { drizzle } from 'drizzle-orm/postgres-js'
+import postgres from 'postgres'
+import * as schema from './schema'
+
+const client = postgres(process.env.DATABASE_URL!, { prepare: false })
+export const db = drizzle(client, { schema })
+```
+
+### Key Requirements Met:
+1. ✓ Planetscale compatibility: prepare: false is set
+2. ✓ Correct imports: drizzle-orm/postgres-js and postgres packages
+3. ✓ Schema imported correctly: import * as schema from './schema'
+4. ✓ Direct env usage: process.env.DATABASE_URL! (no circular dependency)
+5. ✓ Proper export: db instance exported for use in auth and server functions
+
+### Status: COMPLETE
+- File created successfully
+- All imports correct
+- Planetscale configuration applied
+- Ready for Tasks 6, 10, 11, 12 (which depend on this)

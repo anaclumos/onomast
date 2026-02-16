@@ -1,0 +1,94 @@
+TASK 14: Rewrite auth-controls.tsx — Better Auth Client Hooks
+================================================================
+
+COMPLETION STATUS: ✅ COMPLETE
+
+FILE: src/components/auth-controls.tsx
+LINES: 53 (was 25)
+
+CHANGES MADE:
+=============
+
+1. REMOVED IMPORTS (Clerk):
+   - SignedIn from @clerk/tanstack-react-start
+   - SignedOut from @clerk/tanstack-react-start
+   - SignInButton from @clerk/tanstack-react-start
+   - UserButton from @clerk/tanstack-react-start
+
+2. ADDED IMPORTS (Better Auth):
+   - authClient from @/lib/auth-client
+   - useState from react
+   - Button from @/components/ui/button
+
+3. IMPLEMENTATION PATTERN:
+   - 'use client' directive added (client component)
+   - authClient.useSession() hook: const { data: session, isPending } = authClient.useSession()
+   - State management: isSigningOut for sign-out button loading state
+
+4. CONDITIONAL RENDERING LOGIC:
+   a) if (isPending) → return null (loading state)
+   b) if (!session) → return "Log in" button
+      - onClick: window.location.href = '/auth/signin'
+      - size="sm", variant="outline" styling preserved
+   c) else (session exists) → return user info + "Sign out" button
+      - Display: session.user.name || session.user.email
+      - Sign-out: authClient.signOut() with redirect to '/'
+      - Loading state: "Signing out..." text during request
+
+5. STYLING PRESERVED:
+   - Button component: size="sm", variant="outline"
+   - User info: text-xs text-muted-foreground
+   - Layout: flex items-center gap-2
+
+VERIFICATION RESULTS:
+====================
+
+✅ No Clerk imports remain (grep verified)
+✅ No Clerk references anywhere in file
+✅ TypeScript compilation: 0 errors (LSP diagnostics clean)
+✅ authClient imported from correct path (@/lib/auth-client)
+✅ useSession() hook used correctly
+✅ Conditional rendering logic implemented
+✅ Button styling preserved (size="sm", variant="outline")
+✅ Sign-out functionality with redirect
+✅ Loading state handling (isPending, isSigningOut)
+
+ARCHITECTURE NOTES:
+===================
+
+1. Sign-in Flow:
+   - Button click → window.location.href = '/auth/signin'
+   - Assumes /auth/signin page exists (Task 13 creates this)
+   - Simple navigation pattern (no modal)
+
+2. Sign-out Flow:
+   - Button click → authClient.signOut() → redirect to '/'
+   - Async operation with loading state
+   - Error handling: finally block ensures state reset
+
+3. Session State:
+   - isPending: True while session is loading
+   - session: null when not authenticated, contains user data when authenticated
+   - session.user.name and session.user.email available
+
+4. Client Component:
+   - 'use client' directive required for useSession() hook
+   - Hooks (useState, authClient.useSession) only work in client components
+   - Safe to use in layouts/headers (client-side rendering)
+
+DEPENDENCIES:
+=============
+
+- Requires: src/lib/auth-client.ts (Task 7) ✅
+- Requires: src/lib/auth.ts (Task 6) ✅
+- Requires: src/routes/api/auth/$.ts (Task 8) ✅
+- Blocks: Task 19 (build verification)
+
+NEXT STEPS:
+===========
+
+- Task 15: Rewrite saved-searches-panel.tsx
+- Task 16: Rewrite leaderboard.tsx
+- Task 17: Rewrite vibe-check-panel.tsx
+- Task 18: Rewrite search-input.tsx
+- Task 19: Build verification

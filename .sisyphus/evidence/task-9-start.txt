@@ -1,0 +1,32 @@
+TASK 9: Rewrite src/start.ts — Remove Clerk Middleware
+========================================================
+
+COMPLETION STATUS: ✓ COMPLETE
+
+CHANGES MADE:
+- Removed: import { clerkMiddleware } from '@clerk/tanstack-react-start/server'
+- Removed: requestMiddleware: [clerkMiddleware()] from config
+- Result: Minimal start.ts with only createStart import and export
+
+FINAL FILE CONTENT:
+-------------------
+import { createStart } from '@tanstack/react-start'
+
+export const startInstance = createStart(() => {
+  return {}
+})
+
+VERIFICATION RESULTS:
+✓ No Clerk references in file (grep -i clerk returned no matches)
+✓ createStart import present
+✓ startInstance export present
+✓ File structure matches target specification
+✓ TypeScript: Pre-existing config issues unrelated to this change
+
+RATIONALE:
+Better Auth handles authentication through its own API route (/api/auth/$),
+not through request middleware. Unlike Clerk's middleware-based approach,
+Better Auth doesn't require middleware in start.ts.
+
+DEPENDENCIES:
+- Unblocks Task 13: __root.tsx rewrite

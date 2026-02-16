@@ -1,0 +1,72 @@
+TASK 18: Update Deployment Configuration Files
+================================================
+
+OBJECTIVE:
+Remove Convex references and document the new Better Auth + Drizzle stack.
+
+FILES MODIFIED:
+===============
+
+1. vercel.json
+   - BEFORE: Complex buildCommand with conditional Convex deploy
+   - AFTER: Simple buildCommand with NITRO_PRESET=vercel bun run build
+   - CHANGE: Removed entire if/else conditional checking VERCEL_ENV
+   - VERIFICATION: ✓ No "convex" references in file
+
+2. package.json (scripts section)
+   - REMOVED: "convex:dev": "convex dev"
+   - REMOVED: "convex:deploy": "convex deploy"
+   - ADDED: "db:generate": "drizzle-kit generate"
+   - ADDED: "db:migrate": "drizzle-kit migrate"
+   - ADDED: "db:push": "drizzle-kit push"
+   - ADDED: "db:studio": "drizzle-kit studio"
+   - VERIFICATION: ✓ No "convex" references in scripts
+
+3. SETUP.md (complete rewrite)
+   - TITLE: Changed from "Setup (Clerk + Convex + Vercel)" to "Setup (Better Auth + Drizzle + Planetscale)"
+   - STACK: Updated to Better Auth (self-hosted, cookie-based) + Drizzle ORM + Planetscale Postgres
+   - REQUIREMENTS: Removed Convex project access, added Planetscale CLI
+   - LOCAL DEV: Simplified to .env.local setup + drizzle-kit commands (no convex dev)
+   - REMOVED: All Clerk JWT template setup instructions
+   - REMOVED: All Convex deployment instructions
+   - REMOVED: All Convex environment variable setup
+   - ADDED: Database schema management section (generate, push, studio)
+   - ADDED: Authentication setup section (Better Auth configuration)
+   - ADDED: Production deploy section (Planetscale branch switching + drizzle-kit push)
+   - ENV VARS: Updated to DATABASE_URL + BETTER_AUTH_SECRET (removed CLERK_* and VITE_CONVEX_URL)
+   - VERIFICATION: ✓ No "convex" or "clerk" references in file
+
+VERIFICATION RESULTS:
+====================
+
+✓ vercel.json: No Convex references
+✓ package.json: No Convex scripts
+✓ SETUP.md: No Convex or Clerk references
+✓ All three files updated successfully
+✓ New stack documented: Better Auth + Drizzle + Planetscale
+✓ Database scripts added: db:generate, db:migrate, db:push, db:studio
+✓ Production deployment instructions updated
+
+STACK MIGRATION SUMMARY:
+=======================
+
+OLD STACK:
+- Auth: Clerk (managed service)
+- Backend: Convex (serverless functions)
+- Deployment: Vercel with Convex deploy in buildCommand
+
+NEW STACK:
+- Auth: Better Auth (self-hosted, cookie-based)
+- Database: Drizzle ORM + Planetscale Postgres
+- Deployment: Vercel with simple buildCommand (no Convex)
+
+KEY CHANGES:
+- Removed middleware-based auth (Clerk) → Cookie-based sessions (Better Auth)
+- Removed serverless functions (Convex) → Server functions + Drizzle ORM
+- Removed complex build process → Simple Nitro build
+- Removed Clerk JWT setup → Better Auth secret management
+- Removed Convex deployment → Drizzle migrations via drizzle-kit
+
+DEPENDENCIES:
+=============
+This task unblocks Task 19 (build verification).

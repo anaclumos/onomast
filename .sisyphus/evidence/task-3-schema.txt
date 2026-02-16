@@ -1,0 +1,39 @@
+Task 3: Create Drizzle schema (src/db/schema.ts)
+=================================================
+Status: COMPLETE
+Date: 2026-02-17
+
+File created: src/db/schema.ts
+
+Exports verified:
+  - user (Better Auth core table)
+  - session (Better Auth core table)
+  - account (Better Auth core table)
+  - verification (Better Auth core table)
+  - savedSearches (app table, translated from Convex)
+  - vibeChecks (app table, translated from Convex)
+
+Better Auth tables follow docs at https://www.better-auth.com/docs/concepts/database:
+  - user: id(pk), name, email(unique), emailVerified(boolean), image(?), createdAt, updatedAt
+  - session: id(pk), expiresAt, token(unique), createdAt, updatedAt, ipAddress(?), userAgent(?), userId(fk->user cascade)
+  - account: id(pk), accountId, providerId, userId(fk->user cascade), accessToken(?), refreshToken(?), idToken(?), accessTokenExpiresAt(?), refreshTokenExpiresAt(?), scope(?), password(?), createdAt, updatedAt
+  - verification: id(pk), identifier, value, expiresAt, createdAt(?), updatedAt(?)
+
+App tables translated from convex/schema.ts:
+  - savedSearches: id(pk), userId(fk->user cascade), normalizedName, name, description(?), region(?), language(?), latinName(?), createdAt(defaultNow), updatedAt(defaultNow)
+    Indexes: saved_searches_user_id_idx(userId), saved_searches_user_id_normalized_name_idx(userId+normalizedName, unique)
+  - vibeChecks: id(pk), inputHash, name, description(?), region(?), language(?), locale, positivity(int), vibe(typed union), reason, whyGood, whyBad, redditTake, similarCompanies(text[]), model(?), promptVersion(int), createdAt(defaultNow), updatedAt(defaultNow)
+    Indexes: vibe_checks_input_hash_idx(inputHash, unique)
+
+Type mapping from Convex:
+  - v.string() -> text()
+  - v.optional(v.string()) -> text() (nullable by default)
+  - v.number() -> integer() for positivity/promptVersion
+  - v.number() for createdAt/updatedAt -> timestamp() with defaultNow()
+  - v.union(v.literal(...)) -> text().$type<union>()
+  - v.array(v.string()) -> text().array()
+
+DB column naming: snake_case (e.g., user_id, created_at, input_hash)
+JS property naming: camelCase (e.g., userId, createdAt, inputHash)
+
+TypeScript compilation: PASS (0 errors in src/db/schema.ts)

@@ -1,0 +1,44 @@
+Task 15: Rewrite saved-searches-panel.tsx — server fns + React Query
+====================================================================
+
+Status: COMPLETE
+File: src/components/saved-searches-panel.tsx (118 lines -> 130 lines)
+
+REMOVED:
+- import { SignedIn, SignedOut, useAuth } from '@clerk/tanstack-react-start'
+- import { useMutation, useQuery } from 'convex/react'
+- import { listSavedSearchesFn, type SavedSearch, saveSearchFn } from '@/lib/convex-functions'
+- import { useState } from 'react' (no longer needed — mutation state from React Query)
+- <SignedOut> / <SignedIn> wrapper components
+- Manual isSaving/statusText useState
+
+ADDED:
+- import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+- import { authClient } from '@/lib/auth-client'
+- import { listSavedSearches, saveSearch, type SavedSearch } from '@/server/saved-searches'
+- authClient.useSession() for session check
+- React Query useQuery with enabled: !!session
+- React Query useMutation with onSuccess invalidation
+- normalizedName field in mutation data (required by new server fn)
+
+KEY CHANGES:
+1. Auth: useAuth() -> authClient.useSession()
+2. List query: Convex useQuery(fn, skip) -> React Query useQuery({ queryKey, queryFn, enabled })
+3. Save mutation: Convex useMutation(fn) -> React Query useMutation({ mutationFn, onSuccess })
+4. Conditional rendering: <SignedOut>/<SignedIn> -> if (!session)/if (session)
+5. ID field: search._id -> search.id (Drizzle schema uses 'id')
+6. Status text: Manual useState -> saveMutation.isSuccess / saveMutation.isError
+7. Loading state: Manual useState(isSaving) -> saveMutation.isPending
+8. normalizedName: Added name.toLowerCase() for server fn requirement
+
+PRESERVED:
+- All JSX structure (div, section, h2, Button, Link components)
+- All Tailwind classes unchanged
+- toRouteSearch() helper function
+- SearchState interface
+- Link params/search/to props
+- Button size="sm" variant="secondary"
+
+VERIFICATION:
+- grep clerk/convex/SignedIn/SignedOut/useAuth/_id: 0 matches
+- All imports resolve to existing modules

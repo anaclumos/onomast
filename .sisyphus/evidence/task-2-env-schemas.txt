@@ -1,0 +1,59 @@
+TASK 2: Update Environment Variable Zod Schemas
+================================================
+
+OBJECTIVE:
+Replace Clerk/Convex environment variables with Better Auth and Drizzle/Postgres variables.
+
+FILES MODIFIED:
+===============
+
+1. src/env.ts
+   - REMOVED: clientEnvSchema entries for VITE_CLERK_PUBLISHABLE_KEY and VITE_CONVEX_URL
+   - REMOVED: convexEnvSchema and ConvexEnv type entirely
+   - UPDATED: serverEnvSchema
+     * REMOVED: CLERK_SECRET_KEY
+     * ADDED: DATABASE_URL: z.string().min(1)
+     * ADDED: BETTER_AUTH_SECRET: z.string().min(1)
+     * KEPT: NODE_ENV and AI_GATEWAY_API_KEY
+
+2. src/env.client.ts
+   - UPDATED: clientEnvSchema.parse(import.meta.env) → clientEnvSchema.parse({})
+   - Rationale: Better Auth doesn't require client-side environment variables
+
+3. src/env.server.ts
+   - NO CHANGES: getServerEnv() pattern remains intact
+   - Now exports DATABASE_URL and BETTER_AUTH_SECRET via ServerEnv type
+
+VERIFICATION RESULTS:
+====================
+
+✓ No CLERK or CONVEX references remain in env files
+✓ All three files have valid TypeScript syntax
+✓ Zod validation pattern preserved
+✓ NODE_ENV and AI_GATEWAY_API_KEY retained as required
+
+SCHEMA SUMMARY:
+===============
+
+clientEnvSchema (BEFORE):
+  - VITE_CLERK_PUBLISHABLE_KEY: string
+  - VITE_CONVEX_URL: url
+
+clientEnvSchema (AFTER):
+  - (empty object)
+
+serverEnvSchema (BEFORE):
+  - NODE_ENV: enum (development|production|test)
+  - AI_GATEWAY_API_KEY: optional string
+  - CLERK_SECRET_KEY: string
+
+serverEnvSchema (AFTER):
+  - NODE_ENV: enum (development|production|test)
+  - AI_GATEWAY_API_KEY: optional string
+  - DATABASE_URL: string (min 1 char)
+  - BETTER_AUTH_SECRET: string (min 1 char)
+
+DEPENDENCIES UNBLOCKED:
+=======================
+- Task 6: Better Auth configuration (now has env schema)
+- Task 7: Drizzle setup (now has DATABASE_URL schema)

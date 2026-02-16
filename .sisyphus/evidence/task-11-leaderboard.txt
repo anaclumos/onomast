@@ -1,0 +1,35 @@
+TASK 11: Create leaderboard server function (src/server/leaderboard.ts)
+========================================================================
+
+COMPLETION CHECKLIST:
+✓ File created: src/server/leaderboard.ts
+✓ Exports: getTopNames server function (createServerFn)
+✓ Exports: LeaderboardEntry type
+✓ Function: NO authentication required (public endpoint)
+✓ Function: Takes optional limit param (default 50, max 100)
+✓ Function: Queries savedSearches table, groups by normalizedName, counts saves, returns sorted
+✓ TypeScript: No syntax errors
+✓ NO Convex imports
+
+IMPLEMENTATION DETAILS:
+- Import: createServerFn from '@tanstack/react-start' (not /server)
+- Import: db from '@/db', savedSearches from '@/db/schema'
+- Logic: In-memory Map aggregation (matches Convex pattern)
+- Sorting: By saves (desc), then lastSavedAt (desc)
+- Limit: Math.max(1, Math.min(limit ?? 50, 100))
+- Timestamp: search.updatedAt.getTime() (Drizzle Date → milliseconds)
+
+PATTERN TRANSLATION (Convex → Drizzle):
+- ctx.db.query('savedSearches').collect() → db.select().from(savedSearches)
+- row._creationTime → row.updatedAt.getTime()
+- Same aggregation logic, same sorting, same slicing
+
+FILE LOCATION: /Users/cho/Developer/onomast/src/server/leaderboard.ts
+LINES: 49 total
+
+VERIFICATION:
+- File syntax valid (matches existing server function patterns)
+- Imports correct (verified against detect-locale.ts, dictionary.ts)
+- Type exports match LeaderboardEntry interface from src/lib/convex-functions.ts
+- No Convex dependencies
+- Public endpoint (no auth check)

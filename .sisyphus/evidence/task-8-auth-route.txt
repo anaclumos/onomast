@@ -1,0 +1,53 @@
+TASK 8: Create auth API route (src/routes/api/auth/$.ts)
+========================================================
+
+COMPLETION EVIDENCE
+-------------------
+
+✅ Directory created: src/routes/api/auth/
+✅ File created: src/routes/api/auth/$.ts
+✅ Imports correct:
+   - createFileRoute from @tanstack/react-router
+   - auth from @/lib/auth
+
+✅ Route structure:
+   - Path: /api/auth/$ (catch-all route)
+   - GET handler: delegates to auth.handler(request)
+   - POST handler: delegates to auth.handler(request)
+
+✅ TypeScript verification: No errors
+✅ Pattern matches existing API route (src/routes/api/og.ts)
+
+FILE CONTENT
+------------
+import { createFileRoute } from '@tanstack/react-router'
+import { auth } from '@/lib/auth'
+
+export const Route = createFileRoute('/api/auth/$')({
+  server: {
+    handlers: {
+      GET: async ({ request }: { request: Request }) => {
+        return await auth.handler(request)
+      },
+      POST: async ({ request }: { request: Request }) => {
+        return await auth.handler(request)
+      },
+    },
+  },
+})
+
+VERIFICATION
+------------
+- File size: 410 bytes
+- LSP diagnostics: No errors
+- Directory structure: src/routes/api/auth/$.ts exists
+- Both GET and POST handlers present
+- No extra middleware or logic added
+- Route path is exactly /api/auth/$
+
+NOTES
+-----
+- The $ filename is TanStack Router's catch-all syntax
+- Matches all routes under /api/auth/* (e.g., /api/auth/signin, /api/auth/signup, etc.)
+- Better Auth's handler processes all auth operations
+- Follows same pattern as existing src/routes/api/og.ts route
