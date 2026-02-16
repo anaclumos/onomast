@@ -52,34 +52,42 @@ TXT     _dmarc.is.onomast.app           v=DMARC1; p=none;
 MX      is.onomast.app                  feedback-smtp.us-east-1.amazonses.com (priority 10)
 ```
 
-## Step 4: Add DNS Records via Vercel Dashboard
+## Step 4: Add DNS Records via Vercel CLI
 
-Since CLI requires team permissions, use the Vercel Dashboard:
+✅ **COMPLETED** - DNS records have been added via Vercel CLI with `--scope sunghyun-cho` flag:
 
-1. Go to [Vercel Domains](https://vercel.com/[your-team]/onomast/settings/domains)
-2. Find `onomast.app` and click **Manage DNS**
-3. Add each record from Resend (Step 3):
+### Already Added Records:
 
-### SPF Record
-- **Type**: TXT
-- **Name**: `is`
-- **Value**: `v=spf1 include:amazonses.com ~all`
+✅ **SPF Record** - Added via CLI
+```bash
+vercel dns add onomast.app is TXT "v=spf1 include:amazonses.com ~all" --scope sunghyun-cho
+# Record ID: rec_8d1069dd9eef84113f348edf
+```
 
-### DKIM Record
-- **Type**: TXT
-- **Name**: `resend._domainkey.is`
-- **Value**: [Copy from Resend dashboard - long RSA key]
+✅ **DMARC Record** - Added via CLI
+```bash
+vercel dns add onomast.app "_dmarc.is" TXT "v=DMARC1; p=none;" --scope sunghyun-cho
+# Record ID: rec_b5a39d22679074a526961bcd
+```
 
-### DMARC Record
-- **Type**: TXT
-- **Name**: `_dmarc.is`
-- **Value**: `v=DMARC1; p=none;`
+✅ **MX Record** - Added via CLI
+```bash
+vercel dns add onomast.app is MX "feedback-smtp.us-east-1.amazonses.com" 10 --scope sunghyun-cho
+# Record ID: rec_9c8d1ae584e22a9cec5cf31b
+```
 
-### MX Record (Optional - for receiving)
-- **Type**: MX
-- **Name**: `is`
-- **Value**: `feedback-smtp.us-east-1.amazonses.com`
-- **Priority**: 10
+### 🔴 REQUIRED: DKIM Record (Get from Resend Dashboard)
+
+**This record is unique to your Resend account and must be obtained after adding the domain.**
+
+1. Add domain `is.onomast.app` to Resend Dashboard: https://resend.com/domains
+2. Resend will generate a unique DKIM key (very long TXT record)
+3. Add it to Vercel:
+   ```bash
+   vercel dns add onomast.app "resend._domainkey.is" TXT "[PASTE_DKIM_KEY_HERE]" --scope sunghyun-cho
+   ```
+
+**See [RESEND_DKIM_INSTRUCTIONS.md](./RESEND_DKIM_INSTRUCTIONS.md) for detailed steps.**
 
 ## Step 5: Verify DNS Records
 
