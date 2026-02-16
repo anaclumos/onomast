@@ -11,6 +11,8 @@ export const serverEnvSchema = z.object({
   AI_GATEWAY_API_KEY: z.string().optional(),
   DATABASE_URL: z.string().min(1),
   BETTER_AUTH_SECRET: z.string().min(1),
+  BETTER_AUTH_URL: z.string().url().optional(),
+  RESEND_API_KEY: z.string().optional(),
 })
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>

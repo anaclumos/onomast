@@ -45,6 +45,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "recharts": "^3.7.0",
+    "resend": "^6.9.2",
     "satori": "^0.19.1",
     "shadcn": "^3.7.0",
     "tailwind-merge": "^3.4.0",

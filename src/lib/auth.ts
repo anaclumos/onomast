@@ -1,9 +1,14 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
+import { Resend } from 'resend'
 import { db } from '@/db'
 // biome-ignore lint/performance/noNamespaceImport: Drizzle adapter requires schema namespace
 import * as schema from '@/db/schema'
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : undefined
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -14,6 +19,30 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({ user, url }) => {
+      if (!resend) {
+        return
+      }
+      await resend.emails.send({
+        from: 'this@is.onomast.app',
+        to: user.email,
+        subject: 'Reset your password',
+        html: `<p>Click <a href="${url}">here</a> to reset your password.</p>`,
+      })
+    },
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      if (!resend) {
+        return
+      }
+      await resend.emails.send({
+        from: 'this@is.onomast.app',
+        to: user.email,
+        subject: 'Verify your email',
+        html: `<p>Click <a href="${url}">here</a> to verify your email.</p>`,
+      })
+    },
   },
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
