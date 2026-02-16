@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "bun install",
-  "buildCommand": "NITRO_PRESET=vercel bun run build",
+  "buildCommand": "bun run db:migrate && NITRO_PRESET=vercel bun run build",
   "devCommand": "bun run dev"
 }
