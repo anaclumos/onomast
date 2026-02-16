@@ -1,14 +1,14 @@
+import { useQuery } from '@tanstack/react-query'
 import {
   createFileRoute,
   type ErrorComponentProps,
   Link,
   useNavigate,
 } from '@tanstack/react-router'
-import { useQuery } from 'convex/react'
 import { AuthControls } from '@/components/auth-controls'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { SearchForm } from '@/components/search-form'
-import { leaderboardTopNamesFn } from '@/lib/convex-functions'
+import { getTopNames } from '@/server/leaderboard'
 
 export const Route = createFileRoute('/leaderboard')({
   head: () => ({
@@ -62,7 +62,10 @@ function formatDate(timestamp: number) {
 
 function LeaderboardPage() {
   const navigate = useNavigate()
-  const entries = useQuery(leaderboardTopNamesFn, { limit: 50 })
+  const { data: entries, isLoading } = useQuery({
+    queryKey: ['leaderboard', 50],
+    queryFn: () => getTopNames({ data: 50 }),
+  })
 
   const handleSearch = (
     newName: string,
@@ -84,11 +87,11 @@ function LeaderboardPage() {
   }
 
   let list: React.ReactNode
-  if (entries === undefined) {
+  if (isLoading) {
     list = (
       <div className="px-3 py-6 text-muted-foreground text-sm">Loading...</div>
     )
-  } else if (entries.length === 0) {
+  } else if (!entries || entries.length === 0) {
     list = (
       <div className="px-3 py-6 text-muted-foreground text-sm">
         No data yet.

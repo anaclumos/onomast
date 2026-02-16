@@ -1,4 +1,3 @@
-import { ClerkProvider, useAuth } from '@clerk/tanstack-react-start'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import {
   createRootRoute,
@@ -8,11 +7,9 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { Analytics } from '@vercel/analytics/react'
-import { ConvexProviderWithClerk } from 'convex/react-clerk'
 import { EscapeInAppBrowser } from 'eiab/react'
 
 import { I18nProvider } from '@/i18n/context'
-import { convex } from '@/lib/convex-client'
 import { detectLocale } from '@/server/detect-locale'
 import appCss from '../styles.css?url'
 
@@ -64,13 +61,9 @@ function RootComponent() {
   const { locale } = Route.useRouteContext()
 
   return (
-    <ClerkProvider>
-      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-        <I18nProvider initialLocale={locale}>
-          <Outlet />
-        </I18nProvider>
-      </ConvexProviderWithClerk>
-    </ClerkProvider>
+    <I18nProvider initialLocale={locale}>
+      <Outlet />
+    </I18nProvider>
   )
 }
 
