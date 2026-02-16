@@ -9,17 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as NameRouteImport } from './routes/$name'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiOgRouteImport } from './routes/api/og'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
-const LeaderboardRoute = LeaderboardRouteImport.update({
-  id: '/leaderboard',
-  path: '/leaderboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NameRoute = NameRouteImport.update({
   id: '/$name',
   path: '/$name',
@@ -35,59 +28,39 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$name': typeof NameRoute
-  '/leaderboard': typeof LeaderboardRoute
   '/api/og': typeof ApiOgRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$name': typeof NameRoute
-  '/leaderboard': typeof LeaderboardRoute
   '/api/og': typeof ApiOgRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$name': typeof NameRoute
-  '/leaderboard': typeof LeaderboardRoute
   '/api/og': typeof ApiOgRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$name' | '/leaderboard' | '/api/og' | '/api/auth/$'
+  fullPaths: '/' | '/$name' | '/api/og'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$name' | '/leaderboard' | '/api/og' | '/api/auth/$'
-  id: '__root__' | '/' | '/$name' | '/leaderboard' | '/api/og' | '/api/auth/$'
+  to: '/' | '/$name' | '/api/og'
+  id: '__root__' | '/' | '/$name' | '/api/og'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   NameRoute: typeof NameRoute
-  LeaderboardRoute: typeof LeaderboardRoute
   ApiOgRoute: typeof ApiOgRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/leaderboard': {
-      id: '/leaderboard'
-      path: '/leaderboard'
-      fullPath: '/leaderboard'
-      preLoaderRoute: typeof LeaderboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/$name': {
       id: '/$name'
       path: '/$name'
@@ -109,22 +82,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   NameRoute: NameRoute,
-  LeaderboardRoute: LeaderboardRoute,
   ApiOgRoute: ApiOgRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
