@@ -2,7 +2,17 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": ["ultracite/biome/core"],
   "files": {
-    "includes": ["!src/components/ui"]
+    "includes": ["!src/components/ui"],
+    "ignoreUnknown": true
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "useFilenamingConvention": {
+          "level": "off"
+        }
+      }
+    }
   },
   "javascript": {
     "formatter": {
