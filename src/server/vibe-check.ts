@@ -1,10 +1,10 @@
 import { gateway } from '@ai-sdk/gateway'
 import { createServerFn } from '@tanstack/react-start'
 import { generateObject } from 'ai'
-import { ConvexHttpClient } from 'convex/browser'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { convexEnvSchema } from '@/env'
-import { getVibeCheckByHashFn, upsertVibeCheckFn } from '@/lib/convex-functions'
+import { db } from '@/db'
+import { vibeChecks } from '@/db/schema'
 import type {
   OwnedAssets,
   VibeAvailabilitySnapshot,
@@ -127,21 +127,6 @@ const localeToLanguage: Record<string, string> = {
 const MODEL_ID = 'openai/gpt-5.2' as const
 const PROMPT_VERSION = 2 as const
 
-let convexClient: ConvexHttpClient | null = null
-function getConvexClient(): ConvexHttpClient | null {
-  if (convexClient) {
-    return convexClient
-  }
-
-  const env = convexEnvSchema.safeParse(process.env)
-  if (!env.success) {
-    return null
-  }
-
-  convexClient = new ConvexHttpClient(env.data.VITE_CONVEX_URL)
-  return convexClient
-}
-
 function canonicalize(value: string): string {
   return value.trim().replace(/\s+/g, ' ')
 }
@@ -212,12 +197,26 @@ async function computeInputHash(input: {
 async function getCachedVibeCheck(
   inputHash: string
 ): Promise<VibeCheckResult | null> {
-  const client = getConvexClient()
-  if (!client) {
+  const rows = await db
+    .select()
+    .from(vibeChecks)
+    .where(eq(vibeChecks.inputHash, inputHash))
+    .limit(1)
+
+  const row = rows[0]
+  if (!row) {
     return null
   }
 
-  return await client.query(getVibeCheckByHashFn, { inputHash })
+  return {
+    positivity: row.positivity,
+    vibe: row.vibe,
+    reason: row.reason,
+    whyGood: row.whyGood,
+    whyBad: row.whyBad,
+    redditTake: row.redditTake,
+    similarCompanies: row.similarCompanies,
+  }
 }
 
 async function saveVibeCheck(args: {
@@ -229,12 +228,7 @@ async function saveVibeCheck(args: {
   locale: string
   result: VibeCheckResult
 }): Promise<void> {
-  const client = getConvexClient()
-  if (!client) {
-    return
-  }
-
-  await client.mutation(upsertVibeCheckFn, {
+  const base = {
     inputHash: args.inputHash,
     name: canonicalize(args.name),
     description: canonicalize(args.description) || undefined,
@@ -250,7 +244,26 @@ async function saveVibeCheck(args: {
     similarCompanies: args.result.similarCompanies,
     model: MODEL_ID,
     promptVersion: PROMPT_VERSION,
-  })
+    updatedAt: new Date(),
+  }
+
+  const existing = await db
+    .select({ id: vibeChecks.id })
+    .from(vibeChecks)
+    .where(eq(vibeChecks.inputHash, args.inputHash))
+    .limit(1)
+
+  if (existing[0]) {
+    await db
+      .update(vibeChecks)
+      .set(base)
+      .where(eq(vibeChecks.id, existing[0].id))
+  } else {
+    await db.insert(vibeChecks).values({
+      ...base,
+      createdAt: new Date(),
+    })
+  }
 }
 
 const AI_UNAVAILABLE_RESULT: VibeCheckResult = {
