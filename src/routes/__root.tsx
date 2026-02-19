@@ -51,6 +51,12 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        src: 'https://cdn.visitors.now/v.js',
+        'data-token': '2dfba872-3677-4979-afe0-356b42f2fb8f',
+      },
+    ],
   }),
 
   component: RootComponent,
