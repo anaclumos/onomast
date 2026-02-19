@@ -111,7 +111,11 @@ function PackageRow({
         {showOwnedToggle && (
           <Button
             aria-pressed={owned}
-            onClick={() => onToggleOwned(registry)}
+            className="pointer-events-auto"
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleOwned(registry)
+            }}
             size="xs"
             variant={owned ? 'secondary' : 'outline'}
           >

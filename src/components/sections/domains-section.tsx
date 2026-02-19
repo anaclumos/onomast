@@ -126,7 +126,11 @@ function DomainRow({
         {showOwnedToggle && (
           <Button
             aria-pressed={owned}
-            onClick={() => onToggleOwned(tld)}
+            className="pointer-events-auto"
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleOwned(tld)
+            }}
             size="xs"
             variant={owned ? 'secondary' : 'outline'}
           >

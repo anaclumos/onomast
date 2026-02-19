@@ -84,7 +84,11 @@ export function GitHubSection({
               {(owned || githubUser.data?.status !== 'available') && (
                 <Button
                   aria-pressed={owned}
-                  onClick={onToggleOwned}
+                  className="pointer-events-auto"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onToggleOwned()
+                  }}
                   size="xs"
                   variant={owned ? 'secondary' : 'outline'}
                 >

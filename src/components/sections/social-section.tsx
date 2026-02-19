@@ -123,7 +123,11 @@ function SocialRow({
         {showOwnedToggle && (
           <Button
             aria-pressed={owned}
-            onClick={() => onToggleOwned(platform)}
+            className="pointer-events-auto"
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleOwned(platform)
+            }}
             size="xs"
             variant={owned ? 'secondary' : 'outline'}
           >
