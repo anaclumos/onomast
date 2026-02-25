@@ -1,10 +1,7 @@
 import { gateway } from '@ai-sdk/gateway'
 import { createServerFn } from '@tanstack/react-start'
 import { generateObject } from 'ai'
-import { eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { db } from '@/db'
-import { vibeChecks } from '@/db/schema'
 import type {
   OwnedAssets,
   VibeAvailabilitySnapshot,
@@ -125,145 +122,9 @@ const localeToLanguage: Record<string, string> = {
 }
 
 const MODEL_ID = 'openai/gpt-5.2' as const
-const PROMPT_VERSION = 2 as const
 
 function canonicalize(value: string): string {
   return value.trim().replace(/\s+/g, ' ')
-}
-
-async function sha256Hex(input: string): Promise<string> {
-  const bytes = new TextEncoder().encode(input)
-  const digest = await crypto.subtle.digest('SHA-256', bytes)
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
-}
-
-async function computeInputHash(input: {
-  name: string
-  description: string
-  region: string
-  language: string
-  locale: string
-  context: VibeContext
-}): Promise<string> {
-  // Stable cache key; bump PROMPT_VERSION to invalidate prior generations.
-  const owned = input.context.owned ?? {}
-  const availability = input.context.availability ?? {}
-
-  const payload = JSON.stringify({
-    promptVersion: PROMPT_VERSION,
-    model: MODEL_ID,
-    name: canonicalize(input.name),
-    description: canonicalize(input.description),
-    region: canonicalize(input.region),
-    language: canonicalize(input.language),
-    locale: canonicalize(input.locale),
-    handleName: canonicalize(input.context.handleName ?? ''),
-    availability: {
-      domains:
-        availability.domains?.map((d) => ({
-          tld: d.tld,
-          status: d.status,
-        })) ?? [],
-      social:
-        availability.social?.map((s) => ({
-          platform: s.platform,
-          status: s.status,
-        })) ?? [],
-      packages:
-        availability.packages?.map((p) => ({
-          registry: p.registry,
-          status: p.status,
-        })) ?? [],
-      githubUser: availability.githubUser
-        ? {
-            status: availability.githubUser.status,
-            type: availability.githubUser.type,
-          }
-        : null,
-    },
-    owned: {
-      domains: [...(owned.domains ?? [])].sort(),
-      social: [...(owned.social ?? [])].sort(),
-      packages: [...(owned.packages ?? [])].sort(),
-      githubUser: Boolean(owned.githubUser),
-    },
-  })
-
-  return await sha256Hex(payload)
-}
-
-async function getCachedVibeCheck(
-  inputHash: string
-): Promise<VibeCheckResult | null> {
-  const rows = await db
-    .select()
-    .from(vibeChecks)
-    .where(eq(vibeChecks.inputHash, inputHash))
-    .limit(1)
-
-  const row = rows[0]
-  if (!row) {
-    return null
-  }
-
-  return {
-    positivity: row.positivity,
-    vibe: row.vibe,
-    reason: row.reason,
-    whyGood: row.whyGood,
-    whyBad: row.whyBad,
-    redditTake: row.redditTake,
-    similarCompanies: row.similarCompanies,
-  }
-}
-
-async function saveVibeCheck(args: {
-  inputHash: string
-  name: string
-  description: string
-  region: string
-  language: string
-  locale: string
-  result: VibeCheckResult
-}): Promise<void> {
-  const base = {
-    inputHash: args.inputHash,
-    name: canonicalize(args.name),
-    description: canonicalize(args.description) || undefined,
-    region: canonicalize(args.region) || undefined,
-    language: canonicalize(args.language) || undefined,
-    locale: canonicalize(args.locale),
-    positivity: args.result.positivity,
-    vibe: args.result.vibe,
-    reason: args.result.reason,
-    whyGood: args.result.whyGood,
-    whyBad: args.result.whyBad,
-    redditTake: args.result.redditTake,
-    similarCompanies: args.result.similarCompanies,
-    model: MODEL_ID,
-    promptVersion: PROMPT_VERSION,
-    updatedAt: new Date(),
-  }
-
-  const existing = await db
-    .select({ id: vibeChecks.id })
-    .from(vibeChecks)
-    .where(eq(vibeChecks.inputHash, args.inputHash))
-    .limit(1)
-
-  if (existing[0]) {
-    await db
-      .update(vibeChecks)
-      .set(base)
-      .where(eq(vibeChecks.id, existing[0].id))
-  } else {
-    await db.insert(vibeChecks).values({
-      ...base,
-      createdAt: new Date(),
-    })
-  }
 }
 
 const AI_UNAVAILABLE_RESULT: VibeCheckResult = {
@@ -363,19 +224,7 @@ Output requirements:
 
 No corporate speak. No fluff. Say it like you mean it.${args.languageInstruction}`
 }
-
-async function getCachedVibeCheckSafe(
-  inputHash: string
-): Promise<VibeCheckResult | null> {
-  try {
-    return await getCachedVibeCheck(inputHash)
-  } catch {
-    return null
-  }
-}
-
 async function generateVibeCheck(args: {
-  inputHash: string
   name: string
   description: string
   region: string
@@ -419,17 +268,6 @@ async function generateVibeCheck(args: {
       region: args.region,
     }),
   })
-
-  saveVibeCheck({
-    inputHash: args.inputHash,
-    name: args.name,
-    description: args.description,
-    region: args.region,
-    language: args.language,
-    locale: args.locale,
-    result: result.object,
-  }).catch(() => undefined)
-
   return result.object
 }
 
@@ -445,23 +283,8 @@ export const checkWordVibe = createServerFn({ method: 'GET' })
     })
   )
   .handler(async ({ data }): Promise<VibeCheckResult> => {
-    const inputHash = await computeInputHash({
-      name: data.name,
-      description: data.description,
-      region: data.region,
-      language: data.language,
-      locale: data.locale,
-      context: data.context,
-    })
-
-    const cached = await getCachedVibeCheckSafe(inputHash)
-    if (cached) {
-      return cached
-    }
-
     try {
       return await generateVibeCheck({
-        inputHash,
         name: data.name,
         description: data.description,
         region: data.region,
