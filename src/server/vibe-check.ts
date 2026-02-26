@@ -1,4 +1,4 @@
-import { gateway } from '@ai-sdk/gateway'
+import { createOpenAI } from '@ai-sdk/openai'
 import { createServerFn } from '@tanstack/react-start'
 import { generateObject } from 'ai'
 import { z } from 'zod'
@@ -121,7 +121,12 @@ const localeToLanguage: Record<string, string> = {
   pt: 'Portuguese',
 }
 
-const MODEL_ID = 'openai/gpt-5.2' as const
+const MODEL_ID = 'gpt-5.2' as const
+
+const openai = createOpenAI({
+  baseURL: 'https://openai.cho.sh/v1',
+  apiKey: process.env.OPENAI_API_KEY,
+})
 
 function canonicalize(value: string): string {
   return value.trim().replace(/\s+/g, ' ')
@@ -255,7 +260,7 @@ async function generateVibeCheck(args: {
   const ownedSummary = buildOwnedSummary(owned)
 
   const result = await generateObject({
-    model: gateway(MODEL_ID),
+    model: openai(MODEL_ID),
     schema: vibeSchema,
     prompt: buildVibePrompt({
       availabilitySummaryLines,

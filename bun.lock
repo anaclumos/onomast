@@ -5,7 +5,6 @@
     "": {
       "name": "start-app",
       "dependencies": {
-        "@ai-sdk/gateway": "^3.0.22",
         "@ai-sdk/openai": "^3.0.19",
         "@base-ui/react": "^1.1.0",
         "@fontsource-variable/figtree": "^5.2.10",
